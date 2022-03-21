@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">bms4</string>
+    //naverlogin
+    <string name="naver_client_id">xxx</string>
+    <string name="naver_client_secret">xxx</string>
+    <string name="naver_client_name">xxx</string>
+</resources>
