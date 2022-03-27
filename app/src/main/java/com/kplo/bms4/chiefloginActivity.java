@@ -4,133 +4,119 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 
 
 public class chiefloginActivity extends AppCompatActivity {
 
-    private EditText editID, ediPassword;
-    private TextView textView;
 
+    GoogleSignInOptions gso;
+    GoogleSignInClient gsc;
+    ImageView googlebtn;
+    TextView txt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        String url = "http://www.google.com";
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-        Intent intent = getIntent();
+        googlebtn=findViewById(R.id.googlebutton);
 
-        editID = findViewById(R.id.editID);
-        ediPassword = findViewById(R.id.ediPassword);
+        txt=findViewById(R.id.logintext);
 
-        Button button2 = (Button) findViewById(R.id.loginbutton);
-        textView =findViewById(R.id.textresult);
+        txt.setText("이장 로그인");
 
-//////////////////
+        gso= new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        gsc= GoogleSignIn.getClient(this,gso);
 
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+        if(acct!=null)
+        {
+            navigateToSecondActivity();
+        }
 
-        button2.setOnClickListener(new View.OnClickListener() {
+        googlebtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                sendRequest(url);
-
-                    Intent intent = new Intent(chiefloginActivity.this, chiefActivity.class);
-                    startActivity(intent);
-
-
+            public void onClick(View view) {
+                signIn();
             }
         });
 
 
-        if (AppHelper.requestQueue == null)
-            AppHelper.requestQueue = Volley.newRequestQueue(getApplicationContext());
+        Intent intent = getIntent();
 
 
-        ////////////////
+/*
+        Button button2 = (Button)findViewById(R.id.loginbutton);
 
-
-
-        Button button= (Button)findViewById(R.id.joinbutton);
-
-        button.setOnClickListener(new View.OnClickListener() {
-
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(chiefloginActivity.this, chiefjoinActivity.class);
-            startActivity(intent);
-        }
-
-    });
-
-    }
-
-
-    public void sendRequest(String url) {
-
-        StringRequest request = new StringRequest(
-                Request.Method.GET,
-                url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        textView.setText(response);
-                    }
-                },
-
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        textView.setText(error.getMessage());
-                    }
-                }
-        )
-        {
+        button2.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("id", editID.getText().toString());
-                params.put("password", ediPassword.getText().toString());
-
-                return params;
+            public void onClick(View view) {
+                Intent intent = new Intent(chiefloginActivity.this, chiefActivity.class);
+                startActivity(intent);
             }
-        };
+
+        });*/
 
 
-        // 이전 결과가 있더라도 새로 요청
-        request.setShouldCache(false);
-        AppHelper.requestQueue = Volley.newRequestQueue(this);//queue 초기화
+        Button buttonhome= (Button)findViewById(R.id.homebutton);
 
+        buttonhome.setOnClickListener(new View.OnClickListener() {
 
-        AppHelper.requestQueue.add(request);
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(chiefloginActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
 
-        Toast.makeText(getApplicationContext(), "Request sent", Toast.LENGTH_SHORT).show();
+        });
+
 
 
     }
 
 
+    void signIn(){
+        Intent signInIntent = gsc.getSignInIntent();
+        startActivityForResult(signInIntent,1000);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode==1000){
+            Task<GoogleSignInAccount> task=GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                task.getResult(ApiException.class);
+                navigateToSecondActivity();
+            } catch (ApiException e) {
+                Toast.makeText(getApplicationContext(),"something wrong",Toast.LENGTH_SHORT).show();
+            }
+        }
+
+    }
+
+
+    void navigateToSecondActivity(){
+        finish();
+        Intent intent = new Intent(chiefloginActivity.this,chiefActivity.class);
+        startActivity(intent);
+    }
 
 
 }

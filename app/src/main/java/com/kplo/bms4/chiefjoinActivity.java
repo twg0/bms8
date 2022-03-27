@@ -26,9 +26,9 @@ public class chiefjoinActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chiefjoin);
-
+/*
         editID=findViewById(R.id.editID);
-        ediPassword=findViewById(R.id.ediPassword);
+        ediPassword=findViewById(R.id.ediPassword);*/
         sign_in=findViewById(R.id.signin);
 
         Intent intent = getIntent();
