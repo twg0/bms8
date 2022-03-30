@@ -4,24 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/gray"
     tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="48dp"
-        android:layout_marginRight="30dp"
+
         android:layout_marginBottom="30dp"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/logintext"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginBottom="20dp"
             android:text="보호자회원가입"
+            android:background="#7DB249"
             android:textStyle="bold"
             android:textSize="25dp"
             android:textAlignment="center"
@@ -34,6 +33,7 @@
             android:layout_height="48dp"
             android:layout_gravity="center"
             android:ems="10"
+            android:background="@drawable/button_round"
             android:textSize="20dp"
             android:hint="나이"
             android:inputType="textPassword" />
@@ -44,6 +44,9 @@
             android:layout_height="48dp"
             android:layout_gravity="center"
             android:ems="10"
+            android:background="@drawable/button_round"
+            android:layout_marginTop="10dp"
+
             android:textSize="20dp"
             android:hint="연락처"
             android:inputType="textPassword" />
@@ -54,6 +57,9 @@
             android:layout_height="48dp"
             android:layout_gravity="center"
             android:ems="10"
+            android:background="@drawable/button_round"
+            android:layout_marginTop="10dp"
+
             android:textSize="20dp"
             android:hint="모드"
             android:inputType="textPassword" />
@@ -66,6 +72,9 @@
             android:layout_gravity="center"
             android:ems="10"
             android:textSize="20dp"
+            android:background="@drawable/button_round"
+            android:layout_marginTop="10dp"
+
             android:hint="어르신이름"
             android:inputType="textPassword" />
 
@@ -76,6 +85,9 @@
             android:layout_height="48dp"
             android:layout_gravity="center"
             android:ems="10"
+            android:background="@drawable/button_round"
+            android:layout_marginTop="10dp"
+
             android:textSize="20dp"
             android:hint="어르신주민등록번호"
             android:inputType="textPassword" />
@@ -89,6 +101,8 @@
             android:layout_gravity="center"
             android:ems="10"
             android:textSize="20dp"
+            android:background="@drawable/button_round"
+android:layout_marginTop="10dp"
             android:hint="어르신과의 관계"
             android:inputType="textPassword" />
 
@@ -99,6 +113,8 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:text="send"
+            android:background="@drawable/button_round"
+
             android:textSize="33dp"
             android:textStyle="bold" />
 

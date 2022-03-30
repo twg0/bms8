@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/gray"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -16,22 +16,18 @@
         android:layout_marginBottom="30dp"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/image1"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center"
-            android:src="@drawable/broadcast"
-            />
 
         <TextView
             android:id="@+id/choosetext"
-            android:layout_width="match_parent"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:text="알쓸신방"
+            android:layout_marginLeft="85dp"
+            android:text="알쓸
+            신방"
             android:textStyle="bold"
-            android:textSize="44dp"
+            android:textSize="66dp"
+            android:background="#7DB249"
             android:textAlignment="center"
             android:gravity="center_horizontal" />
 
@@ -42,8 +38,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="보호자용"
-            android:textSize="33dp"
+            android:background="@drawable/button_round"
+            android:text="보호자"
+            android:textSize="44dp"
             android:textStyle="bold" />
 
 
@@ -53,8 +50,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="관리자용"
-            android:textSize="33dp"
+            android:text="관리자"
+            android:background="@drawable/button_round"
+
+            android:textSize="44dp"
             android:textStyle="bold" />
 
     </LinearLayout>

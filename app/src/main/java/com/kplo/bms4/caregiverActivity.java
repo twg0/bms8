@@ -37,10 +37,13 @@ public class caregiverActivity extends AppCompatActivity {
     TextView caregivertxt,test;
     String TAG = "caregiverActivity";
 
+
     String Name;
     String Email;
-    String Id, Role,age,phonenumber,userId,email;
+    Long Id;
+    String  age,phonenumber,email,Role;
     private RequestQueue mqueue;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +54,15 @@ public class caregiverActivity extends AppCompatActivity {
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         gsc = GoogleSignIn.getClient(this, gso);
         caregivertxt = findViewById(R.id.caregiver);
+/*
         test=findViewById(R.id.caregiver3);
+*/
 
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if (acct != null) {
             String personName = acct.getDisplayName();
             String personEmail = acct.getEmail();
-            String personId = acct.getId();
+            Long personId = Long.parseLong(acct.getId());
 
             Name = personName;
             Email = personEmail;
@@ -65,8 +70,8 @@ public class caregiverActivity extends AppCompatActivity {
 
             caregivertxt.setText(personName);
 
+
             Log.d(TAG, "handleSignInResult:personName " + personName);
-            Log.d(TAG, "handleSignInResult:personEmail " + personEmail);
             Log.d(TAG, "handleSignInResult:personId " + personId);
 
         }
@@ -88,15 +93,22 @@ public class caregiverActivity extends AppCompatActivity {
         mqueue = Volley.newRequestQueue(this);
         String url = " http://10.0.2.2:8080/user/getuserId/" + Id;
 
+        String url2 = " http://10.0.2.2:8080/user/all";
+
+        Log.d(TAG, "handleSignInResult:personEmail " + Email);
+
+        if(Role.equals("junwon1131@naver.com")  ) {
+            Toast.makeText(getApplicationContext(), "you are not caregiver", Toast.LENGTH_SHORT).show();
+            signout();
+        }
 
 
-        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        final JsonObjectRequest jsonrequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
 
-                    phonenumber=response.getString("phonenumber");
-                    age=response.getString("age");
+                    Role=response.getString("Role");
 
 
                 } catch (JSONException e) {
@@ -111,20 +123,6 @@ public class caregiverActivity extends AppCompatActivity {
         });
 
 
-        Log.d(TAG, "age   " + phonenumber);
-
-        Log.d(TAG, "age   " + url);
-        Log.d(TAG, "age   " + age);
-        Log.d(TAG, "age   " + Email);
-
-
-/////
-
-    if(Email=="junwon1131@naver.com") {
-        Toast.makeText(getApplicationContext(), "you are not caregiver", Toast.LENGTH_SHORT).show();
-
-        signout();
-    }
 
 
 
@@ -151,7 +149,7 @@ public class caregiverActivity extends AppCompatActivity {
                 Intent intent = new Intent(caregiverActivity.this, caregiverjoinActivity.class);
                 intent.putExtra("Name", Name);
                 intent.putExtra("Email", Email);
-                intent.putExtra("userId", Id);
+                intent.putExtra("Id", Id);
 
                 startActivity(intent);
             }
@@ -173,9 +171,20 @@ public class caregiverActivity extends AppCompatActivity {
         });
 
 
-        request.setTag(TAG);
-        mqueue.add(request);
-        
+        jsonrequest.setTag(TAG);
+        mqueue.add(jsonrequest);
+
+
+
+
+        Log.d(TAG, "age   " + age);
+
+        Log.d(TAG, "url   " + url);
+        Log.d(TAG, "Email   " + Email);
+
+
+/////
+
     }
 
 

@@ -26,7 +26,7 @@ public class caregiverjoinActivity extends AppCompatActivity {
     String TAG="caregiverjoinActivity";
 
     TextView idtxt;
-    private EditText agetxt,phonenumbert,oldnamet,oldpersonalIDt,relationshipt;
+    private EditText agetxt,phonenumbert,oldnamet,oldpersonalIDt,relationshipt,Role;
     private RequestQueue queue;
     private Button btnsend,btnok;
     /*private TextView tv;*/
@@ -42,16 +42,16 @@ public class caregiverjoinActivity extends AppCompatActivity {
         setContentView(R.layout.caregiverjoin);
 
         Intent intent = getIntent();
-        String userId =intent.getExtras().getString("userId");
+        String Id =intent.getExtras().getString("Id");
         String Email =intent.getExtras().getString("Email");
         String Name =intent.getExtras().getString("Name");
-        i=userId;
+        i=Id;
 
-        String url = " http://10.0.2.2:8080/user/put/"+i;
+        String url = " http://10.0.2.2:8080/user/post/"+i;
         Log.d(TAG, ":personName "+Name);
-        Log.d(TAG, ": "+userId);
+        Log.d(TAG, ": "+Id);
 
-
+        Role=findViewById(R.id.mode);
         agetxt=findViewById(R.id.age);
         phonenumbert=findViewById(R.id.phonenumber);
 /*
@@ -65,7 +65,7 @@ public class caregiverjoinActivity extends AppCompatActivity {
         tv=findViewById(R.id.tv2);
 */
 
-        final StringRequest stringRequest = new StringRequest(Request.Method.PUT, url, new Response.Listener<String>() {
+        final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 /*tv.setText(response);*/
@@ -80,11 +80,12 @@ public class caregiverjoinActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("userId", userId);
+                params.put("Id", Id);
                 params.put("Email",Email);
 
                 params.put("age", agetxt.getText().toString());
                 params.put("phonenumber", phonenumbert.getText().toString());
+                params.put("Role", Role.getText().toString());
 
                 return params;
             }
