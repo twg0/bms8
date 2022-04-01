@@ -20,10 +20,10 @@ import com.google.android.gms.tasks.Task;
 
 public class chiefloginActivity extends AppCompatActivity {
 
-
+/*
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
-    ImageView googlebtn;
+    ImageView googlebtn;*/
     TextView txt;
 
     @Override
@@ -32,13 +32,13 @@ public class chiefloginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-        googlebtn=findViewById(R.id.googlebutton);
+
 
         txt=findViewById(R.id.logintext);
 
         txt.setText("이장 로그인");
 
-        gso= new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+       /* gso= new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         gsc= GoogleSignIn.getClient(this,gso);
 
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
@@ -54,7 +54,7 @@ public class chiefloginActivity extends AppCompatActivity {
             }
         });
 
-
+*/
         Intent intent = getIntent();
 
 
@@ -87,7 +87,7 @@ public class chiefloginActivity extends AppCompatActivity {
 
 
     }
-
+/*
 
     void signIn(){
         Intent signInIntent = gsc.getSignInIntent();
@@ -116,7 +116,7 @@ public class chiefloginActivity extends AppCompatActivity {
         finish();
         Intent intent = new Intent(chiefloginActivity.this,chiefActivity.class);
         startActivity(intent);
-    }
+    }*/
 
 
 }

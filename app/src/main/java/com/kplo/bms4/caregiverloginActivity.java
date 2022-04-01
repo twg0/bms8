@@ -2,6 +2,7 @@ package com.kplo.bms4;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,43 +17,76 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.kakao.sdk.auth.model.OAuthToken;
+import com.kakao.sdk.user.UserApiClient;
+import com.kakao.sdk.user.model.User;
+
+import kotlin.Unit;
+import kotlin.jvm.functions.Function2;
 
 
 public class caregiverloginActivity extends AppCompatActivity {
-
-
-    GoogleSignInOptions gso;
-    GoogleSignInClient gsc;
-    ImageView googlebtn;
+    private final static String TAG = "유저";
     TextView txt;
-    @Override
+    private Button kakaoAuth;
+    String Id,Email,username;
 
+    @Override
 
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-        googlebtn=findViewById(R.id.googlebutton);
+
+
+        Function2<OAuthToken, Throwable, Unit> callback = new Function2<OAuthToken, Throwable, Unit>()
+        {
+            @Override public Unit invoke(OAuthToken oAuthToken, Throwable throwable)
+            {
+                if (oAuthToken != null)
+            {
+                Log.i("user", oAuthToken.getAccessToken() + " " + oAuthToken.getRefreshToken()); }
+                if (throwable != null)
+                    {
+                        Log.w(TAG, "invoke: " + throwable.getLocalizedMessage());
+                    }
+                         updateKakaoLoginUi();
+                return null;
+            }
+        };
+
+
+        kakaoAuth = findViewById(R.id.kakao_auth_button);
+
+        kakaoAuth.setOnClickListener(new View.OnClickListener() {
+             @Override public void onClick(View v)
+             {
+                 if (UserApiClient.getInstance().isKakaoTalkLoginAvailable(caregiverloginActivity.this))
+                 {
+                     UserApiClient.getInstance().loginWithKakaoTalk(caregiverloginActivity.this, callback);
+
+
+                 }
+
+                 else
+                 {
+                     UserApiClient.getInstance().loginWithKakaoAccount(caregiverloginActivity.this, callback);
+
+
+                 }
+             }
+
+        });
+
+
+        updateKakaoLoginUi();
+
+
+
         txt=findViewById(R.id.logintext);
 
         txt.setText("보호자 로그인");
-        gso= new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
-        gsc= GoogleSignIn.getClient(this,gso);
-
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
-        if(acct!=null)
-        {
-
-            navigateToSecondActivity();
-        }
-
-        googlebtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signIn();
-            }
-        });
 
 
         Intent intent = getIntent();
@@ -86,37 +120,37 @@ public class caregiverloginActivity extends AppCompatActivity {
     }
 
 
-    void signIn(){
-        Intent signInIntent = gsc.getSignInIntent();
-        startActivityForResult(signInIntent,1000);
-    }
+    public void updateKakaoLoginUi() {
+        UserApiClient.getInstance().me(new Function2<User, Throwable, Unit>()
+         {
+         @Override public Unit invoke(User user, Throwable throwable)
+        {
+            if (user != null) {
+                 Log.i(TAG, "id " + user.getId());
+                Id=user.getId().toString();
+                Email=user.getKakaoAccount().getEmail();
+                Log.i(TAG, "email " + user.getKakaoAccount().getEmail());
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==1000){
-            Task<GoogleSignInAccount> task=GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                task.getResult(ApiException.class);
+                Intent intent = new Intent(caregiverloginActivity.this, caregiverActivity.class);
+                intent.putExtra("Id",Id);
+                intent.putExtra("Email",Email);
 
-                navigateToSecondActivity();
-            } catch (ApiException e) {
-                Toast.makeText(getApplicationContext(),"something wrong",Toast.LENGTH_SHORT).show();
-            }
+
+                startActivity(intent);
+
+                 }
+                if (throwable != null)
+                 {
+                 Log.w(TAG, "invoke: " + throwable.getLocalizedMessage());
+
+                 }
+                 return null;
         }
 
-    }
-// 보호자
-    void navigateToSecondActivity(){
-        finish();
-
-
-            Intent intent = new Intent(caregiverloginActivity.this, caregiverActivity.class);
-            startActivity(intent);
-
-
+         });
 
     }
 
 
-}
+
+        }

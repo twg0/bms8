@@ -70,14 +70,16 @@
                         android:textStyle="bold" />
 
 
-        <ImageView
-            android:id="@+id/googlebutton"
+
+        <Button
+            android:id="@+id/kakao_auth_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/googlebtn2"
+            android:layout_height="48dp"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            />
+            android:background="@drawable/kakao"
+            android:layout_marginTop="30dp"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
 
         <Button

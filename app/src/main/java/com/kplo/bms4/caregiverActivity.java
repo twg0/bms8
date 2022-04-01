@@ -24,10 +24,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.kakao.sdk.user.UserApiClient;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 
 
 public class caregiverActivity extends AppCompatActivity {
@@ -40,8 +44,8 @@ public class caregiverActivity extends AppCompatActivity {
 
     String Name;
     String Email;
-    Long Id;
-    String  age,phonenumber,email,Role;
+    String Id;
+    String  age,phonenumber,Role;
     private RequestQueue mqueue;
 
 
@@ -50,23 +54,24 @@ public class caregiverActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.caregiver);
-
+/*
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         gsc = GoogleSignIn.getClient(this, gso);
-        caregivertxt = findViewById(R.id.caregiver);
+        caregivertxt = findViewById(R.id.caregiver);*/
 /*
         test=findViewById(R.id.caregiver3);
 */
+/*
 
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if (acct != null) {
             String personName = acct.getDisplayName();
             String personEmail = acct.getEmail();
-            Long personId = Long.parseLong(acct.getId());
+            String personId =  acct.getId();
 
             Name = personName;
             Email = personEmail;
-            Id = personId;
+            Id =  personId;
 
             caregivertxt.setText(personName);
 
@@ -75,9 +80,15 @@ public class caregiverActivity extends AppCompatActivity {
             Log.d(TAG, "handleSignInResult:personId " + personId);
 
         }
+*/
 
 
         Intent intent = getIntent();
+        Id=intent.getStringExtra("Id");
+        Email=intent.getStringExtra("Email");
+        Log.d(TAG, "handleSignInResult:personName2 " + Id);
+
+
 
         Button logout_button = (Button) findViewById(R.id.logoutbutton);
 
@@ -85,7 +96,17 @@ public class caregiverActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                signout();
+                UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
+                    @Override
+                    public Unit invoke(Throwable throwable) {
+                        return null;
+                    }
+                });
+
+
+                Intent intent = new Intent(caregiverActivity.this, caregiverloginActivity.class);
+                startActivity(intent);
+                finish();
             }
 
         });
@@ -96,11 +117,13 @@ public class caregiverActivity extends AppCompatActivity {
         String url2 = " http://10.0.2.2:8080/user/all";
 
         Log.d(TAG, "handleSignInResult:personEmail " + Email);
+/*
 
-        if(Role.equals("junwon1131@naver.com")  ) {
+        if(  ) {
             Toast.makeText(getApplicationContext(), "you are not caregiver", Toast.LENGTH_SHORT).show();
             signout();
         }
+*/
 
 
         final JsonObjectRequest jsonrequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -147,10 +170,11 @@ public class caregiverActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(caregiverActivity.this, caregiverjoinActivity.class);
+               /*
                 intent.putExtra("Name", Name);
-                intent.putExtra("Email", Email);
+                intent.putExtra("Email", Email);*/
                 intent.putExtra("Id", Id);
-
+                intent.putExtra("Email", Email);
                 startActivity(intent);
             }
 
@@ -175,34 +199,7 @@ public class caregiverActivity extends AppCompatActivity {
         mqueue.add(jsonrequest);
 
 
-
-
-        Log.d(TAG, "age   " + age);
-
-        Log.d(TAG, "url   " + url);
-        Log.d(TAG, "Email   " + Email);
-
-
-/////
-
     }
-
-
-
-
-
-    void signout() {
-        gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                finish();
-                startActivity(new Intent(caregiverActivity.this, caregiverloginActivity.class));
-            }
-        });
-
-    }
-
-
 
 
 

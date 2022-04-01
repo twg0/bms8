@@ -1,7 +1,11 @@
 package com.kplo.bms4;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +22,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +36,7 @@ public class caregiverjoinActivity extends AppCompatActivity {
     private RequestQueue queue;
     private Button btnsend,btnok;
     /*private TextView tv;*/
-    String i;
+    String i,Id,Email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +48,18 @@ public class caregiverjoinActivity extends AppCompatActivity {
         setContentView(R.layout.caregiverjoin);
 
         Intent intent = getIntent();
-        String Id =intent.getExtras().getString("Id");
-        String Email =intent.getExtras().getString("Email");
-        String Name =intent.getExtras().getString("Name");
-        i=Id;
+         Id =intent.getExtras().getString("Id");
+         Email =intent.getExtras().getString("Email");
+
+        /*String Name =intent.getExtras().getString("Name");*/
+        i= Id;
 
         String url = " http://10.0.2.2:8080/user/post/"+i;
+/*
         Log.d(TAG, ":personName "+Name);
-        Log.d(TAG, ": "+Id);
+*/
+        Log.d(TAG, "handleSignInResult:personName3 " + Id);
+        Log.d(TAG, "handleSignInResult:personName4 " + Email);
 
         Role=findViewById(R.id.mode);
         agetxt=findViewById(R.id.age);
@@ -81,7 +91,9 @@ public class caregiverjoinActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Id", Id);
+
                 params.put("Email",Email);
+
 
                 params.put("age", agetxt.getText().toString());
                 params.put("phonenumber", phonenumbert.getText().toString());
@@ -123,7 +135,6 @@ public class caregiverjoinActivity extends AppCompatActivity {
             queue.cancelAll(TAG);
         }
     }
-
 
 
 
