@@ -30,6 +30,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 
@@ -40,14 +42,14 @@ public class caregiverActivity extends AppCompatActivity {
     GoogleSignInClient gsc;
     TextView caregivertxt,test;
     String TAG = "caregiverActivity";
-
+    HashMap<String,String> map2 = new HashMap<>();
 
     String Name;
-    String Email;
-    String Id;
-    String  age,phonenumber,Role;
+    String email;
+    String id,username;
+    String  age,phonenumber,Role,responseget;
     private RequestQueue mqueue;
-
+    int size=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,37 +58,19 @@ public class caregiverActivity extends AppCompatActivity {
         setContentView(R.layout.caregiver);
 /*
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
-        gsc = GoogleSignIn.getClient(this, gso);
-        caregivertxt = findViewById(R.id.caregiver);*/
-/*
-        test=findViewById(R.id.caregiver3);
-*/
-/*
+        gsc = GoogleSignIn.getClient(this, gso);*/
 
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
-        if (acct != null) {
-            String personName = acct.getDisplayName();
-            String personEmail = acct.getEmail();
-            String personId =  acct.getId();
-
-            Name = personName;
-            Email = personEmail;
-            Id =  personId;
-
-            caregivertxt.setText(personName);
-
-
-            Log.d(TAG, "handleSignInResult:personName " + personName);
-            Log.d(TAG, "handleSignInResult:personId " + personId);
-
-        }
-*/
 
 
         Intent intent = getIntent();
-        Id=intent.getStringExtra("Id");
-        Email=intent.getStringExtra("Email");
-        Log.d(TAG, "handleSignInResult:personName2 " + Id);
+        id=intent.getStringExtra("id");
+        email=intent.getStringExtra("email");
+
+        Log.d(TAG, "handleSignInResult:personName2 " + id);
+
+
+        caregivertxt = findViewById(R.id.caregiver);
+        caregivertxt.setText(email);
 
 
 
@@ -112,11 +96,12 @@ public class caregiverActivity extends AppCompatActivity {
         });
 
         mqueue = Volley.newRequestQueue(this);
-        String url = " http://10.0.2.2:8080/user/getuserId/" + Id;
+        String url = " http://10.0.2.2:8080/user/getuserId/" + id;
 
         String url2 = " http://10.0.2.2:8080/user/all";
 
-        Log.d(TAG, "handleSignInResult:personEmail " + Email);
+        Log.d(TAG, "handleSignInResult:personEmail " + email);
+        Log.d(TAG, "handleSignInResult:personurl " + url);
 /*
 
         if(  ) {
@@ -124,6 +109,9 @@ public class caregiverActivity extends AppCompatActivity {
             signout();
         }
 */
+
+
+/*
 
 
         final JsonObjectRequest jsonrequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -144,8 +132,28 @@ public class caregiverActivity extends AppCompatActivity {
                 error.printStackTrace();
             }
         });
+*/
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "handleSignInResult:repsonse " + response);
 
 
+                responseget=response.toString();
+
+                size = 1;
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        stringRequest.setTag(TAG);
+        mqueue.add(stringRequest);
 
 
 
@@ -173,8 +181,8 @@ public class caregiverActivity extends AppCompatActivity {
                /*
                 intent.putExtra("Name", Name);
                 intent.putExtra("Email", Email);*/
-                intent.putExtra("Id", Id);
-                intent.putExtra("Email", Email);
+                intent.putExtra("id", id);
+                intent.putExtra("email", email);
                 startActivity(intent);
             }
 
@@ -194,11 +202,12 @@ public class caregiverActivity extends AppCompatActivity {
 
         });
 
-
+/*
         jsonrequest.setTag(TAG);
-        mqueue.add(jsonrequest);
+        mqueue.add(jsonrequest);*/
+        Log.d(TAG, "handleSignInResult:Role "+size );
 
-
+        Log.d(TAG, "handleSignInResult:Role " +Role );
     }
 
 

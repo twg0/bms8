@@ -36,7 +36,7 @@ public class caregiverjoinActivity extends AppCompatActivity {
     private RequestQueue queue;
     private Button btnsend,btnok;
     /*private TextView tv;*/
-    String i,Id,Email;
+    String i,id,email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,25 +48,22 @@ public class caregiverjoinActivity extends AppCompatActivity {
         setContentView(R.layout.caregiverjoin);
 
         Intent intent = getIntent();
-         Id =intent.getExtras().getString("Id");
-         Email =intent.getExtras().getString("Email");
+         id =intent.getExtras().getString("id");
+         email =intent.getExtras().getString("email");
 
         /*String Name =intent.getExtras().getString("Name");*/
-        i= Id;
 
-        String url = " http://10.0.2.2:8080/user/post/"+i;
+        String url = " http://10.0.2.2:8080/user/post/"+id;
 /*
-        Log.d(TAG, ":personName "+Name);
+        String url2 = " https://localhost:8080/user/post/"+id;
 */
-        Log.d(TAG, "handleSignInResult:personName3 " + Id);
-        Log.d(TAG, "handleSignInResult:personName4 " + Email);
+        Log.d(TAG, ":personName "+url);
+
 
         Role=findViewById(R.id.mode);
         agetxt=findViewById(R.id.age);
         phonenumbert=findViewById(R.id.phonenumber);
-/*
-        addresst=findViewById(R.id.address);
-*/
+/**/
         oldnamet=findViewById(R.id.oldname);
         oldpersonalIDt=findViewById(R.id.oldpersonalID);
         relationshipt=findViewById(R.id.relationship);
@@ -75,7 +72,8 @@ public class caregiverjoinActivity extends AppCompatActivity {
         tv=findViewById(R.id.tv2);
 */
 
-        final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+
+         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 /*tv.setText(response);*/
@@ -89,11 +87,10 @@ public class caregiverjoinActivity extends AppCompatActivity {
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("Id", Id);
+                Map<String, String> params = new HashMap<>();
+                params.put("id", id);
 
-                params.put("Email",Email);
-
+                params.put("email",email);
 
                 params.put("age", agetxt.getText().toString());
                 params.put("phonenumber", phonenumbert.getText().toString());
@@ -117,7 +114,16 @@ public class caregiverjoinActivity extends AppCompatActivity {
 
                 queue.add(stringRequest);
 
+                Log.d(TAG, "handleSignInResult:personName3 " + id);
+                Log.d(TAG, "handleSignInResult:personName4 " + email);
+
+
+
                 Intent intent3= new Intent(caregiverjoinActivity.this,caregiverActivity.class);
+                intent3.putExtra("id",id);
+                intent3.putExtra("email",email);
+
+
                 startActivity(intent3);
 
 

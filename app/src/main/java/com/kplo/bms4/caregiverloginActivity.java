@@ -29,7 +29,7 @@ public class caregiverloginActivity extends AppCompatActivity {
     private final static String TAG = "유저";
     TextView txt;
     private Button kakaoAuth;
-    String Id,Email,username;
+    String id,email,username;
 
     @Override
 
@@ -127,13 +127,19 @@ public class caregiverloginActivity extends AppCompatActivity {
         {
             if (user != null) {
                  Log.i(TAG, "id " + user.getId());
-                Id=user.getId().toString();
-                Email=user.getKakaoAccount().getEmail();
+                id=user.getId().toString();
+                email=user.getKakaoAccount().getEmail();
+
+
+
+
                 Log.i(TAG, "email " + user.getKakaoAccount().getEmail());
+                Log.d(TAG, "email2 " +username);
 
                 Intent intent = new Intent(caregiverloginActivity.this, caregiverActivity.class);
-                intent.putExtra("Id",Id);
-                intent.putExtra("Email",Email);
+                intent.putExtra("id",id);
+                intent.putExtra("email",email);
+                intent.putExtra("username",username);
 
 
                 startActivity(intent);
