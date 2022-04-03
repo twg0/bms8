@@ -134,7 +134,6 @@ public class caregiverloginActivity extends AppCompatActivity {
 
 
                 Log.i(TAG, "email " + user.getKakaoAccount().getEmail());
-                Log.d(TAG, "email2 " +username);
 
                 Intent intent = new Intent(caregiverloginActivity.this, caregiverActivity.class);
                 intent.putExtra("id",id);
@@ -143,8 +142,8 @@ public class caregiverloginActivity extends AppCompatActivity {
 
 
                 startActivity(intent);
-
                  }
+
                 if (throwable != null)
                  {
                  Log.w(TAG, "invoke: " + throwable.getLocalizedMessage());

@@ -18,6 +18,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -30,10 +32,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 public class caregiverActivity extends AppCompatActivity {
@@ -42,14 +47,18 @@ public class caregiverActivity extends AppCompatActivity {
     GoogleSignInClient gsc;
     TextView caregivertxt,test;
     String TAG = "caregiverActivity";
-    HashMap<String,String> map2 = new HashMap<>();
+    ObjectMapper mapper = new ObjectMapper();
+    Map<String,String> map;
 
     String Name;
     String email;
     String id,username;
     String  age,phonenumber,Role,responseget;
+    String[] split;
+
     private RequestQueue mqueue;
-    int size=0;
+    char []str;
+    Integer size=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,11 +113,6 @@ public class caregiverActivity extends AppCompatActivity {
         Log.d(TAG, "handleSignInResult:personurl " + url);
 /*
 
-        if(  ) {
-            Toast.makeText(getApplicationContext(), "you are not caregiver", Toast.LENGTH_SHORT).show();
-            signout();
-        }
-*/
 
 
 /*
@@ -138,11 +142,43 @@ public class caregiverActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, "handleSignInResult:repsonse " + response);
+                try {
+                     map= mapper.readValue(response, Map.class);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
 
-                responseget=response.toString();
+                split=response.split(",");
+                Log.d(TAG, "handleSignInResult:size2 "+map.get("role"));
 
-                size = 1;
+                size=response.length();
+                str=response.toCharArray();
+
+                Role=map.get("role");
+
+                if( Role.equals("chief")) {
+                    Log.d(TAG, "you are not caregiver ");
+
+                    UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
+                        @Override
+                        public Unit invoke(Throwable throwable) {
+                            return null;
+                        }
+                    });
+
+
+                    Intent intent2 = new Intent(caregiverActivity.this, caregiverloginActivity.class);
+                    startActivity(intent2);
+                    finish();
+
+
+
+                }
+
+
+
+                Log.d(TAG, "handleSignInResult:Role " +Role );
 
             }
         }, new Response.ErrorListener() {
@@ -151,6 +187,8 @@ public class caregiverActivity extends AppCompatActivity {
 
             }
         });
+
+
 
         stringRequest.setTag(TAG);
         mqueue.add(stringRequest);
@@ -201,13 +239,10 @@ public class caregiverActivity extends AppCompatActivity {
             }
 
         });
-
 /*
         jsonrequest.setTag(TAG);
         mqueue.add(jsonrequest);*/
-        Log.d(TAG, "handleSignInResult:Role "+size );
 
-        Log.d(TAG, "handleSignInResult:Role " +Role );
     }
 
 

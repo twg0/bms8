@@ -10,19 +10,42 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.kakao.sdk.user.UserApiClient;
+
+import java.io.IOException;
+import java.util.Map;
+
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 
 
 public class chiefActivity extends AppCompatActivity {
 
-    GoogleSignInOptions gso;
-    GoogleSignInClient gsc;
     TextView chieftxt;
+    String TAG = "chief";
+    ObjectMapper mapper = new ObjectMapper();
+    Map<String,String> map;
+
+    String id,username,Role;
+    private RequestQueue mqueue;
+    String[] split;
+    Integer size=0;
+
+    String Name;
+    String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,19 +53,19 @@ public class chiefActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chief);
 
-        gso=new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
-        gsc= GoogleSignIn.getClient(this,gso);
         chieftxt=findViewById(R.id.chief);
 
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
-        if(acct!=null){
-            String personName=acct.getDisplayName();
-            String personEmail=acct.getEmail();
-            chieftxt.setText(personName);
-        }
+
+        mqueue = Volley.newRequestQueue(this);
 
 
         Intent intent = getIntent();
+        id=intent.getStringExtra("id");
+        email=intent.getStringExtra("email");
+        String url = " http://10.0.2.2:8080/user/getuserId/" + id;
+
+        String url2 = " http://10.0.2.2:8080/user/all";
+        chieftxt.setText(email);
 
         Button logout_button = (Button) findViewById(R.id.logoutbutton);
 
@@ -50,10 +73,80 @@ public class chiefActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                signout();
+
+                UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
+                    @Override
+                    public Unit invoke(Throwable throwable) {
+                        return null;
+                    }
+                });
+
+
+                Intent intent = new Intent(chiefActivity.this, chiefloginActivity.class);
+
+
+                startActivity(intent);
+                finish();
+
             }
 
         });
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "handleSignInResult:repsonse " + response);
+                try {
+                    map= mapper.readValue(response, Map.class);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+
+                Log.d(TAG, "handleSignInResult:size2 "+map);
+
+                size=response.length();
+
+                Role=map.get("role");
+
+                if( Role.equals("caregiver")) {
+                    Log.d(TAG, "you are not chief ");
+
+                    UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
+                        @Override
+                        public Unit invoke(Throwable throwable) {
+                            return null;
+                        }
+                    });
+
+
+                    Intent intent2 = new Intent(chiefActivity.this,chiefloginActivity.class);
+                    startActivity(intent2);
+                    finish();
+
+
+
+                }
+
+
+
+                Log.d(TAG, "handleSignInResult:Role " +Role );
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+
+
+        stringRequest.setTag(TAG);
+        mqueue.add(stringRequest);
+
 
 
 
@@ -89,6 +182,9 @@ public class chiefActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(chiefActivity.this, chiefjoinActivity.class);
+                intent.putExtra("id",id);
+                intent.putExtra("email",email);
+
                 startActivity(intent);
             }
 
@@ -97,14 +193,15 @@ public class chiefActivity extends AppCompatActivity {
 
     }
 
-    void signout(){
-        gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                finish();
-                startActivity(new Intent(chiefActivity.this,chiefloginActivity.class));
-            }
-        });
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mqueue != null) {
+            mqueue.cancelAll(TAG);
+        }
     }
+
+
+
 }
