@@ -41,8 +41,7 @@ public class chiefActivity extends AppCompatActivity {
 
     String id,username,Role;
     private RequestQueue mqueue;
-    String[] split;
-    Integer size=0;
+
 
     String Name;
     String email;
@@ -62,10 +61,11 @@ public class chiefActivity extends AppCompatActivity {
         Intent intent = getIntent();
         id=intent.getStringExtra("id");
         email=intent.getStringExtra("email");
-        String url = " http://10.0.2.2:8080/user/getuserId/" + id;
+        String url = " http://10.0.2.2:8080/user/" + email;
 
         String url2 = " http://10.0.2.2:8080/user/all";
         chieftxt.setText(email);
+
 
         Button logout_button = (Button) findViewById(R.id.logoutbutton);
 
@@ -97,43 +97,48 @@ public class chiefActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, "handleSignInResult:repsonse " + response);
-                try {
-                    map= mapper.readValue(response, Map.class);
-                } catch (IOException e) {
-                    e.printStackTrace();
+
+
+                if (response.isEmpty()) {
+                    Log.d(TAG, "handleSignInResult:repsonse getout");
+
+                    return;
+                } else {
+
+                    try {
+                        map = mapper.readValue(response, Map.class);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    Log.d(TAG, "handleSignInResult:size2 " + map);
+
+
+                    Role = map.get("role");
+
+                    if (Role.equals("caregiver")) {
+                        Log.d(TAG, "you are not chief ");
+
+                        UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
+                            @Override
+                            public Unit invoke(Throwable throwable) {
+                                return null;
+                            }
+                        });
+
+
+                        Intent intent2 = new Intent(chiefActivity.this, chiefloginActivity.class);
+                        startActivity(intent2);
+                        finish();
+
+
+                    }
+
+
+                    Log.d(TAG, "handleSignInResult:Role " + Role);
+
                 }
-
-
-
-                Log.d(TAG, "handleSignInResult:size2 "+map);
-
-                size=response.length();
-
-                Role=map.get("role");
-
-                if( Role.equals("caregiver")) {
-                    Log.d(TAG, "you are not chief ");
-
-                    UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
-                        @Override
-                        public Unit invoke(Throwable throwable) {
-                            return null;
-                        }
-                    });
-
-
-                    Intent intent2 = new Intent(chiefActivity.this,chiefloginActivity.class);
-                    startActivity(intent2);
-                    finish();
-
-
-
-                }
-
-
-
-                Log.d(TAG, "handleSignInResult:Role " +Role );
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -146,6 +151,19 @@ public class chiefActivity extends AppCompatActivity {
 
         stringRequest.setTag(TAG);
         mqueue.add(stringRequest);
+
+
+        Button broadcast_button = (Button) findViewById(R.id.broadcast);
+
+        broadcast_button.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(chiefActivity.this, broadcastActivity.class);
+                startActivity(intent);
+            }
+
+        });
 
 
 
@@ -184,6 +202,21 @@ public class chiefActivity extends AppCompatActivity {
                 Intent intent = new Intent(chiefActivity.this, chiefjoinActivity.class);
                 intent.putExtra("id",id);
                 intent.putExtra("email",email);
+
+                startActivity(intent);
+            }
+
+        });
+
+
+        Button buttonregister = (Button) findViewById(R.id.register);
+
+        buttonregister.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(chiefActivity.this, userjoinActivity.class);
+
 
                 startActivity(intent);
             }

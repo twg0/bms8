@@ -22,12 +22,6 @@ public class chiefboard_activity extends AppCompatActivity {
 
         Intent intent2 = getIntent();
 
-        mWebView = (WebView)findViewById(R.id.webview_board);
-        mWebView.setWebViewClient(new WebViewClient());
-        mWebSettings = mWebView.getSettings();
-        mWebSettings.setJavaScriptEnabled(true);
-
-        mWebView.loadUrl("https://www.youtube.com/");
 
     }
 }

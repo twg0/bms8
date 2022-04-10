@@ -2,6 +2,7 @@ package com.kplo.bms4;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -12,8 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class caregiverboardActivity extends AppCompatActivity {
 
-    private WebView mWebView;
-    private WebSettings mWebSettings;
+private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,13 +23,26 @@ public class caregiverboardActivity extends AppCompatActivity {
 
         Intent intent2 = getIntent();
 
+        button=findViewById(R.id.soundbutton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(caregiverboardActivity.this,listenActivity.class);
+                startActivity(intent);
+            }
+        });
 
-        mWebView = (WebView)findViewById(R.id.webview_board);
-        mWebView.setWebViewClient(new WebViewClient());
-        mWebSettings = mWebView.getSettings();
-        mWebSettings.setJavaScriptEnabled(true);
 
-        mWebView.loadUrl("https://www.naver.com");
+
+
+        Button button2=findViewById(R.id.textbutton);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent3=new Intent(caregiverboardActivity.this,textActivity.class);
+                startActivity(intent3);
+            }
+        });
 
     }
 }

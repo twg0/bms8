@@ -19,8 +19,12 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -34,9 +38,9 @@ public class caregiverjoinActivity extends AppCompatActivity {
     TextView idtxt;
     private EditText agetxt,phonenumbert,oldnamet,oldpersonalIDt,relationshipt,Role;
     private RequestQueue queue;
-    private Button btnsend,btnok;
+    private Button btnsend;
     /*private TextView tv;*/
-    String i,id,email;
+    String id,email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +55,19 @@ public class caregiverjoinActivity extends AppCompatActivity {
          id =intent.getExtras().getString("id");
          email =intent.getExtras().getString("email");
 
+
+        Long id2;
+        id2=Long.parseLong(id);
+
+
+
         /*String Name =intent.getExtras().getString("Name");*/
 
-        String url = " http://10.0.2.2:8080/user/post/"+id;
+        String url = " http://10.0.2.2:8080/user/post/"+email;
 /*
         String url2 = " https://localhost:8080/user/post/"+id;
 */
-        Log.d(TAG, ":personName "+url);
+        Log.d(TAG, ":url "+url);
 
 
         Role=findViewById(R.id.mode);
@@ -68,15 +78,11 @@ public class caregiverjoinActivity extends AppCompatActivity {
         oldpersonalIDt=findViewById(R.id.oldpersonalID);
         relationshipt=findViewById(R.id.relationship);
 
-/*
-        tv=findViewById(R.id.tv2);
-*/
-
 
          StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                /*tv.setText(response);*/
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -98,10 +104,57 @@ public class caregiverjoinActivity extends AppCompatActivity {
 
                 return params;
             }
+
+
         };
 
-
         stringRequest.setTag(TAG);
+
+
+/*
+
+        JSONObject obj = new JSONObject();
+    try {
+        obj.put("id", id2);
+    }
+    catch(JSONException e){
+        e.printStackTrace();
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, obj, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+*/
+/*
+                getJsonResult(response);
+*//*
+
+                Log.d(TAG, "handleSignInResult:Role " + response);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        }){
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                params.put("email",email);
+
+                params.put("age", agetxt.getText().toString());
+                params.put("phonenumber", phonenumbert.getText().toString());
+                params.put("Role", Role.getText().toString());
+
+                return params;
+            }
+
+        };
+
+*/
 
 
 
@@ -113,9 +166,11 @@ public class caregiverjoinActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 queue.add(stringRequest);
+                /*queue.add(request);*/
 
-                Log.d(TAG, "handleSignInResult:personName3 " + id);
-                Log.d(TAG, "handleSignInResult:personName4 " + email);
+
+                Log.d(TAG, "handleSignInResult: " + id);
+                Log.d(TAG, "handleSignInResult: " + email);
 
 
 

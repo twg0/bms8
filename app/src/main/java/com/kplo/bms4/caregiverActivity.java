@@ -52,12 +52,9 @@ public class caregiverActivity extends AppCompatActivity {
 
     String Name;
     String email;
-    String id,username;
+    String id,oldname;
     String  age,phonenumber,Role,responseget;
-    String[] split;
-
     private RequestQueue mqueue;
-    char []str;
     Integer size=0;
 
     @Override
@@ -65,10 +62,6 @@ public class caregiverActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.caregiver);
-/*
-        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
-        gsc = GoogleSignIn.getClient(this, gso);*/
-
 
 
         Intent intent = getIntent();
@@ -80,6 +73,21 @@ public class caregiverActivity extends AppCompatActivity {
 
         caregivertxt = findViewById(R.id.caregiver);
         caregivertxt.setText(email);
+
+
+        Button recent = (Button) findViewById(R.id.recentboardbutton);
+
+        recent.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(caregiverActivity.this, listenActivity.class);
+                startActivity(intent);
+
+            }
+
+        });
 
 
 
@@ -105,81 +113,61 @@ public class caregiverActivity extends AppCompatActivity {
         });
 
         mqueue = Volley.newRequestQueue(this);
-        String url = " http://10.0.2.2:8080/user/getuserId/" + id;
 
-        String url2 = " http://10.0.2.2:8080/user/all";
+        String url = " http://10.0.2.2:8080/user/" + email;
+
 
         Log.d(TAG, "handleSignInResult:personEmail " + email);
         Log.d(TAG, "handleSignInResult:personurl " + url);
-/*
 
 
-
-/*
-
-
-        final JsonObjectRequest jsonrequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-
-                    Role=response.getString("Role");
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-*/
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+
                 Log.d(TAG, "handleSignInResult:repsonse " + response);
-                try {
-                     map= mapper.readValue(response, Map.class);
-                } catch (IOException e) {
-                    e.printStackTrace();
+
+
+                if (response.isEmpty()) {
+                    Log.d(TAG, "handleSignInResult:repsonse getout");
+
+                    return;
                 }
+                else {
+
+                    try {
+                        map = mapper.readValue(response, Map.class);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
 
-                split=response.split(",");
-                Log.d(TAG, "handleSignInResult:size2 "+map.get("role"));
 
-                size=response.length();
-                str=response.toCharArray();
-
-                Role=map.get("role");
-
-                if( Role.equals("chief")) {
-                    Log.d(TAG, "you are not caregiver ");
-
-                    UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
-                        @Override
-                        public Unit invoke(Throwable throwable) {
-                            return null;
-                        }
-                    });
+                    Role = map.get("role");
+                    oldname=map.get("oldname");
 
 
-                    Intent intent2 = new Intent(caregiverActivity.this, caregiverloginActivity.class);
-                    startActivity(intent2);
-                    finish();
+                    if (Role.equals("chief")) {
+                        Log.d(TAG, "you are not caregiver ");
+
+                        UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
+                            @Override
+                            public Unit invoke(Throwable throwable) {
+                                return null;
+                            }
+                        });
 
 
+                        Intent intent2 = new Intent(caregiverActivity.this, caregiverloginActivity.class);
+                        startActivity(intent2);
+                        finish();
+
+                    }
+
+                    Log.d(TAG, "handleSignInResult:Role " + Role);
 
                 }
-
-
-
-                Log.d(TAG, "handleSignInResult:Role " +Role );
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -194,19 +182,21 @@ public class caregiverActivity extends AppCompatActivity {
         mqueue.add(stringRequest);
 
 
+            Button button = (Button) findViewById(R.id.boardbutton);
 
 
-        Button button = (Button) findViewById(R.id.boardbutton);
+            button.setOnClickListener(new View.OnClickListener() {
 
-        button.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(caregiverActivity.this, caregiverboardActivity.class);
-                startActivity(intent);
-            }
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(caregiverActivity.this, caregiverboardActivity.class);
+                    startActivity(intent);
+                }
 
-        });
+
+            });
+
 
 
         Button buttonmodify = (Button) findViewById(R.id.modifybutton);
@@ -215,10 +205,10 @@ public class caregiverActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
+
+
                 Intent intent = new Intent(caregiverActivity.this, caregiverjoinActivity.class);
-               /*
-                intent.putExtra("Name", Name);
-                intent.putExtra("Email", Email);*/
+
                 intent.putExtra("id", id);
                 intent.putExtra("email", email);
                 startActivity(intent);
@@ -229,19 +219,44 @@ public class caregiverActivity extends AppCompatActivity {
 
         Button weather_button = (Button) findViewById(R.id.weatherbutton);
 
-        weather_button.setOnClickListener(new View.OnClickListener() {
+
+            weather_button.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+
+                    Intent intent = new Intent(caregiverActivity.this, weatherActivity.class);
+                    startActivity(intent);
+                }
+
+            });
+
+
+
+        Button statement = (Button) findViewById(R.id.statementbutton);
+
+    if(oldname.isEmpty() )
+    {
+
+    }
+
+
+    else
+    {
+        statement.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(caregiverActivity.this, weatherActivity.class);
+                Intent intent = new Intent(caregiverActivity.this, statementActivity.class);
                 startActivity(intent);
             }
 
         });
-/*
-        jsonrequest.setTag(TAG);
-        mqueue.add(jsonrequest);*/
+
+    }
+
+
 
     }
 

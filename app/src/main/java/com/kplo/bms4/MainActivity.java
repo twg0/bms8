@@ -58,7 +58,20 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-    getHashKey();
+
+        Button userbutton = (Button)findViewById(R.id.foruser);
+
+        userbutton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, userloginActivity.class);
+                startActivity(intent);
+            }
+
+        });
+
+        getHashKey();
     }
 
 

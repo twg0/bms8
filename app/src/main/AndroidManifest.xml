@@ -4,7 +4,15 @@
     <!-- 인터넷 권한선언 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.TTS_SERVICE"/>
+        </intent>
+    </queries>
 
     <application
         android:name=".GlobalApplication"
@@ -42,6 +50,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".chiefActivity"></activity>
+        <activity android:name=".userjoinActivity"></activity>
 
         <activity android:name=".caregiverActivity"></activity>
         <activity android:name=".caregiverloginActivity"></activity>
@@ -51,9 +60,13 @@
         <activity android:name=".caregiverjoinActivity"></activity>
         <activity android:name=".chiefjoinActivity"></activity>
         <activity android:name=".weatherActivity"></activity>
-
+        <activity android:name=".broadcastActivity"></activity>
+        <activity android:name=".listenActivity"></activity>
+        <activity android:name=".userloginActivity"></activity>
         <activity android:name=".statementActivity"></activity>
         <activity android:name=".checkcheifAcitivity"></activity>
+        <activity android:name=".userActivity"></activity>
+        <activity android:name=".textActivity"></activity>
 
     </application>
 

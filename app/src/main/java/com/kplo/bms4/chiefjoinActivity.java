@@ -53,7 +53,7 @@ public class chiefjoinActivity extends AppCompatActivity {
         id =intent.getExtras().getString("id");
         email =intent.getExtras().getString("email");
 
-        String url = " http://10.0.2.2:8080/user/post/"+id;
+        String url = " http://10.0.2.2:8080/user/post/"+email;
 /*
         String url2 = " https://localhost:8080/user/post/"+id;
 */
@@ -75,7 +75,7 @@ public class chiefjoinActivity extends AppCompatActivity {
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
+                Map<String, String> params = new HashMap<String, String>();
                 params.put("id", id);
 
                 params.put("email",email);
