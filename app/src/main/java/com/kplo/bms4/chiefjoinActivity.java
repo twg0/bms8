@@ -31,7 +31,7 @@ public class chiefjoinActivity extends AppCompatActivity {
     private EditText editID,ediPassword,Role, agetxt,phonenumbert;
     private Button sign_in;
     private RequestQueue queue;
-    String i,id,email;
+    String i,id,email,guard_user_id;
 
 
     @Override
@@ -58,7 +58,7 @@ public class chiefjoinActivity extends AppCompatActivity {
         String url2 = " https://localhost:8080/user/post/"+id;
 */
         Log.d(TAG, ":personName "+url);
-
+        guard_user_id="0";
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -79,11 +79,11 @@ public class chiefjoinActivity extends AppCompatActivity {
                 params.put("id", id);
 
                 params.put("email",email);
+                params.put("guard_user_id", guard_user_id);
 
                 params.put("age", agetxt.getText().toString());
                 params.put("phonenumber", phonenumbert.getText().toString());
                 params.put("Role", Role.getText().toString());
-
                 return params;
             }
         };

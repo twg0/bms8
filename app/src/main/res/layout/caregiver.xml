@@ -55,13 +55,13 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="111dp"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/recentboardbutton"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="111dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginBottom="20dp"
                 android:layout_weight="1"
@@ -79,7 +79,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginBottom="20dp"
-
+    android:layout_marginTop="22dp"
         android:orientation="horizontal">
 
 
@@ -116,14 +116,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="111dp"
         android:orientation="horizontal">
 
 
         <Button
             android:id="@+id/statementbutton"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="111dp"
             android:layout_weight="1"
             android:textSize="44dp"
             android:background="@drawable/button_round"
@@ -136,7 +136,7 @@
         <Button
             android:id="@+id/modifybutton"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="111dp"
             android:layout_weight="1"
             android:textSize="44dp"
             android:background="@drawable/button_round"

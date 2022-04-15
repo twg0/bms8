@@ -53,10 +53,11 @@ public class caregiverActivity extends AppCompatActivity {
     String Name;
     String email;
     String id,oldname;
-    String  age,phonenumber,Role,responseget;
+    String  age,phonenumber,Role,responseget,guardid;
     private RequestQueue mqueue;
-    Integer size=0;
 
+    Long  guard_user_id;
+    private Button statement;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -74,43 +75,7 @@ public class caregiverActivity extends AppCompatActivity {
         caregivertxt = findViewById(R.id.caregiver);
         caregivertxt.setText(email);
 
-
-        Button recent = (Button) findViewById(R.id.recentboardbutton);
-
-        recent.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(caregiverActivity.this, listenActivity.class);
-                startActivity(intent);
-
-            }
-
-        });
-
-
-
-        Button logout_button = (Button) findViewById(R.id.logoutbutton);
-
-        logout_button.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
-                    @Override
-                    public Unit invoke(Throwable throwable) {
-                        return null;
-                    }
-                });
-
-
-                Intent intent = new Intent(caregiverActivity.this, caregiverloginActivity.class);
-                startActivity(intent);
-                finish();
-            }
-
-        });
+        guard_user_id=(long)0;
 
         mqueue = Volley.newRequestQueue(this);
 
@@ -134,6 +99,7 @@ public class caregiverActivity extends AppCompatActivity {
 
                     return;
                 }
+
                 else {
 
                     try {
@@ -145,7 +111,29 @@ public class caregiverActivity extends AppCompatActivity {
 
 
                     Role = map.get("role");
-                    oldname=map.get("oldname");
+
+                    guardid=String.valueOf(map.get("guard_user_id"));
+
+                    Log.d(TAG, "guard"+guardid);
+
+
+                    guard_user_id=Long.parseLong(guardid);
+
+                    Log.d(TAG, "guard_user_id "+guard_user_id);
+
+
+                    if(guard_user_id==0 )
+                    {
+                        Log.d(TAG, "handleSignInResult:name " + guard_user_id);
+                        statement.setVisibility(View.INVISIBLE);
+
+                    }
+
+                    else
+                    {
+                        statement.setVisibility(View.VISIBLE);
+
+                    }
 
 
                     if (Role.equals("chief")) {
@@ -182,6 +170,19 @@ public class caregiverActivity extends AppCompatActivity {
         mqueue.add(stringRequest);
 
 
+        Button recent = (Button) findViewById(R.id.recentboardbutton);
+
+        recent.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                Intent intent2 = new Intent(caregiverActivity.this, listenActivity.class);
+                startActivity(intent2);
+            }
+
+        });
+
             Button button = (Button) findViewById(R.id.boardbutton);
 
 
@@ -217,6 +218,29 @@ public class caregiverActivity extends AppCompatActivity {
         });
 
 
+
+        Button logout_button = (Button) findViewById(R.id.logoutbutton);
+
+        logout_button.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
+                    @Override
+                    public Unit invoke(Throwable throwable) {
+                        return null;
+                    }
+                });
+
+
+                Intent intent = new Intent(caregiverActivity.this, caregiverloginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+
+        });
+
+
         Button weather_button = (Button) findViewById(R.id.weatherbutton);
 
 
@@ -233,16 +257,12 @@ public class caregiverActivity extends AppCompatActivity {
 
 
 
-        Button statement = (Button) findViewById(R.id.statementbutton);
-
-    if(oldname.isEmpty() )
-    {
-
-    }
+         statement = (Button) findViewById(R.id.statementbutton);
 
 
-    else
-    {
+        Log.d(TAG, "handleSignInResult:name2 " + guard_user_id);
+
+
         statement.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -254,7 +274,7 @@ public class caregiverActivity extends AppCompatActivity {
 
         });
 
-    }
+
 
 
 

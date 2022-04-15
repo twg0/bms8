@@ -78,7 +78,6 @@
             android:hint="어르신이름"
             android:inputType="textPassword" />
 
-
         <EditText
             android:id="@+id/oldpersonalID"
             android:layout_width="wrap_content"
@@ -89,7 +88,7 @@
             android:layout_marginTop="10dp"
 
             android:textSize="20dp"
-            android:hint="어르신주민등록번호"
+            android:hint="피보호자 id"
             android:inputType="textPassword" />
 
 

@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+/*
 
         Button userbutton = (Button)findViewById(R.id.foruser);
 
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+*/
 
         getHashKey();
     }

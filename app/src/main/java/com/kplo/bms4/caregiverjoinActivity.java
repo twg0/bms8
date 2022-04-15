@@ -36,10 +36,10 @@ public class caregiverjoinActivity extends AppCompatActivity {
     String TAG="caregiverjoinActivity";
 
     TextView idtxt;
-    private EditText agetxt,phonenumbert,oldnamet,oldpersonalIDt,relationshipt,Role;
+    private EditText agetxt,phonenumbert,oldnamet,oldpersonalIDt,relationshipt,Role,guard_user_id;
     private RequestQueue queue;
     private Button btnsend;
-    /*private TextView tv;*/
+
     String id,email;
 
     @Override
@@ -75,9 +75,9 @@ public class caregiverjoinActivity extends AppCompatActivity {
         phonenumbert=findViewById(R.id.phonenumber);
 /**/
         oldnamet=findViewById(R.id.oldname);
-        oldpersonalIDt=findViewById(R.id.oldpersonalID);
-        relationshipt=findViewById(R.id.relationship);
 
+        relationshipt=findViewById(R.id.relationship);
+        guard_user_id=findViewById(R.id.oldpersonalID);
 
          StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -101,7 +101,7 @@ public class caregiverjoinActivity extends AppCompatActivity {
                 params.put("age", agetxt.getText().toString());
                 params.put("phonenumber", phonenumbert.getText().toString());
                 params.put("Role", Role.getText().toString());
-
+                params.put("guard_user_id", guard_user_id.getText().toString());
                 return params;
             }
 
@@ -110,51 +110,6 @@ public class caregiverjoinActivity extends AppCompatActivity {
 
         stringRequest.setTag(TAG);
 
-
-/*
-
-        JSONObject obj = new JSONObject();
-    try {
-        obj.put("id", id2);
-    }
-    catch(JSONException e){
-        e.printStackTrace();
-        }
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, obj, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-*/
-/*
-                getJsonResult(response);
-*//*
-
-                Log.d(TAG, "handleSignInResult:Role " + response);
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        }){
-
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-
-                params.put("email",email);
-
-                params.put("age", agetxt.getText().toString());
-                params.put("phonenumber", phonenumbert.getText().toString());
-                params.put("Role", Role.getText().toString());
-
-                return params;
-            }
-
-        };
-
-*/
 
 
 
@@ -174,9 +129,7 @@ public class caregiverjoinActivity extends AppCompatActivity {
 
 
 
-                Intent intent3= new Intent(caregiverjoinActivity.this,caregiverActivity.class);
-                intent3.putExtra("id",id);
-                intent3.putExtra("email",email);
+                Intent intent3= new Intent(caregiverjoinActivity.this,caregiverloginActivity.class);
 
 
                 startActivity(intent3);
