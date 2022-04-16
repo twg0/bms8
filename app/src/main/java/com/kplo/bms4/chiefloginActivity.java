@@ -27,10 +27,10 @@ import kotlin.jvm.functions.Function2;
 
 public class chiefloginActivity extends AppCompatActivity {
 
-/*
-    GoogleSignInOptions gso;
-    GoogleSignInClient gsc;
-    ImageView googlebtn;*/
+    /*
+        GoogleSignInOptions gso;
+        GoogleSignInClient gsc;
+        ImageView googlebtn;*/
     TextView txt;
     private Button kakaoAuth;
     private final static String TAG = "유저";

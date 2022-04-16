@@ -23,6 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Bms4"
         android:usesCleartextTraffic="true"
+        android:requestLegacyExternalStorage="true"
         >
         <meta-data android:name="com.kakao.sdk.AppKey" android:value="521bf7574294e3600fbdf3d1ae00e2c4" />
 
@@ -64,7 +65,6 @@
         <activity android:name=".listenActivity"></activity>
         <activity android:name=".userloginActivity"></activity>
         <activity android:name=".statementActivity"></activity>
-        <activity android:name=".checkcheifAcitivity"></activity>
         <activity android:name=".userActivity"></activity>
         <activity android:name=".textActivity"></activity>
 
