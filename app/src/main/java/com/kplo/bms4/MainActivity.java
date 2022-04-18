@@ -58,6 +58,20 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+
+        Button button3 = (Button)findViewById(R.id.signup);
+
+        button3.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, signupkakaoActivity.class);
+                startActivity(intent);
+            }
+
+        });
+
+
 /*
         Button userbutton = (Button)findViewById(R.id.foruser);
         userbutton.setOnClickListener(new View.OnClickListener() {
