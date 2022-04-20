@@ -82,7 +82,7 @@ public class chiefActivity extends AppCompatActivity {
                 });
 
 
-                Intent intent = new Intent(chiefActivity.this, chiefloginActivity.class);
+                Intent intent = new Intent(chiefActivity.this, MainActivity.class);
 
 
                 startActivity(intent);

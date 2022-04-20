@@ -14,7 +14,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="50dp"
             android:background="#7DB249"
 
             android:orientation="horizontal">
@@ -35,7 +35,7 @@
                 android:id="@+id/chief2"
                 android:layout_width="99dp"
                 android:layout_height="50dp"
-                android:textSize="28dp"
+                android:textSize="22dp"
                 android:textStyle="bold"
                 android:layout_gravity="center"
                 android:textColor="@color/black"
@@ -111,12 +111,12 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="144dp"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/board"
-            android:layout_width="match_parent"
+            android:layout_width="333dp"
             android:layout_height="160dp"
             android:textSize="44dp"
             android:layout_weight="1"
@@ -151,6 +151,18 @@
                 android:layout_weight="1"
                 android:background="@drawable/button_round"
                 android:text="정보수정"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:textSize="44dp" />
+
+            <Button
+                android:id="@+id/addvillage"
+                android:layout_width="wrap_content"
+                android:layout_height="150dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_round"
+                android:text="마을등록"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="20dp"
