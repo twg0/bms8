@@ -71,13 +71,14 @@ public class broadcastActivity extends AppCompatActivity {
 
 
         record =findViewById(R.id.recordbutton);
-    record.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            recordAudio();
+        record.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("d","start");
+                recordAudio();
 
-        }
-    });
+            }
+        });
 
 
         Button play =findViewById(R.id.playbutton);
@@ -92,18 +93,19 @@ public class broadcastActivity extends AppCompatActivity {
 
         stop=findViewById(R.id.stopbutton);
 
-    stop.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            stopRecording();
+        stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("d","stop");
 
-        }
+                stopRecording();
+            }
 
-    });
+        });
 
-    String txt;
-    txt=getrecordingfilepath().toString();
-    Log.d( "hi",txt);
+        String txt;
+        txt=getrecordingfilepath().toString();
+        Log.d( "hi",txt);
 
     }
 
@@ -148,9 +150,9 @@ public class broadcastActivity extends AppCompatActivity {
 
 
     public void stopRecording(){
-            recorder.stop();
-            recorder.release();
-            recorder = null;
+        recorder.stop();
+        recorder.release();
+        recorder = null;
         Toast.makeText(this,"stop",Toast.LENGTH_LONG).show();
 
 
@@ -166,6 +168,7 @@ public class broadcastActivity extends AppCompatActivity {
 
 
     public void playpressed(){
+
         try{
 
             mediaPlayer = new MediaPlayer();
