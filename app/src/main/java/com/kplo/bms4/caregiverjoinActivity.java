@@ -76,7 +76,6 @@ public class caregiverjoinActivity extends AppCompatActivity {
 /**/
         oldnamet=findViewById(R.id.oldname);
 
-        relationshipt=findViewById(R.id.relationship);
         guard_user_id=findViewById(R.id.oldpersonalID);
 
          StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {

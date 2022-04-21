@@ -32,27 +32,15 @@
             android:gravity="center_horizontal" />
 
 
+
         <Button
-            android:id="@+id/forcaregiver"
+            android:id="@+id/login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:background="@drawable/button_round"
-            android:text="보호자/유저"
-            android:textSize="44dp"
-            android:textStyle="bold" />
-
-
-        <Button
-            android:id="@+id/forcheif"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:text="관리자"
-            android:background="@drawable/button_round"
-
+            android:text="로그인"
             android:textSize="44dp"
             android:textStyle="bold" />
 

@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginBottom="20dp"
-            android:text="이장 회원가입"
+            android:text="이장 정보수정"
 
             android:textStyle="bold"
             android:background="#7DB249"
@@ -38,18 +38,6 @@
             android:hint="나이"
             android:inputType="textPassword" />
 
-        <EditText
-            android:id="@+id/personalID"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_gravity="center"
-            android:ems="10"
-            android:background="@drawable/button_round"
-            android:layout_marginTop="10dp"
-            android:textSize="20dp"
-            android:hint="주민등록번호"
-            android:inputType="textPassword" />
-
 
         <EditText
             android:id="@+id/mode"
@@ -66,12 +54,8 @@
 
 
 
-
-
-
-
         <EditText
-            android:id="@+id/phonenumber"
+            android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_gravity="center"
@@ -80,11 +64,14 @@
             android:layout_marginTop="10dp"
 
             android:textSize="20dp"
-            android:hint="연락처"
+            android:hint="이름"
             android:inputType="textPassword" />
 
+
+
+
         <EditText
-            android:id="@+id/address"
+            android:id="@+id/device_id"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_gravity="center"
@@ -93,11 +80,13 @@
             android:layout_marginTop="10dp"
 
             android:textSize="20dp"
-            android:hint="주소"
+            android:hint="device_id"
             android:inputType="textPassword" />
 
+
+
         <EditText
-            android:id="@+id/villagename"
+            android:id="@+id/birthday"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_gravity="center"
@@ -106,21 +95,10 @@
             android:layout_marginTop="10dp"
 
             android:textSize="20dp"
-            android:hint="마을이름"
+            android:hint="birthday"
             android:inputType="textPassword" />
 
-        <EditText
-            android:id="@+id/villagelocation"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_gravity="center"
-            android:ems="10"
-            android:background="@drawable/button_round"
-            android:layout_marginTop="10dp"
 
-            android:textSize="20dp"
-            android:hint="마을위치"
-            android:inputType="textPassword" />
 
         <Button
             android:id="@+id/signin"

@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+/*
 
         Button button2 = (Button)findViewById(R.id.forcaregiver);
 
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+*/
 
 
         Button button3 = (Button)findViewById(R.id.signup);
@@ -71,6 +73,18 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+
+        Button button4 = (Button)findViewById(R.id.login);
+
+        button4.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, loginActivity.class);
+                startActivity(intent);
+            }
+
+        });
 
 /*
         Button userbutton = (Button)findViewById(R.id.foruser);

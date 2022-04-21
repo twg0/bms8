@@ -15,6 +15,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,10 +26,11 @@ public class signupActivity extends AppCompatActivity {
     String TAG="joinActivity";
     String url;
     String id,email;
-    private EditText agetxt,phonenumbert,oldnamet,oldpersonalIDt,relationshipt,Role,guard_user_id;
+    private EditText agetxt,phonenumbert,Role,guard_user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        queue = Volley.newRequestQueue(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup);
@@ -38,8 +40,6 @@ public class signupActivity extends AppCompatActivity {
         phonenumbert=findViewById(R.id.phonenumber);
         /**/
 
-
-        relationshipt=findViewById(R.id.relationship);
         guard_user_id=findViewById(R.id.oldpersonalID);
 
         Role=findViewById(R.id.mode);
@@ -51,6 +51,7 @@ public class signupActivity extends AppCompatActivity {
 
 
         url = " http://10.0.2.2:8080/user/post/"+email;
+
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -85,7 +86,6 @@ public class signupActivity extends AppCompatActivity {
         stringRequest.setTag(TAG);
 
 
-
         button=findViewById(R.id.sendbutton);
 
        button.setOnClickListener(new View.OnClickListener() {
@@ -94,14 +94,8 @@ public class signupActivity extends AppCompatActivity {
 
                queue.add(stringRequest);
 
-
                Intent intent3= new Intent(signupActivity.this,MainActivity.class);
-
-
                startActivity(intent3);
-
-
-
 
            }
        });

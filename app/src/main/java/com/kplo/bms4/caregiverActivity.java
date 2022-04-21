@@ -147,7 +147,7 @@ public class caregiverActivity extends AppCompatActivity {
                         });
 
 
-                        Intent intent2 = new Intent(caregiverActivity.this, caregiverloginActivity.class);
+                        Intent intent2 = new Intent(caregiverActivity.this, MainActivity.class);
                         startActivity(intent2);
                         finish();
 
@@ -233,7 +233,7 @@ public class caregiverActivity extends AppCompatActivity {
                 });
 
 
-                Intent intent = new Intent(caregiverActivity.this, caregiverloginActivity.class);
+                Intent intent = new Intent(caregiverActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }

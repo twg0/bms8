@@ -1,5 +1,6 @@
 package com.kplo.bms4;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -128,7 +129,7 @@ public class chiefActivity extends AppCompatActivity {
                         });
 
 
-                        Intent intent2 = new Intent(chiefActivity.this, chiefloginActivity.class);
+                        Intent intent2 = new Intent(chiefActivity.this, MainActivity.class);
                         startActivity(intent2);
                         finish();
 
@@ -224,6 +225,19 @@ public class chiefActivity extends AppCompatActivity {
         });
 
 
+        Button vadd = (Button) findViewById(R.id.addvillage);
+
+        vadd.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(chiefActivity.this, villageaddActivity.class);
+
+
+                startActivity(intent);
+            }
+
+        });
     }
 
 

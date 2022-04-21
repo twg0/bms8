@@ -29,52 +29,35 @@
                 android:layout_gravity="center"
                 android:textColor="@color/black"
                 android:textAlignment="center"
-                android:text="방송내용" />
+                android:text="게시판" />
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:orientation="horizontal">
 
-
-
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="match_parent"
             android:layout_marginBottom="20dp"
 
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
 
-            <Button
-                android:id="@+id/soundbutton"
-                android:layout_width="wrap_content"
-                android:layout_height="150dp"
-                android:textSize="44dp"
-                android:background="@drawable/button_round"
-                android:textColor="@color/black"
-                android:layout_weight="1"
-                android:layout_marginLeft="20dp"
-                android:layout_marginBottom="20dp"
-                android:text="음성" />
+            <ListView
+                android:id="@+id/listView"
+                android:layout_width="match_parent"
+                android:layout_height="444dp"
+                tools:listitem="@layout/list_item"
+                />
 
             <Button
-                android:id="@+id/textbutton"
-                android:layout_width="wrap_content"
-                android:layout_height="150dp"
-                android:textSize="44dp"
-                android:background="@drawable/button_round"
-                android:textColor="@color/black"
-                android:layout_weight="1"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-
-                android:text="텍스트" />
-
+                android:id="@+id/reg_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#C62828"
+                android:textColor="#FFFFFF"
+                android:text="새 글 작성하기"
+                />
 
 
         </LinearLayout>

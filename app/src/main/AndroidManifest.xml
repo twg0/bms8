@@ -60,7 +60,7 @@
         <activity android:name=".userjoinActivity"></activity>
         <activity android:name=".signupActivity"></activity>
         <activity android:name=".signupkakaoActivity"></activity>
-
+        <activity android:name=".loginActivity"></activity>
         <activity android:name=".caregiverActivity"></activity>
         <activity android:name=".caregiverloginActivity"></activity>
         <activity android:name=".chiefloginActivity"></activity>
@@ -75,7 +75,7 @@
         <activity android:name=".statementActivity"></activity>
         <activity android:name=".userActivity"></activity>
         <activity android:name=".textActivity"></activity>
-
+        <activity android:name=".villageaddActivity"></activity>
     </application>
 
 </manifest>

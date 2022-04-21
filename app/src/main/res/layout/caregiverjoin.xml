@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginBottom="20dp"
-            android:text="보호자회원가입"
+            android:text="보호자 정보수정"
             android:background="#7DB249"
             android:textStyle="bold"
             android:textSize="25dp"
@@ -75,7 +75,7 @@
             android:background="@drawable/button_round"
             android:layout_marginTop="10dp"
 
-            android:hint="어르신이름"
+            android:hint="이름"
             android:inputType="textPassword" />
 
         <EditText
@@ -94,30 +94,19 @@
 
 
         <EditText
-            android:id="@+id/relationship"
+            android:id="@+id/birthday"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_gravity="center"
             android:ems="10"
-            android:textSize="20dp"
-            android:background="@drawable/button_round"
-android:layout_marginTop="10dp"
-            android:hint="어르신과의 관계"
-            android:inputType="textPassword" />
-
-
-
-        <EditText
-            android:id="@+id/villagename"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_gravity="center"
-            android:ems="10"
-            android:textSize="20dp"
             android:background="@drawable/button_round"
             android:layout_marginTop="10dp"
-            android:hint="마을이름"
+
+            android:textSize="20dp"
+            android:hint="birthday"
             android:inputType="textPassword" />
+
+
 
 
 

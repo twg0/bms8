@@ -33,6 +33,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class broadcastActivity extends AppCompatActivity {
     Intent intent;
@@ -57,7 +58,12 @@ public class broadcastActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.record);
+
+
+
+
         String[] permissions = {Manifest.permission.RECEIVE_SMS};
+
 
         if(ismicrophonepresent()){
             getmicrophonepermission();
@@ -81,12 +87,12 @@ public class broadcastActivity extends AppCompatActivity {
         });
 
 
-        Button play =findViewById(R.id.playbutton);
-        play.setOnClickListener(new View.OnClickListener() {
+        Button send =findViewById(R.id.sendbutton);
+        send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                playpressed();
 
+                
             }
         });
 
