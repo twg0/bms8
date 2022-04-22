@@ -4,13 +4,13 @@
     <!-- 인터넷 권한선언 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
     <queries>
         <intent>
             <action android:name="android.intent.action.TTS_SERVICE"/>
+
+
         </intent>
     </queries>
 
@@ -29,8 +29,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Bms4"
         android:usesCleartextTraffic="true"
-        android:requestLegacyExternalStorage="true"
+    android:requestLegacyExternalStorage="true"
         >
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+
         <meta-data android:name="com.kakao.sdk.AppKey" android:value="521bf7574294e3600fbdf3d1ae00e2c4" />
 
         <activity

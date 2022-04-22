@@ -5,4 +5,8 @@
     <string name="naver_client_secret">xxx</string>
     <string name="naver_client_name">xxx</string>
     <string name="kakao_app_key">	521bf7574294e3600fbdf3d1ae00e2c4</string>
+    <string name="tap_on_mic">Tap on mic to speak</string>
+
+
+
 </resources>

@@ -1,6 +1,8 @@
 package com.kplo.bms4;
 
 import android.Manifest;
+import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,12 +14,21 @@ import android.os.Environment;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
+
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import android.speech.RecognitionListener;
+import android.speech.RecognizerIntent;
+import android.speech.SpeechRecognizer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -50,232 +61,117 @@ import java.util.Map;
 public class broadcastActivity extends AppCompatActivity {
     Intent intent;
     SpeechRecognizer mRecognizer;
-    Button sttBtn,record,stop;
+
+    Button sttBtn;
     TextView textView;
     final int PERMISSION = 1;
-    private static int microphone_permission_code=200;
-    TextView contents;
-    private RequestQueue queue;
-    private EditText villageids,zipcodes,citys,streets,fileid,currentdate;
 
-
-
-    String TAG="Activity";
-    String url = " http://10.0.2.2:8080/user/post";
-
-    String id;
-    MediaRecorder recorder;
-    MediaPlayer mediaPlayer;
-    String filename;
-
-
-
-    @Override protected void onCreate(Bundle savedInstanceState)
-    {
-
-
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.record);
 
-        Intent intent1=getIntent();
-        id=intent1.getStringExtra("id");
+        if (Build.VERSION.SDK_INT >= 23) { // 퍼미션 체크
 
-
-
-        fileid=findViewById(R.id.fileid);
-        currentdate=findViewById(R.id.time);
-        villageids=findViewById(R.id.villageid);
-        contents=findViewById(R.id.sttResult);
-
-
-        queue = Volley.newRequestQueue(this);
-
-
-        String[] permissions = {Manifest.permission.RECEIVE_SMS};
-
-
-        if(ismicrophonepresent()){
-            getmicrophonepermission();
+            ActivityCompat.requestPermissions
+                    (this, new String[]{Manifest.permission.INTERNET,
+                            Manifest.permission.RECORD_AUDIO}, PERMISSION);
         }
 
+        textView = (TextView) findViewById(R.id.sttResult);
+        sttBtn = (Button) findViewById(R.id.sttStart);
+        intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getPackageName());
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR");
+        sttBtn.setOnClickListener
+                (v -> {
+                    mRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
+                    mRecognizer.setRecognitionListener(listener);
+                    mRecognizer.startListening(intent);
+                });
+    }
 
+    private RecognitionListener listener = new RecognitionListener() {
+        @Override
+        public void onReadyForSpeech(Bundle params) {
+            Toast.makeText(getApplicationContext(), "음성인식을 시작합니다.",
+                    Toast.LENGTH_SHORT).show();
+        }
 
+        @Override
+        public void onBeginningOfSpeech() {
+        }
 
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MODE_PRIVATE);
+        @Override
+        public void onRmsChanged(float rmsdB) {
+        }
 
+        @Override
+        public void onBufferReceived(byte[] buffer) {
+        }
 
-        record =findViewById(R.id.recordbutton);
-        record.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("d","start");
-                recordAudio();
+        @Override
+        public void onEndOfSpeech() {
+        }
 
-            }
-        });
-
-
-        Button send =findViewById(R.id.sendbtn);
-        send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-////////////////////////
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        /*tv.setText(response);*/
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("error",error.getMessage());
-                    }
-                }) {
-
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> params = new HashMap<String, String>();
-               /*
-                params.put("guard_user_id", guard_user_id);
-*/
-
-                        params.put("user_id",id);
-                        params.put("village_id",villageids.getText().toString());
-                        params.put("file_id",fileid.getText().toString());
-                        params.put("creaeted_time",currentdate.getText().toString());
-                        params.put("contents",contents.getText().toString());
-
-
-                        return params;
-                    }
-                };
-
-
-                stringRequest.setTag(TAG);
-                queue.add(stringRequest);
-
-
-
-
-
-                Intent intent =new Intent(broadcastActivity.this,chiefActivity.class);
-                startActivity(intent);
-                
-            }
-        });
-
-
-        stop=findViewById(R.id.stopbutton);
-
-        stop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("d","stop");
-
-                stopRecording();
+        @Override
+        public void onError(int error) {
+            String message;
+            switch (error) {
+                case SpeechRecognizer.ERROR_AUDIO:
+                    message = "오디오 에러";
+                    break;
+                case SpeechRecognizer.ERROR_CLIENT:
+                    message = "클라이언트 에러";
+                    break;
+                case SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS:
+                    message = "퍼미션 없음";
+                    break;
+                case SpeechRecognizer.ERROR_NETWORK:
+                    message = "네트워크 에러";
+                    break;
+                case SpeechRecognizer.ERROR_NETWORK_TIMEOUT:
+                    message = "네트웍 타임아웃";
+                    break;
+                case SpeechRecognizer.ERROR_NO_MATCH:
+                    message = "찾을 수 없음";
+                    break;
+                case SpeechRecognizer.ERROR_RECOGNIZER_BUSY:
+                    message = "RECOGNIZER가 바쁨";
+                    break;
+                case SpeechRecognizer.ERROR_SERVER:
+                    message = "서버가 이상함";
+                    break;
+                case SpeechRecognizer.ERROR_SPEECH_TIMEOUT:
+                    message = "말하는 시간초과";
+                    break;
+                default:
+                    message = "알 수 없는 오류임";
+                    break;
             }
 
-        });
-
-        String txt;
-        txt=getrecordingfilepath().toString();
-
-        Log.d( "hi",txt);
-
-    }
-
-
-
-    private boolean ismicrophonepresent(){
-        if(this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_MICROPHONE)){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
-    private void    getmicrophonepermission(){
-        if(ContextCompat.checkSelfPermission(this,Manifest.permission.RECORD_AUDIO)
-                ==PackageManager.PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(this, new String[]
-                    {Manifest.permission.RECORD_AUDIO }, microphone_permission_code);
-        }
-    }
-
-
-
-    public void recordAudio(){
-
-        try {
-            recorder = new MediaRecorder();
-            recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-            recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-            recorder.setOutputFile(getrecordingfilepath());
-
-            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-
-            recorder.prepare();
-            recorder.start();
-            Toast.makeText(this,"start",Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    public void stopRecording(){
-        recorder.stop();
-        recorder.release();
-        recorder = null;
-        Toast.makeText(this,"stop",Toast.LENGTH_LONG).show();
-
-
-
-    }
-
-    private String getrecordingfilepath(){
-        ContextWrapper contextWrapper = new ContextWrapper(getApplicationContext());
-        File musicdirectory = contextWrapper.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
-
-        File file = new File(musicdirectory,"test"+".mp3");
-        Log.d("d","path "+file.getPath());
-        return file.getPath();
-
-    }
-
-
-    public void playpressed(){
-
-
-        try{
-            mediaPlayer = new MediaPlayer();
-            mediaPlayer.setDataSource(getrecordingfilepath());
-
-
-
-            mediaPlayer.prepare();
-            mediaPlayer.start();
+            Toast.makeText(getApplicationContext(), "에러가 발생하였습니다. : " + message, Toast.LENGTH_SHORT).show();
         }
 
+        @Override
+        public void onResults(Bundle results) {
+            // 말을 하면 ArrayList에 단어를 넣고 textView에 단어를 이어줍니다.
 
-        catch (Exception e){
-            e.printStackTrace();
+            ArrayList<String> matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+
+            for (int i = 0; i < matches.size(); i++) {
+                textView.setText(matches.get(i));
+            }
+
         }
-    }
 
-
-
-
-
-//////
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (queue != null) {
-            queue.cancelAll(TAG);
+        @Override
+        public void onPartialResults(Bundle partialResults) {
         }
-    }
 
+        @Override
+        public void onEvent(int eventType, Bundle params) {
+        }
+    };
 }
+
