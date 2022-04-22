@@ -26,7 +26,7 @@ public class signupActivity extends AppCompatActivity {
     String TAG="joinActivity";
     String url;
     String id,email;
-    private EditText agetxt,phonenumbert,Role,guard_user_id;
+    private EditText agetxt,phonenumbert,Role,guard_user_id,birth,device,name2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,19 +35,21 @@ public class signupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup);
 
-        Role=findViewById(R.id.mode);
-        agetxt=findViewById(R.id.age);
-        phonenumbert=findViewById(R.id.phonenumber);
+        Role=findViewById(R.id.roleedit);
+        birth=findViewById(R.id.birthday);
+        device=findViewById(R.id.deviceID);
+        name2=findViewById(R.id.name);
+
         /**/
 
         guard_user_id=findViewById(R.id.oldpersonalID);
 
-        Role=findViewById(R.id.mode);
 
 
         Intent intent = getIntent();
         id =intent.getExtras().getString("id");
         email =intent.getExtras().getString("email");
+
 
 
         url = " http://10.0.2.2:8080/user/post/"+email;
@@ -68,16 +70,16 @@ public class signupActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("id", id);
+                params.put("user_id", id);
+                params.put("device_id",device.getText().toString());
 
                 params.put("email",email);
-
-                params.put("age", agetxt.getText().toString());
-                params.put("phonenumber", phonenumbert.getText().toString());
-                params.put("guard_user_id", guard_user_id.getText().toString());
+                params.put("birthday", birth.getText().toString());
+                params.put("username", name2.getText().toString());
 
                 params.put("Role", Role.getText().toString());
 
+                params.put("guard_user_id", guard_user_id.getText().toString());
                 return params;
             }
         };

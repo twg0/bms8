@@ -176,6 +176,7 @@ public class chiefActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(chiefActivity.this, chiefboard_activity.class);
+
                 startActivity(intent);
             }
 
@@ -216,7 +217,7 @@ public class chiefActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(chiefActivity.this, userjoinActivity.class);
+                Intent intent = new Intent(chiefActivity.this, oldjoinActivity.class);
 
 
                 startActivity(intent);

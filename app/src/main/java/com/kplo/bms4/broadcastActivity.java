@@ -24,6 +24,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,7 +41,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class broadcastActivity extends AppCompatActivity {
     Intent intent;
@@ -43,8 +53,12 @@ public class broadcastActivity extends AppCompatActivity {
     final int PERMISSION = 1;
     private static int microphone_permission_code=200;
     EditText contents;
+    private RequestQueue queue;
+    private EditText villageids,zipcodes,citys,streets,fileid;
 
 
+    String TAG="Activity";
+    String url = " http://10.0.2.2:8080/user/post/";
 
     MediaRecorder recorder;
     MediaPlayer mediaPlayer;
@@ -59,7 +73,9 @@ public class broadcastActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.record);
 
+        fileid=findViewById(R.id.fileid);
 
+        queue = Volley.newRequestQueue(this);
 
 
         String[] permissions = {Manifest.permission.RECEIVE_SMS};
@@ -87,11 +103,49 @@ public class broadcastActivity extends AppCompatActivity {
         });
 
 
-        Button send =findViewById(R.id.sendbutton);
+        Button send =findViewById(R.id.sendbtn);
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+////////////////////////
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        /*tv.setText(response);*/
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("error",error.getMessage());
+                    }
+                }) {
+
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<String, String>();
+               /*
+                params.put("guard_user_id", guard_user_id);
+*/
+                        params.put("fileid",fileid.getText().toString());
+
+                        params.put("zipcode",zipcodes.getText().toString());
+                        params.put("street",streets.getText().toString());
+                        params.put("city",citys.getText().toString());
+                        return params;
+                    }
+                };
+
+
+                stringRequest.setTag(TAG);
+                queue.add(stringRequest);
+
+
+
+
+
+                Intent intent =new Intent(broadcastActivity.this,chiefActivity.class);
+                startActivity(intent);
                 
             }
         });
@@ -187,5 +241,13 @@ public class broadcastActivity extends AppCompatActivity {
         }
     }
 
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (queue != null) {
+            queue.cancelAll(TAG);
+        }
+    }
 
 }

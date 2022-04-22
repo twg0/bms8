@@ -26,44 +26,6 @@
             android:textAlignment="center"
             android:gravity="center_horizontal" />
 
-
-        <EditText
-            android:id="@+id/age"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_gravity="center"
-            android:ems="10"
-            android:background="@drawable/button_round"
-            android:textSize="20dp"
-            android:hint="나이"
-            android:inputType="textPassword" />
-
-        <EditText
-            android:id="@+id/phonenumber"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_gravity="center"
-            android:ems="10"
-            android:background="@drawable/button_round"
-            android:layout_marginTop="10dp"
-
-            android:textSize="20dp"
-            android:hint="연락처"
-            android:inputType="textPassword" />
-
-        <EditText
-            android:id="@+id/mode"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_gravity="center"
-            android:ems="10"
-            android:background="@drawable/button_round"
-            android:layout_marginTop="10dp"
-
-            android:textSize="20dp"
-            android:hint="모드"
-            android:inputType="textPassword" />
-
         <EditText
             android:id="@+id/birthday"
             android:layout_width="wrap_content"
@@ -75,6 +37,20 @@
 
             android:textSize="20dp"
             android:hint="birthday"
+            android:inputType="textPassword" />
+
+
+        <EditText
+            android:id="@+id/roleedit"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:background="@drawable/button_round"
+            android:layout_marginTop="10dp"
+
+            android:textSize="20dp"
+            android:hint="role"
             android:inputType="textPassword" />
 
 
@@ -107,6 +83,32 @@
             android:hint="피보호자 id"
             android:inputType="textPassword" />
 
+        <EditText
+            android:id="@+id/deviceID"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:background="@drawable/button_round"
+            android:layout_marginTop="10dp"
+
+            android:textSize="20dp"
+            android:hint="deviceID"
+            android:inputType="textPassword" />
+
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:background="@drawable/button_round"
+            android:layout_marginTop="10dp"
+
+            android:textSize="20dp"
+            android:hint="name"
+            android:inputType="textPassword" />
 
 
 

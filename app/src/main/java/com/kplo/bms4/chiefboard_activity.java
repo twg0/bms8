@@ -123,17 +123,26 @@ public class chiefboard_activity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 if(position==0){
-                startActivity(new Intent(chiefboard_activity.this,positionlistActivity.class));
+
+                    Intent intent =new Intent( chiefboard_activity.this,positionlistActivity.class );
+                    intent.putExtra("file_id", fileid);
+
+                    startActivity(intent);
+
                 }
 
                 else if(position==1){
-                    startActivity(new Intent(chiefboard_activity.this,positionlistActivity.class));
+                    Intent intent =new Intent( chiefboard_activity.this,positionlistActivity.class );
+                    intent.putExtra("file_id", fileid);
 
+                    startActivity(intent);
                 }
 
                 else if(position==2){
-                    startActivity(new Intent(chiefboard_activity.this,positionlistActivity.class));
+                    Intent intent =new Intent( chiefboard_activity.this,positionlistActivity.class );
+                    intent.putExtra("file_id", fileid);
 
+                    startActivity(intent);
                 }
 
 

@@ -26,7 +26,7 @@ public class signupkakaoActivity extends AppCompatActivity {
     TextView txt;
     private Button kakaoAuth;
     private final static String TAG = "signupkakao";
-    String id,email,username;
+    String id,email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,7 +125,6 @@ public class signupkakaoActivity extends AppCompatActivity {
                     Intent intent = new Intent(signupkakaoActivity.this, signupActivity.class);
                     intent.putExtra("id",id);
                     intent.putExtra("email",email);
-                    intent.putExtra("username",username);
 
 
                     startActivity(intent);
