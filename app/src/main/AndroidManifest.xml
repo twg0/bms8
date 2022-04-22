@@ -77,6 +77,8 @@
         <activity android:name=".textActivity"></activity>
         <activity android:name=".villageaddActivity"></activity>
         <activity android:name=".positionlistActivity"></activity>
+        <activity android:name=".oldjoinActivity"></activity>
+
     </application>
 
 </manifest>

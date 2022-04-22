@@ -31,6 +31,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.util.IOUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -40,6 +41,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
@@ -52,14 +54,16 @@ public class broadcastActivity extends AppCompatActivity {
     TextView textView;
     final int PERMISSION = 1;
     private static int microphone_permission_code=200;
-    EditText contents;
+    TextView contents;
     private RequestQueue queue;
-    private EditText villageids,zipcodes,citys,streets,fileid;
+    private EditText villageids,zipcodes,citys,streets,fileid,currentdate;
+
 
 
     String TAG="Activity";
-    String url = " http://10.0.2.2:8080/user/post/";
+    String url = " http://10.0.2.2:8080/user/post";
 
+    String id;
     MediaRecorder recorder;
     MediaPlayer mediaPlayer;
     String filename;
@@ -73,7 +77,16 @@ public class broadcastActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.record);
 
+        Intent intent1=getIntent();
+        id=intent1.getStringExtra("id");
+
+
+
         fileid=findViewById(R.id.fileid);
+        currentdate=findViewById(R.id.time);
+        villageids=findViewById(R.id.villageid);
+        contents=findViewById(R.id.sttResult);
+
 
         queue = Volley.newRequestQueue(this);
 
@@ -89,7 +102,6 @@ public class broadcastActivity extends AppCompatActivity {
 
 
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MODE_PRIVATE);
-        contents=findViewById(R.id.edittext);
 
 
         record =findViewById(R.id.recordbutton);
@@ -127,11 +139,14 @@ public class broadcastActivity extends AppCompatActivity {
                /*
                 params.put("guard_user_id", guard_user_id);
 */
-                        params.put("fileid",fileid.getText().toString());
 
-                        params.put("zipcode",zipcodes.getText().toString());
-                        params.put("street",streets.getText().toString());
-                        params.put("city",citys.getText().toString());
+                        params.put("user_id",id);
+                        params.put("village_id",villageids.getText().toString());
+                        params.put("file_id",fileid.getText().toString());
+                        params.put("creaeted_time",currentdate.getText().toString());
+                        params.put("contents",contents.getText().toString());
+
+
                         return params;
                     }
                 };
@@ -165,6 +180,7 @@ public class broadcastActivity extends AppCompatActivity {
 
         String txt;
         txt=getrecordingfilepath().toString();
+
         Log.d( "hi",txt);
 
     }
@@ -222,26 +238,38 @@ public class broadcastActivity extends AppCompatActivity {
     private String getrecordingfilepath(){
         ContextWrapper contextWrapper = new ContextWrapper(getApplicationContext());
         File musicdirectory = contextWrapper.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
+
         File file = new File(musicdirectory,"test"+".mp3");
+        Log.d("d","path "+file.getPath());
         return file.getPath();
+
     }
 
 
     public void playpressed(){
 
-        try{
 
+        try{
             mediaPlayer = new MediaPlayer();
             mediaPlayer.setDataSource(getrecordingfilepath());
+
+
+
             mediaPlayer.prepare();
             mediaPlayer.start();
         }
+
+
         catch (Exception e){
             e.printStackTrace();
         }
     }
 
 
+
+
+
+//////
     @Override
     protected void onStop() {
         super.onStop();

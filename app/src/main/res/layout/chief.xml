@@ -41,7 +41,7 @@
                 android:textColor="@color/black"
                 android:background="#7DB249"
                 android:textAlignment="center"
-                android:text="관리자" />
+                android:text="이장" />
 
             <Button
                 android:id="@+id/logoutbutton"

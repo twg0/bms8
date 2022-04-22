@@ -22,12 +22,14 @@
             android:textSize="33dp"
             android:textAlignment="center"
             android:gravity="center_horizontal" />
+
         <TextView
             android:id="@+id/sttResult"
             android:textSize="23dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="음성인식 결과가 여기에 표시됩니다." />
+
 
 
         <Button
@@ -50,20 +52,40 @@
 
 
         <EditText
-            android:id="@+id/fileid"
-            android:hint="fileid "
-            android:textSize="22dp"
+            android:id="@+id/villageid"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:background="@drawable/button_round"
+            android:textSize="20dp"
+            android:hint="villageid"
+            android:inputType="textPassword" />
+
+
+        <EditText
+            android:id="@+id/fileid"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:background="@drawable/button_round"
+            android:textSize="20dp"
+            android:hint="fileid"
+            android:inputType="textPassword" />
+
 
 
         <EditText
             android:id="@+id/time"
-            android:hint="yyyymmdd "
-            android:textSize="22dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:background="@drawable/button_round"
+            android:textSize="20dp"
+            android:hint="yyyymmdd"
+            android:inputType="textPassword" />
 
 
         <Button
@@ -75,9 +97,7 @@
             android:textSize="44dp"
             android:text="보내기"/>
 
-        <EditText
-            android:id="@+id/edittext"
-            android:layout_width="match_parent"
-            android:layout_height="111dp" />
+
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
