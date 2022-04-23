@@ -61,14 +61,14 @@ import java.util.Map;
 public class broadcastActivity extends AppCompatActivity {
     Intent intent;
     SpeechRecognizer mRecognizer;
-    String TAG="villagejoinActivity";
+    String TAG="broadcast";
 
     Button sttBtn;
     TextView textView;
     EditText fileid2,villageid;
     final int PERMISSION = 1;
     private RequestQueue queue;
-    String userid;
+    String userid,email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +79,7 @@ public class broadcastActivity extends AppCompatActivity {
 
         Intent intent2 = getIntent();
         userid=intent2.getStringExtra("user_id");
+        email=intent2.getStringExtra("email");
 
         /////
 
@@ -114,7 +115,7 @@ public class broadcastActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String url = " http://10.0.2.2:8080/files/post/"+fileid2.getText().toString();
+                String url = " http://10.0.2.2:8080/file/post/"+fileid2.getText().toString();
                 Log.d(TAG,"url"+url);
                 Log.d("text","text"+textView.getText().toString());
 
@@ -150,8 +151,13 @@ public class broadcastActivity extends AppCompatActivity {
                 stringRequest.setTag(TAG);
 
                 queue.add(stringRequest);
-                Log.d(TAG,"result"+stringRequest);
 
+
+                Intent intent2=new Intent(broadcastActivity.this,chiefActivity.class);
+                intent2.putExtra("id",userid);
+                intent2.putExtra("email",email);
+
+                startActivity(intent2);
             }
         });
     }

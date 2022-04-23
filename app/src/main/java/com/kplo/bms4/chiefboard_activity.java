@@ -39,8 +39,17 @@ public class chiefboard_activity extends AppCompatActivity {
     private RequestQueue mqueue;
     String TAG = "ch";
     ObjectMapper mapper = new ObjectMapper();
-    Map<String, String> map[];
+    /*Map<String, String> map[];*/
+    Map<String, String> map;
+
+/*
     String[] fileid, contents;
+*/
+/*
+    String fileid, contents,Role;
+*/
+    String fileid="a", contents="b",Role;
+
     Integer cnt = 0;
 
 
@@ -51,8 +60,10 @@ public class chiefboard_activity extends AppCompatActivity {
         setContentView(R.layout.board);
         mqueue = Volley.newRequestQueue(this);
 
-        String url = " http://10.0.2.2:8080/files/all";
+        String url = " http://10.0.2.2:8080/file/1";
+
         Log.d(TAG, "handle ");
+
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -71,10 +82,19 @@ public class chiefboard_activity extends AppCompatActivity {
 
                     try {
 
-                        while(cnt<2) {
+                        map = mapper.readValue(response, Map.class);
+
+
+/*
+ while(cnt<2) {
+
                             map[cnt] = mapper.readValue(response, Map.class);
+
                             cnt++;
                         }
+*/
+
+
 
                     }
 
@@ -86,24 +106,65 @@ public class chiefboard_activity extends AppCompatActivity {
                     Log.d(TAG, "handleSignInResult:size2 " + map);
 
                     cnt=0;
-
+/*
         fileid = new String[2];
-        contents = new String[2];
+        contents = new String[2];*//*
+
+*/
+/*
 
                     while(cnt<2) {
 
 
-                        fileid[cnt] = map[cnt].get("fileid");
-                        contents[cnt] = map[cnt].get("cotents");
+                        fileid[cnt] = map[cnt].get("file_id");
+                        contents[cnt] = map[cnt].get("contents");
                         cnt++;
                     }
 
+*//*
+
+
+                    Role=map.get("role");
+*/
 
 
 
+                    fileid= map.get("file_id");
+                    contents = map.get("contents");
+
+                    ListView listView = findViewById(R.id.listView);
+
+                    List<String> list = new ArrayList<>();
+
+                    list.add(fileid);
 
 
+                    ArrayAdapter arrayAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, list);
+                    listView.setAdapter(arrayAdapter);
 
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                            if (position >= 0) {
+
+                                Intent intent = new Intent(chiefboard_activity.this, positionlistActivity.class);
+                   /* intent.putExtra("file_id", fileid[position]);
+                    intent.putExtra("contents", contents[position]);
+*/
+                                intent.putExtra("file_id", fileid);
+                                intent.putExtra("contents", contents);
+
+                                startActivity(intent);
+
+                            }
+
+
+                        }
+                    });
+
+
+///////////////
                 }
             }
         }, new Response.ErrorListener() {
@@ -115,9 +176,9 @@ public class chiefboard_activity extends AppCompatActivity {
 
 
 
-
             stringRequest.setTag(TAG);
             mqueue.add(stringRequest);
+
 
 
 
@@ -125,14 +186,16 @@ public class chiefboard_activity extends AppCompatActivity {
         //////////
 
 
-        ListView listView = findViewById(R.id.listView);
 
-        List<String> list = new ArrayList<>();
-        Integer i = 0;
 
+/*
         while(i<cnt) {
             list.add(fileid[i]);
-        }
+        }*/
+
+
+
+
 
 /*
         fileid[0] = "hi";
@@ -140,26 +203,13 @@ public class chiefboard_activity extends AppCompatActivity {
         list.add(fileid[0]);*/
 
 
-        ArrayAdapter arrayAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, list);
-        listView.setAdapter(arrayAdapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                if (position >= 0) {
-
-                    Intent intent = new Intent(chiefboard_activity.this, positionlistActivity.class);
-                    intent.putExtra("file_id", fileid[position]);
-                    intent.putExtra("contents", contents[position]);
-
-                    startActivity(intent);
-
-                }
 
 
-            }
-        });
+
+
+
+
+
 
 
         btn = findViewById(R.id.reg_button);

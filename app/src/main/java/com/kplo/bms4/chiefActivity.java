@@ -60,7 +60,7 @@ public class chiefActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        id=intent.getStringExtra("id");
+        id=intent.getStringExtra("user_id");
         email=intent.getStringExtra("email");
         String url = " http://10.0.2.2:8080/user/" + email;
 
@@ -118,7 +118,7 @@ public class chiefActivity extends AppCompatActivity {
 
                     Role = map.get("role");
 
-                    if (Role.equals("caregiver")) {
+                   /* if (Role.equals("caregiver")) {
                         Log.d(TAG, "you are not chief ");
 
                         UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
@@ -134,7 +134,7 @@ public class chiefActivity extends AppCompatActivity {
                         finish();
 
 
-                    }
+                    }*/
 
 
                     Log.d(TAG, "handleSignInResult:Role " + Role);
