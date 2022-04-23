@@ -83,19 +83,6 @@
             android:hint="주소"
             android:inputType="textPassword" />
 
-        <EditText
-            android:id="@+id/address"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_gravity="center"
-            android:ems="10"
-            android:background="@drawable/button_round"
-            android:layout_marginTop="10dp"
-
-            android:textSize="20dp"
-            android:hint="주소"
-            android:inputType="textPassword" />
-
 
         <Button
             android:id="@+id/signin"

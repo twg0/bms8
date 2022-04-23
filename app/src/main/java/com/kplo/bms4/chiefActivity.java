@@ -161,7 +161,7 @@ public class chiefActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(chiefActivity.this, broadcastActivity.class);
-                intent.putExtra("id",id);
+                intent.putExtra("user_id",id);
                 startActivity(intent);
 
             }

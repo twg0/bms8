@@ -61,15 +61,31 @@ import java.util.Map;
 public class broadcastActivity extends AppCompatActivity {
     Intent intent;
     SpeechRecognizer mRecognizer;
+    String TAG="villagejoinActivity";
 
     Button sttBtn;
     TextView textView;
+    EditText fileid2,villageid;
     final int PERMISSION = 1;
+    private RequestQueue queue;
+    String userid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.record);
+
+        queue = Volley.newRequestQueue(this);
+
+        Intent intent2 = getIntent();
+        userid=intent2.getStringExtra("user_id");
+
+        /////
+
+        fileid2 = findViewById(R.id.fileid);
+        villageid = findViewById(R.id.villageid);
+
+
 
         if (Build.VERSION.SDK_INT >= 23) { // 퍼미션 체크
 
@@ -88,8 +104,61 @@ public class broadcastActivity extends AppCompatActivity {
                     mRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
                     mRecognizer.setRecognitionListener(listener);
                     mRecognizer.startListening(intent);
+
                 });
+
+
+        Button btn =findViewById(R.id.send);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String url = " http://10.0.2.2:8080/files/post/"+fileid2.getText().toString();
+                Log.d(TAG,"url"+url);
+                Log.d("text","text"+textView.getText().toString());
+
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("error",error.getMessage());
+                    }
+                }) {
+
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<String, String>();
+
+
+                        params.put("file_id",fileid2.getText().toString());
+                        params.put("contents",textView.getText().toString());
+                        params.put("user_id",userid);
+                        params.put("village_id",villageid.getText().toString());
+
+
+                        return params;
+                    }
+                };
+
+
+                stringRequest.setTag(TAG);
+
+                queue.add(stringRequest);
+                Log.d(TAG,"result"+stringRequest);
+
+            }
+        });
     }
+
+
+
+
 
     private RecognitionListener listener = new RecognitionListener() {
         @Override
@@ -173,5 +242,16 @@ public class broadcastActivity extends AppCompatActivity {
         public void onEvent(int eventType, Bundle params) {
         }
     };
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (queue != null) {
+            queue.cancelAll(TAG);
+        }
+    }
+
+
 }
 
