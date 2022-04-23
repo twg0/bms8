@@ -19,6 +19,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kakao.sdk.user.UserApiClient;
 import com.kplo.bms4.databinding.ActivityMainBinding;
@@ -38,28 +39,31 @@ public class chiefboard_activity extends AppCompatActivity {
     private RequestQueue mqueue;
     String TAG = "ch";
     ObjectMapper mapper = new ObjectMapper();
-    Map<String,String> map;
-    String  fileid ="0394";
-    Integer cnt=0;
+    Map<String, String> map[];
+    String[] fileid, contents;
+    Integer cnt = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.board);
+        mqueue = Volley.newRequestQueue(this);
 
-        String url = " http://10.0.2.2:8080/files/all" ;
+        String url = " http://10.0.2.2:8080/files/all";
+        Log.d(TAG, "handle ");
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d(TAG, "handleSignInResult:repsonse " + response);
+                Log.d(TAG, "handleSignInResult:repsonse11 " + response);
 
 
                 if (response.isEmpty()) {
                     Log.d(TAG, "empty");
-                    cnt++;
+
                     return;
                 }
 
@@ -67,8 +71,13 @@ public class chiefboard_activity extends AppCompatActivity {
 
                     try {
 
-                        map = mapper.readValue(response, Map.class);
+                        while(cnt<2) {
+                            map[cnt] = mapper.readValue(response, Map.class);
+                            cnt++;
+                        }
+
                     }
+
                     catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -76,14 +85,24 @@ public class chiefboard_activity extends AppCompatActivity {
 
                     Log.d(TAG, "handleSignInResult:size2 " + map);
 
+                    cnt=0;
 
-/*
-                   fileid = map.get("fileid");
-*/
+        fileid = new String[2];
+        contents = new String[2];
+
+                    while(cnt<2) {
+
+
+                        fileid[cnt] = map[cnt].get("fileid");
+                        contents[cnt] = map[cnt].get("cotents");
+                        cnt++;
+                    }
 
 
 
-                    /*Log.d(TAG, "handleSignInResult:Role " + Role);*/
+
+
+
 
                 }
             }
@@ -94,71 +113,62 @@ public class chiefboard_activity extends AppCompatActivity {
             }
         });
 
-/*
 
-        if(cnt==0) {
+
+
             stringRequest.setTag(TAG);
             mqueue.add(stringRequest);
-        }
 
-*/
+
+
 
         //////////
 
 
+        ListView listView = findViewById(R.id.listView);
 
-        ListView listView=findViewById(R.id.listView);
+        List<String> list = new ArrayList<>();
+        Integer i = 0;
 
-        List<String> list=new ArrayList<>();
-        list.add(fileid);
-        list.add(fileid);
+        while(i<cnt) {
+            list.add(fileid[i]);
+        }
+
+/*
+        fileid[0] = "hi";
+        contents[0] = "by";
+        list.add(fileid[0]);*/
 
 
-
-        ArrayAdapter arrayAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1,list);
+        ArrayAdapter arrayAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, list);
         listView.setAdapter(arrayAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                if(position==0){
+                if (position >= 0) {
 
-                    Intent intent =new Intent( chiefboard_activity.this,positionlistActivity.class );
-                    intent.putExtra("file_id", fileid);
+                    Intent intent = new Intent(chiefboard_activity.this, positionlistActivity.class);
+                    intent.putExtra("file_id", fileid[position]);
+                    intent.putExtra("contents", contents[position]);
 
                     startActivity(intent);
 
                 }
-
-                else if(position==1){
-                    Intent intent =new Intent( chiefboard_activity.this,positionlistActivity.class );
-                    intent.putExtra("file_id", fileid);
-
-                    startActivity(intent);
-                }
-
-                else if(position==2){
-                    Intent intent =new Intent( chiefboard_activity.this,positionlistActivity.class );
-                    intent.putExtra("file_id", fileid);
-
-                    startActivity(intent);
-                }
-
 
 
             }
         });
 
 
-
-        btn=findViewById(R.id.reg_button);
+        btn = findViewById(R.id.reg_button);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(chiefboard_activity.this,broadcastActivity.class);
-            startActivity(intent);
+                Intent intent = new Intent(chiefboard_activity.this, broadcastActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -176,7 +186,6 @@ public class chiefboard_activity extends AppCompatActivity {
             mqueue.cancelAll(TAG);
         }
     }
-
 
 
 }

@@ -30,13 +30,14 @@ public class chiefjoinActivity extends AppCompatActivity {
 
     private EditText editID,ediPassword,Role, agetxt,phonenumbert;
     private Button sign_in;
-    private RequestQueue queue;
+    private RequestQueue queue,queue2;
     String i,id,email,guard_user_id;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         queue = Volley.newRequestQueue(this);
+        queue2 = Volley.newRequestQueue(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chiefjoin);
@@ -54,9 +55,7 @@ public class chiefjoinActivity extends AppCompatActivity {
         email =intent.getExtras().getString("email");
 
         String url = " http://10.0.2.2:8080/user/post/"+email;
-/*
-        String url2 = " https://localhost:8080/user/post/"+id;
-*/
+        String url2 = " http://10.0.2.2:8080/user/remove/"+email;
         Log.d(TAG, ":personName "+url);
         guard_user_id="0";
 
@@ -118,7 +117,43 @@ public class chiefjoinActivity extends AppCompatActivity {
 
             }
         });
+/////
+        StringRequest stringRequest2 = new StringRequest(Request.Method.DELETE, url2, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                /*tv.setText(response);*/
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("error",error.getMessage());
+            }
+        }) {
 
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+
+
+                params.put("email",email);
+
+                return params;
+            }
+        };
+
+
+        stringRequest2.setTag(TAG);
+
+
+
+        Button rm=findViewById(R.id.rmbtn);
+        rm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                queue2.add(stringRequest2);
+
+            }
+        });
     }
 
     @Override
