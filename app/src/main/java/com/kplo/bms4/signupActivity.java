@@ -52,7 +52,7 @@ public class signupActivity extends AppCompatActivity {
 
 
 
-        url = " http://10.0.2.2:8080/user/post/"+email;
+        url = " http://10.0.2.2:8080/user/post/"+id;
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -74,10 +74,11 @@ public class signupActivity extends AppCompatActivity {
                 params.put("device_id",device.getText().toString());
 
                 params.put("email",email);
+                params.put("Role", Role.getText().toString());
+
                 params.put("birthday", birth.getText().toString());
                 params.put("username", name2.getText().toString());
 
-                params.put("Role", Role.getText().toString());
 
                 params.put("guard_user_id", guard_user_id.getText().toString());
                 return params;

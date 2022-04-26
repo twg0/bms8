@@ -60,7 +60,7 @@ public class chiefboard_activity extends AppCompatActivity {
         setContentView(R.layout.board);
         mqueue = Volley.newRequestQueue(this);
 
-        String url = " http://10.0.2.2:8080/file/1";
+        String url = " http://10.0.2.2:8080/admin/files";
 
         Log.d(TAG, "handle ");
 
