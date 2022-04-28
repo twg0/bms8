@@ -25,7 +25,7 @@
             android:textSize="25dp"
             android:textAlignment="center"
             android:gravity="center_horizontal" />
-
+<!--
         <EditText
             android:id="@+id/deviceID"
             android:layout_width="wrap_content"
@@ -37,6 +37,19 @@
 
             android:textSize="20dp"
             android:hint="deviceID"
+            android:inputType="textPassword" />-->
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:background="@drawable/button_round"
+            android:layout_marginTop="10dp"
+
+            android:textSize="20dp"
+            android:hint="name"
             android:inputType="textPassword" />
 
         <EditText
@@ -51,7 +64,7 @@
             android:textSize="20dp"
             android:hint="role"
             android:inputType="textPassword" />
-
+<!--
         <EditText
             android:id="@+id/birthday"
             android:layout_width="wrap_content"
@@ -63,7 +76,7 @@
 
             android:textSize="20dp"
             android:hint="birthday"
-            android:inputType="textPassword" />
+            android:inputType="textPassword" />-->
 
 
 
@@ -83,19 +96,7 @@
                     android:inputType="textPassword" />
         -->
 
-        <EditText
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_gravity="center"
-            android:ems="10"
-            android:background="@drawable/button_round"
-            android:layout_marginTop="10dp"
-
-            android:textSize="20dp"
-            android:hint="name"
-            android:inputType="textPassword" />
-        <EditText
+       <!-- <EditText
             android:id="@+id/oldpersonalID"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
@@ -107,7 +108,7 @@
             android:textSize="20dp"
             android:hint="피보호자 id"
             android:inputType="textPassword" />
-
+-->
 
 
 
