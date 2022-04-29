@@ -1,3 +1,4 @@
+/*
 package com.kplo.bms4;
 
 import android.content.Intent;
@@ -19,10 +20,12 @@ import kotlin.jvm.functions.Function2;
 
 public class signupkakaoActivity extends AppCompatActivity {
 
-    /*
+    */
+/*
         GoogleSignInOptions gso;
         GoogleSignInClient gsc;
-        ImageView googlebtn;*/
+        ImageView googlebtn;*//*
+
     TextView txt;
     private Button kakaoAuth;
     private final static String TAG = "signupkakao";
@@ -51,6 +54,7 @@ public class signupkakaoActivity extends AppCompatActivity {
                 return null;
             }
         };
+
 
 
         kakaoAuth = findViewById(R.id.kakao_auth_button);
@@ -142,4 +146,4 @@ public class signupkakaoActivity extends AppCompatActivity {
 
     }
 
-}
+}*/

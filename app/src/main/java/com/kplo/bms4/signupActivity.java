@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -32,6 +33,7 @@ public class signupActivity extends AppCompatActivity {
     String TAG="joinActivity";
     String url;
     String id,email;
+    ImageButton img;
     private EditText agetxt,phonenumbert,Role,guard_user_id,birth,device,name2;
 
     @Override
@@ -39,7 +41,7 @@ public class signupActivity extends AppCompatActivity {
         queue = Volley.newRequestQueue(this);
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.signup);
+        setContentView(R.layout.activity_input_inform);
 
         birth=findViewById(R.id.birthday);
         device=findViewById(R.id.deviceID);
@@ -100,9 +102,9 @@ public class signupActivity extends AppCompatActivity {
         stringRequest.setTag(TAG);*/
 
 
-        button=findViewById(R.id.sendbutton);
+        img=findViewById(R.id.info_input);
 
-       button.setOnClickListener(new View.OnClickListener() {
+       img.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
 
@@ -130,6 +132,8 @@ public class signupActivity extends AppCompatActivity {
             queue.cancelAll(TAG);
         }
     }*/
+
+
 
     public void signupclick(String Role,String name){
 

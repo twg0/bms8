@@ -8,5 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#48FFFFFF</color>
+    <color name="kakao">#fee500</color>
+    <color name="actionbar">#93c47d</color>
+    <color name="background_gray">#DDDDDD</color>
 
 </resources>

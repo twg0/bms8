@@ -62,7 +62,6 @@
         <activity android:name=".chiefActivity"></activity>
         <activity android:name=".userjoinActivity"></activity>
         <activity android:name=".signupActivity"></activity>
-        <activity android:name=".signupkakaoActivity"></activity>
         <activity android:name=".loginActivity"></activity>
         <activity android:name=".caregiverActivity"></activity>
         <activity android:name=".caregiverloginActivity"></activity>
@@ -81,7 +80,11 @@
         <activity android:name=".villageaddActivity"></activity>
         <activity android:name=".positionlistActivity"></activity>
         <activity android:name=".oldjoinActivity"></activity>
-
+        <activity android:name=".broadcast_notice"></activity>
+        <activity android:name=".common"></activity>
+        <activity android:name=".master"></activity>
+        <activity android:name=".Person_infoActivity"></activity>
+        <activity android:name=".input_inform"></activity>
     </application>
 
 </manifest>

@@ -1,61 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gray"
-    tools:context=".MainActivity">
+    android:orientation="vertical"
+    android:background="#DDDDDD"
+    >
+
+    <ImageView
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:src="@drawable/logo"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="120dp"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="100dp"
-        android:layout_marginLeft="48dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginBottom="30dp"
-        android:orientation="vertical">
-
-
-        <TextView
-            android:id="@+id/choosetext"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="85dp"
-            android:text="알쓸
-            신방"
-            android:textStyle="bold"
-            android:textSize="66dp"
-            android:background="#7DB249"
-            android:textAlignment="center"
-            android:gravity="center_horizontal" />
-
-
-
+        android:layout_height="45dp"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:layout_marginTop="110dp"
+        >
         <Button
-            android:id="@+id/login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/button_round"
-            android:text="로그인"
-            android:textSize="44dp"
-            android:textStyle="bold" />
-
-
-        <Button
-            android:id="@+id/signup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:text="회원가입"
-            android:background="@drawable/button_round"
-
-            android:textSize="44dp"
-            android:textStyle="bold" />
+            android:id="@+id/kakao_login"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:text="카카오 간편 로그인"
+            android:textColor="#181600"
+            android:textAlignment="gravity"
+            android:backgroundTint="@color/kakao"
+            android:drawableLeft="@drawable/kakao_logo"/>
     </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
