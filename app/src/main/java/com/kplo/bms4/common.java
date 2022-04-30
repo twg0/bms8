@@ -91,6 +91,15 @@ String Role,name,email;
         });
 
 
+        Button play=findViewById(R.id.playbtn);
+        play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+            }
+        });
+
         person_info2 = findViewById(R.id.person_info);
         person_info2.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -216,6 +216,8 @@ public class MainActivity extends AppCompatActivity {
 
                                 Role = map.get("role");
                                 name=map.get("username");
+
+                                Role="ROLE_USER";
                                 Log.d(TAG, "handleSignInResult:size22222 " + Role);
 //로그인 시 이사람의 이메일을 통해 정보를 입력받는다.  현재 서버에서 role 은 chief,user 둘 밖에 나타내지않는다...
                                 if (Role.equals("ROLE_USER")) {
