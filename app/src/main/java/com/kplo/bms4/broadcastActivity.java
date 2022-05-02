@@ -68,7 +68,7 @@ public class broadcastActivity extends AppCompatActivity {
     EditText fileid2,villageid;
     final int PERMISSION = 1;
     private RequestQueue queue;
-    String userid,email;
+    String userid,email,vid2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +78,8 @@ public class broadcastActivity extends AppCompatActivity {
         queue = Volley.newRequestQueue(this);
 
         Intent intent2 = getIntent();
-        userid=intent2.getStringExtra("user_id");
-        email=intent2.getStringExtra("email");
+        vid2=intent2.getStringExtra("vid");
+
 
         /////
 

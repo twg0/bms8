@@ -41,6 +41,7 @@ import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 
 public class broadcast_notice extends AppCompatActivity /*implements AdapterView.OnItemClickListener*/ {
+    String vid2;
 
     ArrayList<HashMap<String, String>> ti_con;
     ArrayList<String> title, content;
@@ -61,6 +62,9 @@ public class broadcast_notice extends AppCompatActivity /*implements AdapterView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_broadcast_notice);
+        Intent intent=getIntent();
+        vid2=intent.getStringExtra("vid");
+
         mqueue = Volley.newRequestQueue(this);
         plus2 = findViewById(R.id.plus);
         img = findViewById(R.id.logout);
@@ -107,7 +111,12 @@ public class broadcast_notice extends AppCompatActivity /*implements AdapterView
         Log.d(" asdsadsad", " 11" + str);
 
 
-        String url = " http://10.0.2.2:8080/users/";
+
+
+
+
+vid2="3";
+        String url = " http://10.0.2.2:8080/api/villages/"+vid2+"/files";
 
 /*
         try {
@@ -146,7 +155,7 @@ public class broadcast_notice extends AppCompatActivity /*implements AdapterView
 
                         for (int i = 0; i < paramMap.size(); i++) {
 
-                            ti_data[i] = paramMap.get(i).get("email").toString();
+                            ti_data[i] = paramMap.get(i).get("title").toString();
                             Log.d(" asdsadsad", " emails  " + paramMap.get(i).get("email"));
                             Log.d(" asdsadsad", " tidata  " + ti_data[i]);
 

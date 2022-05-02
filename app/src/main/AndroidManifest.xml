@@ -72,6 +72,8 @@
         <activity android:name=".chiefjoinActivity"></activity>
         <activity android:name=".weatherActivity"></activity>
         <activity android:name=".broadcastActivity"></activity>
+        <activity android:name=".broadcast_notice_master"></activity>
+        <activity android:name=".usermanageActivity"></activity>
         <activity android:name=".listenActivity"></activity>
         <activity android:name=".userloginActivity"></activity>
         <activity android:name=".statementActivity"></activity>

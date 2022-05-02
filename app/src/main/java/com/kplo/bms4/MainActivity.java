@@ -40,11 +40,12 @@ import kotlin.jvm.functions.Function2;
 public class MainActivity extends AppCompatActivity {
     private Button kakaoAuth;
     private final static String TAG = "signupkakao";
-    String id, email;
+    String email;
+    String id2;
     ObjectMapper mapper = new ObjectMapper();
     Map<String, String> map;
-    String name;
-    private RequestQueue mqueue;
+    String name, villname, vid2;
+    private RequestQueue mqueue, mqueue2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         mqueue = Volley.newRequestQueue(this);
+        mqueue2 = Volley.newRequestQueue(this);
 
 
 /*
@@ -184,13 +186,13 @@ public class MainActivity extends AppCompatActivity {
             public Unit invoke(User user, Throwable throwable) {
                 if (user != null) {
                     Log.i(TAG, "id " + user.getId());
-                    id = user.getId().toString();
+                    /*id = user.getId().toString();*/
                     email = user.getKakaoAccount().getEmail();
 
 
                     Log.d(".", "." + email);
-                    email="user1";
-                    String url = " http://10.0.2.2:8080/users/" + email;
+                    email = "user1";
+                    String url = " http://10.0.2.2:8080/api/users/" + email;
                     String TAG = "main";
 
 
@@ -215,29 +217,87 @@ public class MainActivity extends AppCompatActivity {
                                 String Role;
 
                                 Role = map.get("role");
-                                name=map.get("username");
+                                name = map.get("username");
+                                id2 = String.valueOf(map.get("id"));
 
-                                Role="ROLE_USER";
-                                Log.d(TAG, "handleSignInResult:size22222 " + Role);
+
+///////
+                                String url2 = " http://10.0.2.2:8080/api/users/" + id2 + "/villages";
+
+                                StringRequest stringRequest = new StringRequest(Request.Method.GET, url2, new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        Log.d(TAG, "handleSignInResult:repsonse " + response);
+
+                                        if (response.isEmpty()) {
+
+
+                                            return;
+                                        } else {
+
+                                            try {
+                                                map = mapper.readValue(response, Map.class);
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+
+                                            Log.d(TAG, "handleSignInResult:size2323" + map);
+                                            String Role;
+
+                                            villname = map.get("nickname");
+                                            vid2 = String.valueOf(map.get("id"));
+                                            Log.d(TAG, "vid2 " + vid2);
+
+                                            Role = "ROLE_CHIEF";
+                                            Log.d(TAG, "handleSignInResult:size22222 " + Role);
 //로그인 시 이사람의 이메일을 통해 정보를 입력받는다.  현재 서버에서 role 은 chief,user 둘 밖에 나타내지않는다...
-                                if (Role.equals("ROLE_USER")) {
-                                    Log.d(".","common");
-                                    Intent intent = new Intent(MainActivity.this, common.class);
-
-                                    intent.putExtra("Role", Role);
+                                            if (Role.equals("ROLE_USER")) {
+                                                Log.d(".", "common");
+                                                Intent intent = new Intent(MainActivity.this, common.class);
+                                                intent.putExtra("data", 0);
+                                                intent.putExtra("Role", Role);
 //지금상태로 common 으로 가면 이사람의 trigger 를 모른다.....ㅠ
-                                    intent.putExtra("name", name);
-                                    intent.putExtra("email", email);
-                                    startActivity(intent);
-                                }
+                                                intent.putExtra("name", name);
+                                                intent.putExtra("id", id2);
+                                                intent.putExtra("email", email);
+                                                intent.putExtra("vname", villname);
+                                                intent.putExtra("vid", vid2);
+                                                startActivity(intent);
+                                            }
 
 
-                                if (Role.equals("ROLE_CHIEF")) {
-                                    Intent intent = new Intent(MainActivity.this, master.class);
-                                    intent.putExtra("id", id);
-                                    intent.putExtra("email", email);
-                                    startActivity(intent);
-                                }
+                                            if (Role.equals("ROLE_CHIEF")) {
+                                                Intent intent = new Intent(MainActivity.this, master.class);
+                                                intent.putExtra("id", id2);
+                                                intent.putExtra("email", email);
+                                                intent.putExtra("vname", villname);
+                                                intent.putExtra("name", name);
+                                                intent.putExtra("vid", vid2);
+                                                startActivity(intent);
+                                            }
+
+
+                                            Log.d(TAG, "handleSignInResult:size22222 " + villname);
+
+                                        }
+                                    }
+                                }, new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        Log.d(".", "error");
+                                        Intent intent = new Intent(MainActivity.this, input_inform.class);
+                                        intent.putExtra("email", email);
+                                        startActivity(intent);
+
+
+                                    }
+                                });
+
+                                stringRequest.setTag(TAG);
+                                mqueue2.add(stringRequest);
+
+
+                                ///////
 
 
 /*
@@ -268,10 +328,8 @@ public class MainActivity extends AppCompatActivity {
                         public void onErrorResponse(VolleyError error) {
                             Log.d(".", "error");
                             Intent intent = new Intent(MainActivity.this, input_inform.class);
-                            intent.putExtra("id", id);
                             intent.putExtra("email", email);
                             startActivity(intent);
-
 
 
                         }

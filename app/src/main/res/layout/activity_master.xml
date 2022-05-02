@@ -18,9 +18,9 @@
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
             android:gravity="left"
             android:paddingVertical="10dp"
-            android:layout_marginLeft="20dp"
             android:text="ㅇㅇ마을 이장 : ㅇㅇㅇ님"
             android:textColor="@color/black"
             android:textSize="20dp" />
@@ -35,18 +35,17 @@
             android:background="@color/actionbar"
             android:foreground="?android:attr/selectableItemBackground"
             android:src="@drawable/person_icon" />
-
-
         <ImageButton
             android:id="@+id/logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
             android:background="@color/actionbar"
             android:foreground="?android:attr/selectableItemBackground"
-            android:src="@drawable/ic_logout" />
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_logout"
+            android:layout_marginRight="10dp"
+            />
     </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -100,13 +99,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         >
-
         <Button
-            android:id="@+id/manage"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:paddingLeft="5dp"
             android:text="사용자 관리"
+            android:id="@+id/manage"
             android:textSize="20dp"
             android:paddingTop="10dp"
             android:layout_gravity="top"

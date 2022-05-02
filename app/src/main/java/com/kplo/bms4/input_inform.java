@@ -120,7 +120,7 @@ public class input_inform extends AppCompatActivity {
                 String name2;
                 name2=name.getText().toString();
                 if(flag == 0) {
-                    url = " http://10.0.2.2:8080/users";
+                    url = " http://10.0.2.2:8080/api/users";
                     usersignupclick(name2,email,url);
                     UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
                         @Override
