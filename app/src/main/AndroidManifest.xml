@@ -104,7 +104,8 @@
         <activity android:name=".broadcast_play"></activity>
         <activity android:name=".commoncaregiver"></activity>
         <activity android:name=".manage_person"></activity>
-
+        <activity android:name=".manage_person_delete"></activity>
+        <activity android:name=".manage_person_plus"></activity>
     </application>
 
 </manifest>

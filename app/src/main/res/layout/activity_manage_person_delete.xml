@@ -34,6 +34,7 @@
             android:foreground="?android:attr/selectableItemBackground"
             android:src="@drawable/ic_logout" />
     </RelativeLayout>
+
     <ListView
         android:id="@+id/person_list"
         android:layout_width="match_parent"
