@@ -53,9 +53,9 @@ public class common extends AppCompatActivity {
         name = intent.getStringExtra("name");
         email = intent.getStringExtra("email");
 
-        Log.d("ddd2", " " + id);
+        Log.d("common", " id" + id);
 
-        Log.d("ddd", " " + Role);
+        Log.d("common", " Role" + Role);
         text = findViewById(R.id.toolbar_title);
         String vname;
 

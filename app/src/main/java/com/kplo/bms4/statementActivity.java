@@ -23,7 +23,7 @@ ImageButton img;
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.guardata);
+        setContentView(R.layout.activity_state_data);
 
         Intent intent = getIntent();
 
@@ -48,6 +48,8 @@ ImageButton img;
 
             }
         });
+
+
 
 
 

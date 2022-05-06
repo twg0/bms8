@@ -102,6 +102,9 @@
         <activity android:name=".Person_infoActivity"></activity>
         <activity android:name=".input_inform"></activity>
         <activity android:name=".broadcast_play"></activity>
+        <activity android:name=".commoncaregiver"></activity>
+        <activity android:name=".manage_person"></activity>
+
     </application>
 
 </manifest>

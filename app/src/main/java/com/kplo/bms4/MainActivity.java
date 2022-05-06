@@ -155,11 +155,10 @@ public class MainActivity extends AppCompatActivity {
                                     e.printStackTrace();
                                 }
 
-                                Log.d(TAG, "handleSignInResult:size2 " + map);
                                 String Role;
 
                                 Role = map.get("role");
-
+                                /*Role = "ROLE_CHIEF";*/
                                 name = map.get("username");
                                 id2 = String.valueOf(map.get("id"));
 
@@ -169,14 +168,15 @@ public class MainActivity extends AppCompatActivity {
 
                                 // Class class = new ObjectMapper().readValue(response, Class.class);
 
-
-                                if (Role.equals("ROLE_CHIEF"))//
+                Log.d("chief","");
+                                if (Role.equals("ROLE_ADMIN"))//
                                 {
+                                    Log.d("chief","suces");
                                     Intent intent = new Intent(MainActivity.this, master.class);
                                     intent.putExtra("email", email);
                                     intent.putExtra("id", id2);
                                     startActivity(intent);
-
+                                    return;
 
                                 }
 ////////
@@ -212,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+Log.d(" caregiver","");
 
                                                 Intent intent = new Intent(MainActivity.this, commoncaregiver.class);
                                                 intent.putExtra("email", email);
@@ -231,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
                                 }, new Response.ErrorListener() {
                                     @Override
                                     public void onErrorResponse(VolleyError error) {
-                                        Log.d(".", "error2");
+                                        Log.d("main", "you dont have old");
 
                                             Intent intent = new Intent(MainActivity.this, common.class);
                                             intent.putExtra("email", email);
@@ -264,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Log.d(".", "error");
+                            Log.d("main", "no userdata");
 
 
                             Intent intent = new Intent(MainActivity.this, input_inform.class);

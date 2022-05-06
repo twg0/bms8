@@ -25,26 +25,29 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class broadcastActivity extends AppCompatActivity {
     Intent intent;
     SpeechRecognizer mRecognizer;
-    String TAG="broadcast";
+    String TAG = "broadcast";
 
     Button sttBtn;
     TextView textView;
     EditText fileid2;
     final int PERMISSION = 1;
     private RequestQueue queue;
-    String userid,email,vid2,id,content;
+    String userid, email, vid2, id, content = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +57,11 @@ public class broadcastActivity extends AppCompatActivity {
         queue = Volley.newRequestQueue(this);
 
         Intent intent2 = getIntent();
-        vid2=intent2.getStringExtra("vid");
-        vid2="3";
-        id=intent2.getStringExtra("id");
+        vid2 = intent2.getStringExtra("vid");
+
+        id = intent2.getStringExtra("id");
 
         /////
-
-
 
 
         if (Build.VERSION.SDK_INT >= 23) { // 퍼미션 체크
@@ -83,17 +84,18 @@ public class broadcastActivity extends AppCompatActivity {
                 });
 
 
-        Button btn =findViewById(R.id.send);
+        Button btn = findViewById(R.id.send);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                String url = " http://10.0.2.2:8080/api/admins/"+id+"/files";
-                Log.d(TAG,"url"+url);
-                Log.d("text","text"+textView.getText().toString());
-/*
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                String url = " http://10.0.2.2:8080/api/admins/" + id + "/files";
+                Log.d(TAG, "url" + url);
+
+                addfiles(url);
+
+               /* StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
 
@@ -111,8 +113,6 @@ public class broadcastActivity extends AppCompatActivity {
                         Map<String, String> params = new HashMap<String, String>();
 
 
-                        *//*params.put("contents",textView.getText().toString());*//*
-                        params.put("contents",textView.getText().toString());
                         params.put("title",);
                         params.put("village_id",vid2);
 
@@ -130,9 +130,6 @@ public class broadcastActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
 
 
     private RecognitionListener listener = new RecognitionListener() {
@@ -204,10 +201,12 @@ public class broadcastActivity extends AppCompatActivity {
             ArrayList<String> matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
 
             for (int i = 0; i < matches.size(); i++) {
+/*
                 textView.setText(matches.get(i));
-                content+=matches.get(i);
+*/
+
+                content += matches.get(i);
             }
-            Log.d("",""+content);
 
         }
 
@@ -229,20 +228,26 @@ public class broadcastActivity extends AppCompatActivity {
         }
     }
 
-    public void addfiles (String url){
-        String TAG="aaa";
+    public void addfiles(String url) {
+        String TAG = "broadcast";
 
         JSONObject js = new JSONObject();
         try {
-            Long now = System.currentTimeMillis();
+            long now = System.currentTimeMillis();
+            Date date = new Date(now);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            String title2 = dateFormat.format(date);
+            Long vid3 = Long.parseLong(vid2);
 
-            String title2=String.valueOf(now);
+            js.put("contents", content);
+            js.put("title", title2);
+            js.put("village_id", vid3);
 
-            js.put("contents",textView.getText().toString());
-            js.put("title",title2 );
-            js.put("village_id",vid2);
+            Log.d("broad", "contents " + content);
+            Log.d("broad", "villageid " + vid2);
+            Log.d("broad", "title " + title2);
 
-
+content="";
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -258,7 +263,7 @@ public class broadcastActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                VolleyLog.d(TAG, "Errornot send: " + error.getMessage());
             }
         }) {
 
@@ -275,10 +280,7 @@ public class broadcastActivity extends AppCompatActivity {
         };
 
 
-
-
         Volley.newRequestQueue(this).add(jsonObjReq);
-
 
 
     }
