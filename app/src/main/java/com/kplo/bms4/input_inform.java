@@ -44,7 +44,7 @@ public class input_inform extends AppCompatActivity {
     RadioGroup radioGroup;
     RadioButton radioButton;
     LinearLayout linearLayout;
-    EditText name,birth,phone,guard_name,guard_birth,master_id;
+    EditText name, birth, phone, guard_name, guard_birth, master_id;
 
     int flag = 0;
 
@@ -56,22 +56,22 @@ public class input_inform extends AppCompatActivity {
         //입력된 정보
         name = (EditText) findViewById(R.id.input_name);
 
-        birth = (EditText) findViewById(R.id.input_birth);
+
         phone = (EditText) findViewById(R.id.input_phone);
-        guard_name = (EditText) findViewById(R.id.input_guard_name);
-        guard_birth = (EditText) findViewById(R.id.input_birth);
-        master_id = (EditText) findViewById(R.id.input_master_id);
+        /*guard_name = (EditText) findViewById(R.id.input_guard_name);*/
 
 
-        Intent intent=getIntent();
+        Intent intent = getIntent();
         String email;
-        email=intent.getStringExtra("email");
+        email = intent.getStringExtra("email");
+
+
         //Check box 이벤트 등록
-        checkBox=findViewById(R.id.checkbox);
+        checkBox = findViewById(R.id.checkbox);
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     checkBox.setText("is Checked");
                 } else {
                     checkBox.setText("is unChecked");
@@ -81,29 +81,29 @@ public class input_inform extends AppCompatActivity {
 
         checkBox.setVisibility(View.GONE);
 
-        radioGroup=findViewById(R.id.radioGroup);
+        radioGroup = findViewById(R.id.radioGroup);
         radioGroup.check(R.id.radio1);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-                if(checkedId == R.id.radio1){
-                    linearLayout=findViewById(R.id.guard);
-                    linearLayout.setVisibility(View.GONE);
-                    linearLayout=findViewById(R.id.village_m);
-                    linearLayout.setVisibility(View.GONE);
+                if (checkedId == R.id.radio1) {
+                   /* linearLayout=findViewById(R.id.guard);
+                    linearLayout.setVisibility(View.GONE);*/
+
                     flag = 0;
-                } else if(checkedId == R.id.radio2) {
-                    linearLayout=findViewById(R.id.village_m);
-                    linearLayout.setVisibility(View.GONE);
-                    linearLayout=findViewById(R.id.guard);
-                    linearLayout.setVisibility(View.VISIBLE);
+
+                } else if (checkedId == R.id.radio2) {
+
+                   /* linearLayout=findViewById(R.id.guard);
+                    linearLayout.setVisibility(View.VISIBLE);*/
                     flag = 1;
+
                 } else {
-                    linearLayout=findViewById(R.id.guard);
-                    linearLayout.setVisibility(View.GONE);
-                    linearLayout=findViewById(R.id.village_m);
-                    linearLayout.setVisibility(View.VISIBLE);
+                   /* linearLayout=findViewById(R.id.guard);
+                    linearLayout.setVisibility(View.GONE);*/
+
                     flag = 2;
+
                 }
             }
         });
@@ -118,76 +118,70 @@ public class input_inform extends AppCompatActivity {
                 String url;
 
                 String name2;
-                name2=name.getText().toString();
-                if(flag == 0) {
+                name2 = name.getText().toString();
+
+                String p2;
+                p2 = phone.getText().toString();
+                if (flag == 0) {
                     url = " http://10.0.2.2:8080/api/users";
-                    usersignupclick(name2,email,url);
+                    usersignupclick(name2, email, url, p2);
+                    /*
                     UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
                         @Override
                         public Unit invoke(Throwable throwable) {
                             return null;
                         }
                     });
+*/
 
-                    intent = new Intent(getApplicationContext(), common.class);
-
-                    intent.putExtra("data", 0);
-                    startActivity(intent);
-                    finish();
-                }
-                else if(flag == 1) {
-                    url = " http://10.0.2.2:8080/users";
-                caregiverignupclick(name2,email,url);
-                    UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
+                    /*finish();*/
+                } else if (flag == 1) {
+                    url = " http://10.0.2.2:8080/api/users";
+                    caregiverignupclick(name2, email, url, p2);
+                   /* UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
                         @Override
                         public Unit invoke(Throwable throwable) {
                             return null;
                         }
                     });
+*/
 
-                    intent = new Intent(getApplicationContext(), common.class);
-
-                    intent.putExtra("data", 1);
-                    startActivity(intent);
+/*
                     finish();
+*/
 
-                }
-                else {
-                    url = " http://10.0.2.2:8080/users";
+                } else {
+                    url = " http://10.0.2.2:8080/api/users";
 
-                    chiefsignupclick(name2,email,url);
-                    UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
+                    chiefsignupclick(name2, email, url, p2);
+                   /* UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
                         @Override
                         public Unit invoke(Throwable throwable) {
                             return null;
                         }
-                    });
+                    });*/
 
-                    intent = new Intent(getApplicationContext(), master.class);
 
-                    intent.putExtra("data", 2);
-                    startActivity(intent);
+/*
                     finish();
-
-
+*/
 
                 }
-
 
 
             }
         });
 
 
-
     }
 
-    public void usersignupclick(String name,String email,String url){
-        String TAG="a";
+    public void usersignupclick(String name, String email, String url, String phone) {
+        String TAG = "a";
         JSONObject js = new JSONObject();
         try {
-            js.put("email",email);
-            js.put("username",name);
+            js.put("email", email);
+            js.put("username", name);
+            js.put("phoneNumber", phone);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -199,6 +193,13 @@ public class input_inform extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d(TAG, response.toString() + " i am queen");
+
+                        Intent intent;
+                        intent = new Intent(getApplicationContext(), common.class);
+                        intent.putExtra("email", email);
+
+                        startActivity(intent);
+                        /*finish();*/
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -220,21 +221,21 @@ public class input_inform extends AppCompatActivity {
         };
 
 
-
-
         Volley.newRequestQueue(this).add(jsonObjReq);
-
 
 
     }
 
-    public void caregiverignupclick(String name,String email,String url){
-        String TAG="aa";
+
+    public void caregiverignupclick(String name, String email, String url, String phone) {
+        String TAG = "aa";
 
         JSONObject js = new JSONObject();
         try {
-            js.put("email",email);
-            js.put("username",name);
+            js.put("email", email);
+            js.put("username", name);
+            js.put("phoneNumber", phone);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -246,6 +247,21 @@ public class input_inform extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d(TAG, response.toString() + " i am queen");
+                      /*  UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
+                            @Override
+                            public Unit invoke(Throwable throwable) {
+                                return null;
+                            }
+                        });
+                        */
+
+                        Intent intent;
+                        intent = new Intent(getApplicationContext(), commoncaregiver.class);
+                        intent.putExtra("email", email);
+
+
+                        startActivity(intent);
+                        /*finish();*/
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -267,22 +283,21 @@ public class input_inform extends AppCompatActivity {
         };
 
 
-
-
         Volley.newRequestQueue(this).add(jsonObjReq);
-
-
 
     }
 
 
-    public void chiefsignupclick(String name,String email,String url){
-        String TAG="aaa";
+    public void chiefsignupclick(String name, String email, String url, String phone) {
+        String TAG = "aaa";
 
         JSONObject js = new JSONObject();
         try {
-            js.put("email",email);
-            js.put("username",name);
+            js.put("email", email);
+            js.put("username", name);
+            js.put("phoneNumber", phone);
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -294,6 +309,20 @@ public class input_inform extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d(TAG, response.toString() + " i am queen");
+                       /* UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
+                            @Override
+                            public Unit invoke(Throwable throwable) {
+                                return null;
+                            }
+                        });*/
+
+                        Intent intent;
+                        intent = new Intent(getApplicationContext(), master.class);
+                        intent.putExtra("email", email);
+
+
+                        startActivity(intent);
+                        /*finish();*/
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -315,11 +344,9 @@ public class input_inform extends AppCompatActivity {
         };
 
 
-
-
         Volley.newRequestQueue(this).add(jsonObjReq);
 
-
-
     }
+
+
 }

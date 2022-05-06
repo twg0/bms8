@@ -28,45 +28,46 @@ import kotlin.jvm.functions.Function1;
 
 public class common extends AppCompatActivity {
     TextView text;
-    Button guard_data, notice,weather;
+    Button guard_data, notice, weather;
     ImageButton person_info2;
     ImageButton logout;
     Integer trigger = 0; // 주민(0)과 보호자(1) 구분 플래그
-    String id,villname;
+    String id, villname;
     ObjectMapper mapper = new ObjectMapper();
     Map<String, String> map;
-    String Role,name,email;
-    private RequestQueue mqueue;
+    String Role, name, email;
+    private RequestQueue mqueue, mqueue2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_common);
         mqueue = Volley.newRequestQueue(this);
-
+        mqueue2 = Volley.newRequestQueue(this);
         Intent intent = getIntent();
-        trigger = intent.getIntExtra("data",1);
+
 
         id = intent.getStringExtra("id");
 
         Role = intent.getStringExtra("Role");
-        name= intent.getStringExtra("name");
+        name = intent.getStringExtra("name");
         email = intent.getStringExtra("email");
-        villname = intent.getStringExtra("vname");
-        Log.d("ddd2333333"," "+villname);
-        Log.d("ddd2"," "+id);
 
-Log.d("ddd"," "+Role);
+        Log.d("ddd2", " " + id);
+
+        Log.d("ddd", " " + Role);
         text = findViewById(R.id.toolbar_title);
         String vname;
 
-        vname = villname+"마을" + name+"님";
+        vname = villname + "마을" + name + "님";
         text.setText(vname);
 
         guard_data = findViewById(R.id.guard_data);
 
-        if (  trigger == 1)
+        if (trigger == 1)
             guard_data.setVisibility(View.VISIBLE); // 보호자일 때
+
+
         else
             guard_data.setVisibility(View.INVISIBLE); // 주민일 때
 
@@ -83,13 +84,22 @@ Log.d("ddd"," "+Role);
         }*/
 
 
+        guard_data.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent2 = new Intent(common.this, statementActivity.class);
 
-        weather=findViewById(R.id.weatherbtn);
+                startActivity(intent2);
+
+            }
+        });
+
+        weather = findViewById(R.id.weatherbtn);
 
         weather.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String url = " http://10.0.2.2:8080/api/users/" + id+"/villages";
+                String url = " http://10.0.2.2:8080/api/users/" + id + "/villages";
                 String TAG = "main";
 
 
@@ -114,9 +124,9 @@ Log.d("ddd"," "+Role);
                             String Role;
 
                             Role = map.get("role");
-                            name=map.get("username");
+                            name = map.get("username");
 
-                            Role="ROLE_USER";
+                            Role = "ROLE_USER";
                             Log.d(TAG, "handleSignInResult:size22222 " + Role);
 
                         }
@@ -124,7 +134,6 @@ Log.d("ddd"," "+Role);
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
 
 
                     }
@@ -136,8 +145,6 @@ Log.d("ddd"," "+Role);
 
             }
         });
-
-
 
 
         logout = findViewById(R.id.logout);
@@ -174,24 +181,70 @@ Log.d("ddd"," "+Role);
         });
 
 
-        Button play=findViewById(R.id.playbtn);
+        Button play = findViewById(R.id.play_button);
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
+                Intent intent = new Intent(common.this, broadcast_play.class);
+                startActivity(intent);
             }
         });
+
 
         person_info2 = findViewById(R.id.person_info);
         person_info2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent2 = new Intent(common.this, Person_infoActivity.class);
-                intent2.putExtra("Role",Role);
-                intent2.putExtra("name",name);
-                intent2.putExtra("email",email);
-                startActivity(intent2);
+
+                String url = " http://10.0.2.2:8080/api/users/" + email;
+
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("TAG", "handleSignInResult:repsonse " + response);
+
+                        if (response.isEmpty()) {
+
+
+                            return;
+                        } else {
+
+                            try {
+                                map = mapper.readValue(response, Map.class);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            Log.d("TAG", "handleSignInResult:size2 " + map);
+                            String Role;
+
+                            Role = map.get("role");
+                            name = map.get("username");
+                            id = String.valueOf(map.get("id"));
+                            Role = "ROLE_USER";
+                            Log.d("TAG", "handleSignInResult:size22222 " + Role);
+
+                            Intent intent2 = new Intent(common.this, Person_infoActivity.class);
+                            intent2.putExtra("Role", Role);
+                            intent2.putExtra("name", name);
+                            intent2.putExtra("email", email);
+                            intent2.putExtra("id", id);
+
+                            startActivity(intent2);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+
+                    }
+                });
+
+                /*stringRequest.setTag(TAG);*/
+                mqueue2.add(stringRequest);
+
+
             }
         });
 

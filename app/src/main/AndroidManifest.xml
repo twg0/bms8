@@ -46,6 +46,8 @@
             </intent-filter>
 
         </activity>
+
+
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">
@@ -59,21 +61,33 @@
                     android:scheme="kakao521bf7574294e3600fbdf3d1ae00e2c4" />
             </intent-filter>
         </activity>
+
         <activity android:name=".chiefActivity"></activity>
         <activity android:name=".userjoinActivity"></activity>
         <activity android:name=".signupActivity"></activity>
         <activity android:name=".loginActivity"></activity>
         <activity android:name=".caregiverActivity"></activity>
         <activity android:name=".caregiverloginActivity"></activity>
+<!--
         <activity android:name=".chiefloginActivity"></activity>
+-->
         <activity android:name=".chiefboard_activity"></activity>
         <activity android:name=".caregiverboardActivity"></activity>
         <activity android:name=".caregiverjoinActivity"></activity>
-        <activity android:name=".chiefjoinActivity"></activity>
+        <!--<activity android:name=".chiefjoinActivity"></activity>-->
         <activity android:name=".weatherActivity"></activity>
         <activity android:name=".broadcastActivity"></activity>
         <activity android:name=".broadcast_notice_master"></activity>
         <activity android:name=".usermanageActivity"></activity>
+        <activity android:name=".addvillage"></activity>
+        <activity android:name=".state_data" android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".listenActivity"></activity>
         <activity android:name=".userloginActivity"></activity>
         <activity android:name=".statementActivity"></activity>
@@ -87,6 +101,7 @@
         <activity android:name=".master"></activity>
         <activity android:name=".Person_infoActivity"></activity>
         <activity android:name=".input_inform"></activity>
+        <activity android:name=".broadcast_play"></activity>
     </application>
 
 </manifest>

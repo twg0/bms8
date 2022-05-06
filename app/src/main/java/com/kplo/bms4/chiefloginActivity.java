@@ -1,3 +1,4 @@
+/*
 package com.kplo.bms4;
 
 import android.content.Intent;
@@ -27,10 +28,12 @@ import kotlin.jvm.functions.Function2;
 
 public class chiefloginActivity extends AppCompatActivity {
 
-    /*
+    */
+/*
         GoogleSignInOptions gso;
         GoogleSignInClient gsc;
-        ImageView googlebtn;*/
+        ImageView googlebtn;*//*
+
 
     TextView txt;
     private Button kakaoAuth;
@@ -109,8 +112,6 @@ public class chiefloginActivity extends AppCompatActivity {
 
         });
 
-
-
     }
 
 
@@ -151,4 +152,4 @@ public class chiefloginActivity extends AppCompatActivity {
 
     }
 
-}
+}*/

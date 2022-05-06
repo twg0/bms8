@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
+import android.os.*;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,16 +22,22 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kakao.sdk.auth.model.OAuthToken;
 import com.kakao.sdk.user.UserApiClient;
 import com.kakao.sdk.user.model.User;
 import com.kplo.bms4.caregiverloginActivity;
-import com.kplo.bms4.chiefloginActivity;
 
+
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.Map;
 
 import kotlin.Unit;
@@ -39,13 +46,14 @@ import kotlin.jvm.functions.Function2;
 
 public class MainActivity extends AppCompatActivity {
     private Button kakaoAuth;
-    private final static String TAG = "signupkakao";
+    private final static String TAG = "main";
     String email;
     String id2;
-    ObjectMapper mapper = new ObjectMapper();
     Map<String, String> map;
-    String name, villname, vid2;
+    String name, villname, vid2, Role,url2;
     private RequestQueue mqueue, mqueue2;
+    ObjectMapper mapper = new ObjectMapper();
+    String guardid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,51 +66,6 @@ public class MainActivity extends AppCompatActivity {
         mqueue2 = Volley.newRequestQueue(this);
 
 
-/*
-
-        Button button2 = (Button)findViewById(R.id.forcaregiver);
-
-        button2.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, caregiverloginActivity.class);
-                startActivity(intent);
-            }
-
-        });
-
-
-
-        Button button = (Button)findViewById(R.id.forcheif);
-
-        button.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, chiefloginActivity.class);
-                startActivity(intent);
-            }
-
-        });
-*/
-
-/*
-
-        Button button3 = (Button)findViewById(R.id.signup);
-
-        button3.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, signupkakaoActivity.class);
-                startActivity(intent);
-            }
-
-        });
-*/
-
-
         Function2<OAuthToken, Throwable, Unit> callback = new Function2<OAuthToken, Throwable, Unit>() {
             @Override
             public Unit invoke(OAuthToken oAuthToken, Throwable throwable) {
@@ -112,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 if (throwable != null) {
                     Log.w(TAG, "invoke: " + throwable.getLocalizedMessage());
                 }
-                updateKakaoLoginUi(mqueue);
+                updateKakaoLoginUi();
                 return null;
             }
         };
@@ -136,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        updateKakaoLoginUi(mqueue);
+        updateKakaoLoginUi();
 
 
 /*
@@ -155,32 +118,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-/*
-
-    private void getHashKey(){
-        PackageInfo packageInfo = null;
-        try {
-            packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        if (packageInfo == null)
-            Log.e("KeyHash", "KeyHash:null");
-
-        for (Signature signature : packageInfo.signatures) {
-            try {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.e("KeyHash", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-            } catch (NoSuchAlgorithmException e) {
-                Log.e("KeyHash", "Unable to get MessageDigest. signature=" + signature, e);
-            }
-        }
-    }
-*/
-
-    public void updateKakaoLoginUi(RequestQueue mqueue) {
+    public void updateKakaoLoginUi() {
         UserApiClient.getInstance().me(new Function2<User, Throwable, Unit>() {
             @Override
             public Unit invoke(User user, Throwable throwable) {
@@ -189,11 +127,17 @@ public class MainActivity extends AppCompatActivity {
                     /*id = user.getId().toString();*/
                     email = user.getKakaoAccount().getEmail();
 
+                    Log.d(".", ".email " + email);
 
-                    Log.d(".", "." + email);
-                    email = "user1";
                     String url = " http://10.0.2.2:8080/api/users/" + email;
                     String TAG = "main";
+
+/*
+
+                    Intent intent = new Intent(MainActivity.this, common.class);
+                    intent.putExtra("email", email);
+                    startActivity(intent);
+*/
 
 
                     StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -202,8 +146,6 @@ public class MainActivity extends AppCompatActivity {
                             Log.d(TAG, "handleSignInResult:repsonse " + response);
 
                             if (response.isEmpty()) {
-
-
                                 return;
                             } else {
 
@@ -217,20 +159,36 @@ public class MainActivity extends AppCompatActivity {
                                 String Role;
 
                                 Role = map.get("role");
+
                                 name = map.get("username");
                                 id2 = String.valueOf(map.get("id"));
 
 
-///////
-                                String url2 = " http://10.0.2.2:8080/api/users/" + id2 + "/villages";
+                                Integer size = 0;
 
-                                StringRequest stringRequest = new StringRequest(Request.Method.GET, url2, new Response.Listener<String>() {
+
+                                // Class class = new ObjectMapper().readValue(response, Class.class);
+
+
+                                if (Role.equals("ROLE_CHIEF"))//
+                                {
+                                    Intent intent = new Intent(MainActivity.this, master.class);
+                                    intent.putExtra("email", email);
+                                    intent.putExtra("id", id2);
+                                    startActivity(intent);
+
+
+                                }
+////////
+
+                                url2 = " http://10.0.2.2:8080/api/users/" + id2 + "/ward";
+
+                                StringRequest stringRequest2 = new StringRequest(Request.Method.GET, url2, new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
-                                        Log.d(TAG, "handleSignInResult:repsonse " + response);
+                                        Log.d(TAG, "handleSignInResult:repsonse1212 " + response);
 
                                         if (response.isEmpty()) {
-
 
                                             return;
                                         } else {
@@ -241,92 +199,74 @@ public class MainActivity extends AppCompatActivity {
                                                 e.printStackTrace();
                                             }
 
-                                            Log.d(TAG, "handleSignInResult:size2323" + map);
-                                            String Role;
+                                            Log.d(TAG, "handleSignInResult:size2 " + map);
 
-                                            villname = map.get("nickname");
-                                            vid2 = String.valueOf(map.get("id"));
-                                            Log.d(TAG, "vid2 " + vid2);
 
-                                            Role = "ROLE_CHIEF";
-                                            Log.d(TAG, "handleSignInResult:size22222 " + Role);
-//로그인 시 이사람의 이메일을 통해 정보를 입력받는다.  현재 서버에서 role 은 chief,user 둘 밖에 나타내지않는다...
-                                            if (Role.equals("ROLE_USER")) {
-                                                Log.d(".", "common");
-                                                Intent intent = new Intent(MainActivity.this, common.class);
-                                                intent.putExtra("data", 0);
+
+                                            guardid = String.valueOf(map.get("id"));
+
+
+
+
+                                            // Class class = new ObjectMapper().readValue(response, Class.class);
+
+
+
+
+
+                                                Intent intent = new Intent(MainActivity.this, commoncaregiver.class);
+                                                intent.putExtra("email", email);
                                                 intent.putExtra("Role", Role);
-//지금상태로 common 으로 가면 이사람의 trigger 를 모른다.....ㅠ
                                                 intent.putExtra("name", name);
-                                                intent.putExtra("id", id2);
-                                                intent.putExtra("email", email);
-                                                intent.putExtra("vname", villname);
-                                                intent.putExtra("vid", vid2);
-                                                startActivity(intent);
-                                            }
+                                            intent.putExtra("id", id2);
+
+                                            startActivity(intent);
 
 
-                                            if (Role.equals("ROLE_CHIEF")) {
-                                                Intent intent = new Intent(MainActivity.this, master.class);
-                                                intent.putExtra("id", id2);
-                                                intent.putExtra("email", email);
-                                                intent.putExtra("vname", villname);
-                                                intent.putExtra("name", name);
-                                                intent.putExtra("vid", vid2);
-                                                startActivity(intent);
-                                            }
 
 
-                                            Log.d(TAG, "handleSignInResult:size22222 " + villname);
 
                                         }
                                     }
                                 }, new Response.ErrorListener() {
                                     @Override
                                     public void onErrorResponse(VolleyError error) {
-                                        Log.d(".", "error");
-                                        Intent intent = new Intent(MainActivity.this, input_inform.class);
-                                        intent.putExtra("email", email);
+                                        Log.d(".", "error2");
+
+                                            Intent intent = new Intent(MainActivity.this, common.class);
+                                            intent.putExtra("email", email);
+                                            intent.putExtra("Role", Role);
+                                            intent.putExtra("name", name);
+                                        intent.putExtra("id", id2);
+
                                         startActivity(intent);
+
+
+/*
+
+                            Intent intent = new Intent(MainActivity.this, input_inform.class);
+                            intent.putExtra("email", email);
+                            startActivity(intent);
+*/
 
 
                                     }
                                 });
 
-                                stringRequest.setTag(TAG);
-                                mqueue2.add(stringRequest);
+                                stringRequest2.setTag(TAG);
+                                mqueue2.add(stringRequest2);
 
 
-                                ///////
 
-
-/*
-                    else
-                    {
-                    }
-*/
-                   /* if (Role.equals("caregiver")) {
-                        Log.d(TAG, "you are not chief ");
-
-                        UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
-                            @Override
-                            public Unit invoke(Throwable throwable) {
-                                return null;
-                            }
-                        });
-
-
-                        Intent intent2 = new Intent(chiefActivity.this, MainActivity.class);
-                        startActivity(intent2);
-                        finish();
-                    }*/
-
+                                /////
                             }
                         }
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             Log.d(".", "error");
+
+
                             Intent intent = new Intent(MainActivity.this, input_inform.class);
                             intent.putExtra("email", email);
                             startActivity(intent);
@@ -338,7 +278,55 @@ public class MainActivity extends AppCompatActivity {
                     stringRequest.setTag(TAG);
                     mqueue.add(stringRequest);
 
-                    //
+
+                    ////////////////////////////////////////////////////////
+
+                    /*jsonToObjectUrl();*/
+
+                    Log.d("", "flag");
+/*
+
+                    if (name.isEmpty()) {
+                        Intent intent = new Intent(MainActivity.this, input_inform.class);
+                        intent.putExtra("email", email);
+                        startActivity(intent);
+
+                    } else {
+
+                        if (Role.equals("ROLE_CHIEF"))//
+                        {
+                            Intent intent = new Intent(MainActivity.this, master.class);
+                            intent.putExtra("email", email);
+                            startActivity(intent);
+
+
+                        }
+                         else {//
+
+*/
+/*
+                            if (  )//피보호자 리스트가 없는경우
+                            {
+                                Intent intent = new Intent(MainActivity.this, common.class);
+                                intent.putExtra("email", email);
+                                startActivity(intent);
+
+                            } else {//있는경우
+
+                                Intent intent = new Intent(MainActivity.this, common.class);
+                                intent.putExtra("email", email);
+                                startActivity(intent);
+                            }
+*/
+                    /*
+
+
+
+                        }
+
+
+                    }
+*/
 
                     Log.i(TAG, "email " + user.getKakaoAccount().getEmail());
 
@@ -349,11 +337,82 @@ public class MainActivity extends AppCompatActivity {
 
                 }
                 return null;
+
             }
 
         });
 
     }
 
+/*
+
+    private void jsonToObjectUrl() {
+        final ObjectMapper mapper = new ObjectMapper();
+
+        final Handler handler = new Handler();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    email="user1";
+                    userinfo info = mapper.readValue(new URL("http://10.0.2.2:8080/api/users/" + email), userinfo.class);
+
+                    Log.d("json string -> object\n", " " + info.getRole());
+
+
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            Log.d("json string -> object\n", " " + info.getRole());
+name=info.getName();
+                            if (name.isEmpty()) {
+                                Intent intent = new Intent(MainActivity.this, input_inform.class);
+                                intent.putExtra("email", email);
+                                startActivity(intent);
+
+                            }
+
+                            else{
+
+
+*/
+/*
+
+                                if (  )//피보호자 리스트가 없는경우
+                                {
+                                    Intent intent = new Intent(MainActivity.this, common.class);
+                                    intent.putExtra("email", email);
+                                    startActivity(intent);
+
+                                } else {//있는경우
+
+                                    Intent intent = new Intent(MainActivity.this, common.class);
+                                    intent.putExtra("email", email);
+                                    startActivity(intent);
+                                }
+*//*
+
+
+
+                            }
+
+
+
+
+                        }
+                    });
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+*/
 
 }

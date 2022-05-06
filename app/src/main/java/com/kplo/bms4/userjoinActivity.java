@@ -75,10 +75,12 @@ public class userjoinActivity extends AppCompatActivity {
                queue.add(stringRequest);
 
 
+/*
                Intent intent3= new Intent(userjoinActivity.this,chiefActivity.class);
+*/
 
 
-               startActivity(intent3);
+               /*startActivity(intent3);*/
 
 
 

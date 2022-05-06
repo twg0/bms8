@@ -1,3 +1,4 @@
+/*
 package com.kplo.bms4;
 
 import android.content.Intent;
@@ -41,9 +42,11 @@ public class chiefjoinActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chiefjoin);
+*/
 /*
         editID=findViewById(R.id.editID);
-        ediPassword=findViewById(R.id.ediPassword);*/
+        ediPassword=findViewById(R.id.ediPassword);*//*
+
         sign_in=findViewById(R.id.signin);
         Role=findViewById(R.id.mode);
         agetxt=findViewById(R.id.age);
@@ -63,7 +66,9 @@ public class chiefjoinActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                /*tv.setText(response);*/
+                */
+/*tv.setText(response);*//*
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -121,7 +126,9 @@ public class chiefjoinActivity extends AppCompatActivity {
         StringRequest stringRequest2 = new StringRequest(Request.Method.DELETE, url2, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                /*tv.setText(response);*/
+                */
+/*tv.setText(response);*//*
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -165,4 +172,4 @@ public class chiefjoinActivity extends AppCompatActivity {
     }
 
 
-}
+}*/

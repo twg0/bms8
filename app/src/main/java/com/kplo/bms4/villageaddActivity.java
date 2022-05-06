@@ -101,11 +101,11 @@ public class villageaddActivity extends AppCompatActivity {
 */
 
 
-
+/*
                 Intent intent3= new Intent(villageaddActivity.this,chiefActivity.class);
 
 
-                startActivity(intent3);
+                startActivity(intent3);*/
 
 
 

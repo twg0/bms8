@@ -63,7 +63,7 @@ public class caregiverjoinActivity extends AppCompatActivity {
 
         /*String Name =intent.getExtras().getString("Name");*/
 
-        String url = " http://10.0.2.2:8080/user/post/"+email;
+        String url = " http://10.0.2.2:8080/api/user/post/"+email;
 /*
         String url2 = " https://localhost:8080/user/post/"+id;
 */
@@ -72,11 +72,7 @@ public class caregiverjoinActivity extends AppCompatActivity {
 
         Role=findViewById(R.id.mode);
         agetxt=findViewById(R.id.age);
-        phonenumbert=findViewById(R.id.phonenumber);
-/**/
-        oldnamet=findViewById(R.id.oldname);
 
-        guard_user_id=findViewById(R.id.oldpersonalID);
 
          StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override

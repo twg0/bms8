@@ -52,7 +52,9 @@ public class signupActivity extends AppCompatActivity {
 
         /**/
 
+/*
         guard_user_id=findViewById(R.id.oldpersonalID);
+*/
 
 
 

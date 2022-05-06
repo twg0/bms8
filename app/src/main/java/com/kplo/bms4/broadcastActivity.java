@@ -1,61 +1,37 @@
 package com.kplo.bms4;
 
 import android.Manifest;
-import android.content.ActivityNotFoundException;
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.media.MediaPlayer;
-import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 
-import android.speech.tts.TextToSpeech;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import android.speech.RecognitionListener;
-import android.speech.RecognizerIntent;
-import android.speech.SpeechRecognizer;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.common.util.IOUtils;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 public class broadcastActivity extends AppCompatActivity {
@@ -65,26 +41,25 @@ public class broadcastActivity extends AppCompatActivity {
 
     Button sttBtn;
     TextView textView;
-    EditText fileid2,villageid;
+    EditText fileid2;
     final int PERMISSION = 1;
     private RequestQueue queue;
-    String userid,email,vid2;
+    String userid,email,vid2,id,content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.record);
+        setContentView(R.layout.activity_broadcast_record);
 
         queue = Volley.newRequestQueue(this);
 
         Intent intent2 = getIntent();
         vid2=intent2.getStringExtra("vid");
-
+        vid2="3";
+        id=intent2.getStringExtra("id");
 
         /////
 
-        fileid2 = findViewById(R.id.fileid);
-        villageid = findViewById(R.id.villageid);
 
 
 
@@ -95,8 +70,7 @@ public class broadcastActivity extends AppCompatActivity {
                             Manifest.permission.RECORD_AUDIO}, PERMISSION);
         }
 
-        textView = (TextView) findViewById(R.id.sttResult);
-        sttBtn = (Button) findViewById(R.id.sttStart);
+        sttBtn = (Button) findViewById(R.id.play_button);
         intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getPackageName());
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR");
@@ -115,10 +89,10 @@ public class broadcastActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String url = " http://10.0.2.2:8080/file/post/"+fileid2.getText().toString();
+                String url = " http://10.0.2.2:8080/api/admins/"+id+"/files";
                 Log.d(TAG,"url"+url);
                 Log.d("text","text"+textView.getText().toString());
-
+/*
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -137,10 +111,10 @@ public class broadcastActivity extends AppCompatActivity {
                         Map<String, String> params = new HashMap<String, String>();
 
 
-                        params.put("file_id",fileid2.getText().toString());
+                        *//*params.put("contents",textView.getText().toString());*//*
                         params.put("contents",textView.getText().toString());
-                        params.put("user_id",userid);
-                        params.put("village_id",villageid.getText().toString());
+                        params.put("title",);
+                        params.put("village_id",vid2);
 
 
                         return params;
@@ -150,14 +124,9 @@ public class broadcastActivity extends AppCompatActivity {
 
                 stringRequest.setTag(TAG);
 
-                queue.add(stringRequest);
+                queue.add(stringRequest);*/
 
 
-                Intent intent2=new Intent(broadcastActivity.this,chiefActivity.class);
-                intent2.putExtra("id",userid);
-                intent2.putExtra("email",email);
-
-                startActivity(intent2);
             }
         });
     }
@@ -236,7 +205,9 @@ public class broadcastActivity extends AppCompatActivity {
 
             for (int i = 0; i < matches.size(); i++) {
                 textView.setText(matches.get(i));
+                content+=matches.get(i);
             }
+            Log.d("",""+content);
 
         }
 
@@ -256,6 +227,60 @@ public class broadcastActivity extends AppCompatActivity {
         if (queue != null) {
             queue.cancelAll(TAG);
         }
+    }
+
+    public void addfiles (String url){
+        String TAG="aaa";
+
+        JSONObject js = new JSONObject();
+        try {
+            Long now = System.currentTimeMillis();
+
+            String title2=String.valueOf(now);
+
+            js.put("contents",textView.getText().toString());
+            js.put("title",title2 );
+            js.put("village_id",vid2);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        // Make request for JSONObject
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(
+                Request.Method.POST, url, js,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d(TAG, response.toString() + " i am queen");
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+            }
+        }) {
+
+            /**
+             * Passing some request headers
+             */
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json; charset=utf-8");
+                return headers;
+            }
+
+        };
+
+
+
+
+        Volley.newRequestQueue(this).add(jsonObjReq);
+
+
+
     }
 
 
