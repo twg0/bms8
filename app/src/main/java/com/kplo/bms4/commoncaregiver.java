@@ -357,7 +357,7 @@ public class commoncaregiver extends AppCompatActivity {
         person_info2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent2 = new Intent(commoncaregiver.this, Person_infoActivity.class);
+                Intent intent2 = new Intent(commoncaregiver.this, Person_info_guardActivity.class);
                 intent2.putExtra("Role", Role);
                 intent2.putExtra("name", name);
                 intent2.putExtra("email", email);

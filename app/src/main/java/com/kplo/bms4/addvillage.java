@@ -40,7 +40,7 @@ public class addvillage extends AppCompatActivity {
     ObjectMapper mapper = new ObjectMapper();
     Map<String, String> map;
 
-    String id, username, Role;
+    String id2, username, Role, vid2;
     private RequestQueue mqueue;
 
     String vid;
@@ -54,20 +54,23 @@ public class addvillage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addvillage);
         Intent intent = getIntent();
-        id = intent.getStringExtra("id");
-        Long id2 = Long.parseLong(id);
+        id2 = intent.getStringExtra("id");
+        Long id = Long.parseLong(id2);
         Button send = findViewById(R.id.reg_button);
 
         villid = findViewById(R.id.villageid2);
-        String url = " http://10.0.2.2:8080/api/users/" + id2 + "/villages";
+        vid2 = villid.getText().toString();
 
 
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String vid2 = villid.getText().toString();
-                Long vid3 = Long.parseLong(vid2);
-                addvill(id, vid3, url);
+
+                Long vid = Long.parseLong(vid2);
+                String url = " http://10.0.2.2:8080/api/users/" + id + "/villages?villageId=" + vid;
+
+                addvill(id2, vid, url);
 
             }
         });

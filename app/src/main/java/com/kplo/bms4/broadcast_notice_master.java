@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,7 +43,8 @@ public class broadcast_notice_master extends AppCompatActivity /*implements Adap
     AlertDialog alertDialog;
     String vid2;
     ImageButton img, plus2;
-    String title2;
+    String title2,vname,name;
+    TextView toolbar;
     private final static String TAG = "broadcast";
 
     ObjectMapper mapper = new ObjectMapper();
@@ -55,10 +57,13 @@ public class broadcast_notice_master extends AppCompatActivity /*implements Adap
         setContentView(R.layout.activity_broadcast_notice);
         Intent intent=getIntent();
         vid2=intent.getStringExtra("vid");
+        vname = intent.getStringExtra("vname");
+        name = intent.getStringExtra("name");
 
         mqueue = Volley.newRequestQueue(this);
 
-
+        toolbar = findViewById(R.id.toolbar_title);
+        toolbar.setText(vname + "마을이장" + name + "님");
 
         img = findViewById(R.id.logout);
         img.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +89,7 @@ public class broadcast_notice_master extends AppCompatActivity /*implements Adap
 
 
         listView = findViewById(R.id.broad_list);
+/*
 
         String str = "[   \n" +
                 "    {\n" +
@@ -103,6 +109,7 @@ public class broadcast_notice_master extends AppCompatActivity /*implements Adap
 
         Log.d(" asdsadsad", " 11" + str);
 
+*/
 
 
 
@@ -202,6 +209,7 @@ public class broadcast_notice_master extends AppCompatActivity /*implements Adap
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, " add users to village  " );
 
 
             }

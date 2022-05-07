@@ -26,7 +26,7 @@ import java.util.Map;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 
-public class Person_infoActivity extends AppCompatActivity {
+public class Person_info_guardActivity extends AppCompatActivity {
 
     Intent intent;
     int trigger;
@@ -35,12 +35,12 @@ public class Person_infoActivity extends AppCompatActivity {
     String name, email, role, vname, id;
     private RequestQueue queue, queue2;
     String TAG = "personinfo";
-    ImageButton img;
+ImageButton img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_person_info);
+        setContentView(R.layout.activity_person_guard_info);
 
         intent = getIntent();
         id = intent.getStringExtra("id");
@@ -51,6 +51,9 @@ public class Person_infoActivity extends AppCompatActivity {
 
         linearLayout = findViewById(R.id.guard_info);
         queue2 = Volley.newRequestQueue(this);
+
+        if (role.equals("ROLE_USER"))
+            linearLayout.setVisibility(View.INVISIBLE);
 
         toolbar = findViewById(R.id.toolbar_title);
         toolbar.setText(vname + "마을" + name + "님");
@@ -72,39 +75,35 @@ public class Person_infoActivity extends AppCompatActivity {
         villageadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Person_infoActivity.this, addvillage.class);
-                intent.putExtra("id", id);
+                Intent intent = new Intent(Person_info_guardActivity.this, addvillage.class);
+               intent.putExtra("id",id);
                 startActivity(intent);
             }
         });
-        img = findViewById(R.id.logout);
-        img.setOnClickListener(new View.OnClickListener() {
+img=findViewById(R.id.logout);
+img.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+
+        UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
             @Override
-            public void onClick(View view) {
-
-                UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
-                    @Override
-                    public Unit invoke(Throwable throwable) {
-                        return null;
-                    }
-                });
-
-
-                Intent intent2 = new Intent(Person_infoActivity.this, MainActivity.class);
-                startActivity(intent2);
-                finish();
+            public Unit invoke(Throwable throwable) {
+                return null;
             }
         });
+
+
+        Intent intent2 = new Intent(Person_info_guardActivity.this, MainActivity.class);
+        startActivity(intent2);
+        finish();
+    }
+});
 
         Button addcaregiver = findViewById(R.id.caregiveradd);
         addcaregiver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Person_infoActivity.this, caregiverjoinActivity.class);
-                intent.putExtra("id",id);
-                intent.putExtra("email",email);
-                 intent.putExtra("name",name);
-
+                Intent intent = new Intent(Person_info_guardActivity.this, caregiverjoinActivity.class);
                 startActivity(intent);
             }
         });
@@ -118,7 +117,7 @@ public class Person_infoActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         /*tv.setText(response);*/
-                        Log.d(" ", " 탈퇴완료");
+                        Log.d(" "," 탈퇴완료");
                     }
                 }, new Response.ErrorListener() {
                     @Override

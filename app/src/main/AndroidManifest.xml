@@ -107,6 +107,8 @@
         <activity android:name=".manage_person_delete"></activity>
         <activity android:name=".manage_person_plus"></activity>
         <activity android:name=".Person_infomasterActivity"></activity>
+        <activity android:name=".Person_info_guardActivity"></activity>
+
     </application>
 
 </manifest>

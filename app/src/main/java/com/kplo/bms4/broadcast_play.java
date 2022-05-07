@@ -20,6 +20,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -41,6 +42,7 @@ Map<String,String > map;
     String TAG = "broadplay";
     String[] ti_data, con_data;
 Integer size;
+TextView nowtime;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,10 +54,14 @@ vname=intent.getStringExtra("vname");
         vid=intent.getStringExtra("vid");
         Log.d(" ",""+vid);
 
+        nowtime=findViewById(R.id.now_time);
+
+
 toolbar.setText(vname);
         progressBar = findViewById(R.id.progressbar);
         progressBar.setProgress(30);
 
+        mqueue2 = Volley.newRequestQueue(this);
 
 
 
@@ -80,16 +86,18 @@ toolbar.setText(vname);
 
                         String[] ti_data = new String[paramMap.size()];
                         String[] con_data = new String[paramMap.size()];
-
+                        String[] time_data = new String[paramMap.size()];
                         for (int i = 0; i < paramMap.size(); i++) {
 
                             ti_data[i] = paramMap.get(i).get("title").toString();
                             Log.d(" asdsadsad", " emails  " + paramMap.get(i).get("title"));
                             Log.d(" asdsadsad", " tidata  " + ti_data[i]);
 
-                            con_data[i] = paramMap.get(i).get("role").toString();
+                            con_data[i] = paramMap.get(i).get("contents").toString();
                             Log.d(" asdsadsad", " role  " + paramMap.get(i).get("contents"));
                             Log.d(" asdsadsad", " condata  " + con_data[i]);
+
+                            time_data[i] = paramMap.get(i).get("createdTime").toString();
 
                         }
 
@@ -102,6 +110,7 @@ toolbar.setText(vname);
                             @Override
                             public void onClick(View v){
                                 speak(con_data[0]);
+                                nowtime.setText(time_data[0]);
                             }
                         });
 
@@ -110,10 +119,7 @@ toolbar.setText(vname);
                         e.printStackTrace();
                     }
 
-
                     Log.d("", "" + response);
-
-
 
                     // Class class = new ObjectMapper().readValue(response, Class.class);
 
@@ -132,7 +138,6 @@ toolbar.setText(vname);
 
         stringRequest2.setTag(TAG);
         mqueue2.add(stringRequest2);
-
 
 
     }
@@ -156,6 +161,8 @@ toolbar.setText(vname);
         });
     }
 
+/*
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -165,5 +172,6 @@ toolbar.setText(vname);
         }
         super.onDestroy();
     }
+*/
 
 }

@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -51,9 +52,9 @@ public class broadcast_notice extends AppCompatActivity /*implements AdapterView
     ListView listView;
     AlertDialog alertDialog;
     ImageButton img, plus2;
-    String title2;
+    String title2,vname,name;
     private final static String TAG = "broadcast";
-
+TextView toolbar;
     ObjectMapper mapper = new ObjectMapper();
     ArrayList<HashMap<String, String>> map2;
     private RequestQueue mqueue;
@@ -64,6 +65,12 @@ public class broadcast_notice extends AppCompatActivity /*implements AdapterView
         setContentView(R.layout.activity_broadcast_notice);
         Intent intent=getIntent();
         vid2=intent.getStringExtra("vid");
+        vname = intent.getStringExtra("vname");
+        name = intent.getStringExtra("name");
+
+        toolbar = findViewById(R.id.toolbar_title);
+        toolbar.setText(vname + "마을" + name + "님");
+
 
         mqueue = Volley.newRequestQueue(this);
         plus2 = findViewById(R.id.plus);
@@ -92,30 +99,12 @@ public class broadcast_notice extends AppCompatActivity /*implements AdapterView
 
         listView = findViewById(R.id.broad_list);
 
-        String str = "[   \n" +
-                "    {\n" +
-                "        \"id\": \"200\",\n" +
-                "        \"name\": \"Alexia Milano\",\n" +
-                "        \"email\": \"minalo@gmail.com\",\n" +
-                "        \"prenom\": \"xx-xx-xxxx,x - street, x - country\"\n" +
-                "\n" +
-                "    }, {\n" +
-                "        \"id\": \"201\",\n" +
-                "        \"name\": \"Johnny Depp\",\n" +
-                "        \"email\": \"johnny_depp@gmail.com\",\n" +
-                "        \"prenom\": \"xx-xx-xxxx,x - street, x - country\"\n" +
-                "\n" +
-                "    }\n" +
-                "]";
-
-        Log.d(" asdsadsad", " 11" + str);
 
 
 
 
 
 
-vid2="3";
         String url = " http://10.0.2.2:8080/api/villages/"+vid2+"/files";
 
 /*
@@ -159,7 +148,7 @@ vid2="3";
                             Log.d(" asdsadsad", " emails  " + paramMap.get(i).get("email"));
                             Log.d(" asdsadsad", " tidata  " + ti_data[i]);
 
-                            con_data[i] = paramMap.get(i).get("role").toString();
+                            con_data[i] = paramMap.get(i).get("contents").toString();
                             Log.d(" asdsadsad", " role  " + paramMap.get(i).get("role"));
                             Log.d(" asdsadsad", " condata  " + con_data[i]);
 
@@ -215,16 +204,6 @@ vid2="3";
         mqueue.add(stringRequest);
 
 
-        plus2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-                Log.d(TAG, "flag ");
-
-
-            }
-        });
 
 /*
 

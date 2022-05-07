@@ -161,6 +161,8 @@ public class master extends AppCompatActivity {
 
                             Intent intent2 = new Intent(master.this, manage_person.class);
                             intent2.putExtra("vid", vid2);
+                            intent2.putExtra("vname", vname2);
+                            intent2.putExtra("name", name2);
                             startActivity(intent2);
 
                         }
@@ -175,6 +177,8 @@ public class master extends AppCompatActivity {
 
                             Intent intent2 = new Intent(master.this, broadcast_notice_master.class);
                             intent2.putExtra("vid", vid2);
+                            intent2.putExtra("vname", vname2);
+                            intent2.putExtra("name", name2);
                             startActivity(intent2);
                         }
                     });

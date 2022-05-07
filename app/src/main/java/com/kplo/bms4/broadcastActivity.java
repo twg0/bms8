@@ -124,37 +124,6 @@ public class broadcastActivity extends AppCompatActivity {
 
                 addfiles(url);
 
-               /* StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("error",error.getMessage());
-                    }
-                }) {
-
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> params = new HashMap<String, String>();
-
-
-                        params.put("title",);
-                        params.put("village_id",vid2);
-
-
-                        return params;
-                    }
-                };
-
-
-                stringRequest.setTag(TAG);
-
-                queue.add(stringRequest);*/
-
 
             }
         });
@@ -231,7 +200,6 @@ public class broadcastActivity extends AppCompatActivity {
 
             for (int i = 0; i < matches.size(); i++) {
 /*
-                textView.setText(matches.get(i));
 */
 
                 content += matches.get(i);

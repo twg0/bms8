@@ -34,17 +34,17 @@
             android:foreground="?android:attr/selectableItemBackground"
             android:src="@drawable/ic_logout" />
     </RelativeLayout>
+
     <TextView
         android:id="@+id/now_time"
         android:layout_width="wrap_content"
-        android:textSize="30dp"
-        android:textStyle="bold"
         android:layout_height="40dp"
         android:layout_below="@id/toolbar"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
         android:text="22년 5월 3일 13:26:35"
-        />
+        android:textSize="30dp"
+        android:textStyle="bold" />
     <ProgressBar
         android:id="@+id/progressbar"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"

@@ -19,6 +19,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -33,14 +34,15 @@ import java.util.Map;
 
 
 public class caregiverjoinActivity extends AppCompatActivity {
-    String TAG="caregiverjoinActivity";
+    String TAG = "caregiverjoinActivity";
 
-    TextView idtxt;
-    private EditText agetxt,phonenumbert,oldnamet,oldpersonalIDt,relationshipt,Role,guard_user_id;
+    TextView toolbar;
+    private EditText agetxt, phonenumbert, oldnamet, oldpersonalIDt, relationshipt, Role, guard_user_id;
     private RequestQueue queue;
     private Button btnsend;
-
-    String id,email;
+    String gid;
+    String id2, email,id3,id,name;
+    EditText old;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,82 +54,35 @@ public class caregiverjoinActivity extends AppCompatActivity {
         setContentView(R.layout.caregiverjoin);
 
         Intent intent = getIntent();
-         id =intent.getExtras().getString("id");
-         email =intent.getExtras().getString("email");
+        id2 = intent.getExtras().getString("id");
+        email = intent.getExtras().getString("email");
+        name = intent.getExtras().getString("name");
 
-
-        Long id2;
-        id2=Long.parseLong(id);
-
-
-
-        /*String Name =intent.getExtras().getString("Name");*/
-
-        String url = " http://10.0.2.2:8080/api/user/post/"+email;
-/*
-        String url2 = " https://localhost:8080/user/post/"+id;
-*/
-        Log.d(TAG, ":url "+url);
-
-
-        Role=findViewById(R.id.mode);
-        agetxt=findViewById(R.id.age);
-
-
-         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-            Log.d("error",error.getMessage());
-            }
-        }) {
-
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("id", id);
-
-                params.put("email",email);
-
-                params.put("age", agetxt.getText().toString());
-                params.put("phonenumber", phonenumbert.getText().toString());
-                params.put("Role", Role.getText().toString());
-                params.put("guard_user_id", guard_user_id.getText().toString());
-                return params;
-            }
-
-
-        };
-
-        stringRequest.setTag(TAG);
+toolbar=findViewById(R.id.toolbar_title);
+toolbar.setText(name+"님 피보호자 등록");
 
 
 
 
-
-        btnsend =findViewById(R.id.sendbutton);
+        btnsend = findViewById(R.id.send);
 
         btnsend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                queue.add(stringRequest);
-                /*queue.add(request);*/
+                Long gid;
+                gid = Long.parseLong(id2);
+                old = findViewById(R.id.guardid);
+                id3 = old.getText().toString();
+                Long id = Long.parseLong(id3);
+
+                String url = " http://10.0.2.2:8080/api/users/" +id +"/guardian?guardianId=" + gid;
+
+                Log.d(TAG, ":url " + url);
+
+                add(url,gid);
 
 
-                Log.d(TAG, "handleSignInResult: " + id);
-                Log.d(TAG, "handleSignInResult: " + email);
-
-
-
-                Intent intent3= new Intent(caregiverjoinActivity.this,caregiverloginActivity.class);
-
-
-                startActivity(intent3);
 
 
             }
@@ -136,15 +91,51 @@ public class caregiverjoinActivity extends AppCompatActivity {
 
     }
 
+    public void add(String url,Long gid) {
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (queue != null) {
-            queue.cancelAll(TAG);
+
+        JSONObject js = new JSONObject();
+
+        try {
+
+            js.put("guardianId", gid);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+
+        // Make request for JSONObject
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(
+                Request.Method.POST, url, js,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d(TAG, response.toString() + " i am queen");
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+            }
+        }) {
+
+            /**
+             * Passing some request headers
+             */
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json; charset=utf-8");
+                return headers;
+            }
+
+        };
+
+
+        Volley.newRequestQueue(this).add(jsonObjReq);
+
+
     }
-
-
 
 }

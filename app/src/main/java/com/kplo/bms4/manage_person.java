@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,14 +42,15 @@ public class manage_person extends AppCompatActivity /*implements AdapterView.On
     ListView listView;
     AlertDialog alertDialog;
     String vid2;
-    ImageButton img, plus2;
-    String title2;
+    ImageButton img;
+    String title2,vname,name;
     private static String TAG = "broadcast";
     ImageButton imageButton, trash_bucket;
     ObjectMapper mapper = new ObjectMapper();
     ArrayList<HashMap<String, String>> map2;
     private RequestQueue mqueue;
     Intent intent2;
+    TextView toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +58,15 @@ public class manage_person extends AppCompatActivity /*implements AdapterView.On
         setContentView(R.layout.activity_manage_person);
         Intent intent = getIntent();
         vid2 = intent.getStringExtra("vid");
+        vname = intent.getStringExtra("vname");
+        name = intent.getStringExtra("name");
         Log.d("manageperson", "" + vid2);
 
         mqueue = Volley.newRequestQueue(this);
+
+
+        toolbar=findViewById(R.id.toolbar_title);
+        toolbar.setText(vname+"마을이장"+name +"님");
 
         imageButton = findViewById(R.id.plus);
         imageButton.setOnClickListener(new View.OnClickListener() {
@@ -66,6 +74,8 @@ public class manage_person extends AppCompatActivity /*implements AdapterView.On
             public void onClick(View view) {
 
                 intent2 = new Intent(manage_person.this, manage_person_plus.class);
+                intent2.putExtra("vid",vid2);
+
                 startActivity(intent2);
             }
         });
