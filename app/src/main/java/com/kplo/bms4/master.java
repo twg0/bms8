@@ -57,6 +57,7 @@ public class master extends AppCompatActivity {
         id = intent.getStringExtra("id");
 
         toolbar = findViewById(R.id.toolbar_title);
+        toolbar.setText( "00 마을이장" + name2 + "님");
 
         Log.d("im master", "im master");
 

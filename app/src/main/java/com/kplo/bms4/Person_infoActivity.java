@@ -18,8 +18,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kakao.sdk.user.UserApiClient;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,7 +38,9 @@ public class Person_infoActivity extends AppCompatActivity {
     private RequestQueue queue, queue2;
     String TAG = "personinfo";
     ImageButton img;
-
+    ObjectMapper mapper = new ObjectMapper();
+    Map<String, String> map;
+    private RequestQueue mqueue, mqueue2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +53,64 @@ public class Person_infoActivity extends AppCompatActivity {
         email = intent.getStringExtra("email");
 
 
+        queue2 = Volley.newRequestQueue(this);
+        mqueue = Volley.newRequestQueue(this);
+        mqueue2 = Volley.newRequestQueue(this);
+
+        String url = " http://10.0.2.2:8080/api/users/" + email;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                if (response.isEmpty()) {
+
+                    return;
+                } else {
+
+                    try {
+                        map = mapper.readValue(response, Map.class);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    Log.d("", "" + response);
+                    String phonenum;
+                    phonenum = map.get("phoneNumber");
+
+
+                    name2 = findViewById(R.id.name);
+
+                    age2 = findViewById(R.id.age);
+                    address = findViewById(R.id.addre);
+                    phone = findViewById(R.id.phon);
+                    email2 = findViewById(R.id.emai);
+                    registration = findViewById(R.id.regis);
+
+                    name2.setText(name);
+                    email2.setText(email);
+                    phone.setText(phonenum);
+
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("infoguard", "no userdata");
+
+
+            }
+        });
+
+        stringRequest.setTag(TAG);
+        mqueue2.add(stringRequest);
+
+
+
+
+
+
         linearLayout = findViewById(R.id.guard_info);
         queue2 = Volley.newRequestQueue(this);
 
@@ -56,16 +118,6 @@ public class Person_infoActivity extends AppCompatActivity {
         toolbar.setText(vname + "마을" + name + "님");
 
 
-        name2 = findViewById(R.id.name);
-        relation = findViewById(R.id.rela);
-        age2 = findViewById(R.id.age);
-        address = findViewById(R.id.addre);
-        phone = findViewById(R.id.phon);
-        email2 = findViewById(R.id.emai);
-        registration = findViewById(R.id.regis);
-
-        name2.setText(name);
-        email2.setText(email);
         String url2 = " http://10.0.2.2:8080/api/users/" + id;
 
         Button villageadd = findViewById(R.id.villageadd);

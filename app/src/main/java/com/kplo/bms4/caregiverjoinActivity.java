@@ -41,7 +41,7 @@ public class caregiverjoinActivity extends AppCompatActivity {
     private RequestQueue queue;
     private Button btnsend;
     String gid;
-    String id2, email,id3,id,name;
+    String id2, email, id3, id, name;
     EditText old;
 
     @Override
@@ -58,10 +58,8 @@ public class caregiverjoinActivity extends AppCompatActivity {
         email = intent.getExtras().getString("email");
         name = intent.getExtras().getString("name");
 
-toolbar=findViewById(R.id.toolbar_title);
-toolbar.setText(name+"님 피보호자 등록");
-
-
+        toolbar = findViewById(R.id.toolbar_title);
+        toolbar.setText(name + "님 피보호자 등록");
 
 
         btnsend = findViewById(R.id.send);
@@ -76,13 +74,11 @@ toolbar.setText(name+"님 피보호자 등록");
                 id3 = old.getText().toString();
                 Long id = Long.parseLong(id3);
 
-                String url = " http://10.0.2.2:8080/api/users/" +id +"/guardian?guardianId=" + gid;
+                String url = " http://10.0.2.2:8080/api/users/" + id + "/guardian?guardianId=" + gid;
 
                 Log.d(TAG, ":url " + url);
 
-                add(url,gid);
-
-
+                add(url, gid);
 
 
             }
@@ -91,7 +87,7 @@ toolbar.setText(name+"님 피보호자 등록");
 
     }
 
-    public void add(String url,Long gid) {
+    public void add(String url, Long gid) {
 
 
         JSONObject js = new JSONObject();

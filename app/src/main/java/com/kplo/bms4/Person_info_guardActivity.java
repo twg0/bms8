@@ -18,8 +18,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kakao.sdk.user.UserApiClient;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,7 +37,10 @@ public class Person_info_guardActivity extends AppCompatActivity {
     String name, email, role, vname, id;
     private RequestQueue queue, queue2;
     String TAG = "personinfo";
-ImageButton img;
+    ImageButton img;
+    ObjectMapper mapper = new ObjectMapper();
+    Map<String, String> map;
+    private RequestQueue mqueue, mqueue2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,59 @@ ImageButton img;
         name = intent.getStringExtra("name");
         email = intent.getStringExtra("email");
 
+        queue2 = Volley.newRequestQueue(this);
+        mqueue = Volley.newRequestQueue(this);
+        mqueue2 = Volley.newRequestQueue(this);
+
+        String url = " http://10.0.2.2:8080/api/users/" + email;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                if (response.isEmpty()) {
+
+                    return;
+                } else {
+
+                    try {
+                        map = mapper.readValue(response, Map.class);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    Log.d("", "" + response);
+                    String phonenum;
+                    phonenum = map.get("phoneNumber");
+
+
+                    name2 = findViewById(R.id.name);
+
+                    age2 = findViewById(R.id.age);
+                    address = findViewById(R.id.addre);
+                    phone = findViewById(R.id.phon);
+                    email2 = findViewById(R.id.emai);
+                    registration = findViewById(R.id.regis);
+
+                    name2.setText(name);
+                    email2.setText(email);
+                    phone.setText(phonenum);
+
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("infoguard", "no userdata");
+
+
+            }
+        });
+
+        stringRequest.setTag(TAG);
+        mqueue2.add(stringRequest);
+
 
         linearLayout = findViewById(R.id.guard_info);
         queue2 = Volley.newRequestQueue(this);
@@ -59,16 +117,6 @@ ImageButton img;
         toolbar.setText(vname + "마을" + name + "님");
 
 
-        name2 = findViewById(R.id.name);
-        relation = findViewById(R.id.rela);
-        age2 = findViewById(R.id.age);
-        address = findViewById(R.id.addre);
-        phone = findViewById(R.id.phon);
-        email2 = findViewById(R.id.emai);
-        registration = findViewById(R.id.regis);
-
-        name2.setText(name);
-        email2.setText(email);
         String url2 = " http://10.0.2.2:8080/api/users/" + id;
 
         Button villageadd = findViewById(R.id.villageadd);
@@ -76,34 +124,39 @@ ImageButton img;
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Person_info_guardActivity.this, addvillage.class);
-               intent.putExtra("id",id);
+                intent.putExtra("id", id);
                 startActivity(intent);
             }
         });
-img=findViewById(R.id.logout);
-img.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-
-        UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
+        img = findViewById(R.id.logout);
+        img.setOnClickListener(new View.OnClickListener() {
             @Override
-            public Unit invoke(Throwable throwable) {
-                return null;
+            public void onClick(View view) {
+
+                UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
+                    @Override
+                    public Unit invoke(Throwable throwable) {
+                        return null;
+                    }
+                });
+
+
+                Intent intent2 = new Intent(Person_info_guardActivity.this, MainActivity.class);
+                startActivity(intent2);
+                finish();
             }
         });
-
-
-        Intent intent2 = new Intent(Person_info_guardActivity.this, MainActivity.class);
-        startActivity(intent2);
-        finish();
-    }
-});
 
         Button addcaregiver = findViewById(R.id.caregiveradd);
         addcaregiver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Person_info_guardActivity.this, caregiverjoinActivity.class);
+
+                intent.putExtra("id", id);
+                intent.putExtra("email", email);
+                intent.putExtra("name", name);
+
                 startActivity(intent);
             }
         });
@@ -117,7 +170,7 @@ img.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onResponse(String response) {
                         /*tv.setText(response);*/
-                        Log.d(" "," 탈퇴완료");
+                        Log.d(" ", " 탈퇴완료");
                     }
                 }, new Response.ErrorListener() {
                     @Override

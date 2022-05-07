@@ -40,6 +40,9 @@ public class Person_infomasterActivity extends AppCompatActivity {
     ObjectMapper mapper = new ObjectMapper();
     Map<String,String> map;
 ImageButton logout;
+
+
+    private RequestQueue mqueue, mqueue2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +54,62 @@ ImageButton logout;
         role = intent.getStringExtra("Role");
         name=intent.getStringExtra("name");
         email=intent.getStringExtra("email");
+
+
+        queue2 = Volley.newRequestQueue(this);
+        mqueue = Volley.newRequestQueue(this);
+        mqueue2 = Volley.newRequestQueue(this);
+
+        String url3 = " http://10.0.2.2:8080/api/users/" + email;
+        StringRequest stringRequest3 = new StringRequest(Request.Method.GET, url3, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                if (response.isEmpty()) {
+
+                    return;
+                } else {
+
+                    try {
+                        map = mapper.readValue(response, Map.class);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    Log.d("", "" + response);
+                    String phonenum;
+                    phonenum = map.get("phoneNumber");
+
+
+                    name2 = findViewById(R.id.name);
+
+                    age2 = findViewById(R.id.age);
+                    address = findViewById(R.id.addre);
+                    phone = findViewById(R.id.phon);
+                    email2 = findViewById(R.id.emai);
+                    registration = findViewById(R.id.regis);
+
+                    name2.setText(name);
+                    email2.setText(email);
+                    phone.setText(phonenum);
+
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("infoguard", "no userdata");
+
+
+            }
+        });
+
+        stringRequest3.setTag(TAG);
+        mqueue2.add(stringRequest3);
+
+
 
 
         queue2 = Volley.newRequestQueue(this);
@@ -80,16 +139,6 @@ logout.setOnClickListener(new View.OnClickListener() {
 
 
 
-        name2=findViewById(R.id.name);
-        relation=findViewById(R.id.rela);
-        age2=findViewById(R.id.age);
-        address=findViewById(R.id.addre);
-        phone=findViewById(R.id.phon);
-        email2=findViewById(R.id.emai);
-        registration=findViewById(R.id.regis);
-
-        name2.setText(name);
-        email2.setText(email);
         String url2 = " http://10.0.2.2:8080/api/admins/"+id;
 
         String url = " http://10.0.2.2:8080/api/admins/"+id+"/villages";
