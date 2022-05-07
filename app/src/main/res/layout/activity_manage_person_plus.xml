@@ -40,7 +40,7 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="이름"
+                android:text="id"
                 android:textColor="@color/black" />
 
             <EditText
@@ -49,74 +49,6 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:inputType="text" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="생년월일"
-                android:textColor="@color/black" />
-
-            <EditText
-                android:id="@+id/input_birth"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:hint=" 6자리 입력"
-                android:inputType="phone" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="전화번호"
-                android:textColor="@color/black" />
-
-            <EditText
-                android:id="@+id/input_phone"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:hint=" - 제외"
-                android:inputType="phone" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="주소"
-                android:textColor="@color/black" />
-
-            <EditText
-                android:id="@+id/input_address"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:inputType="phone" />
         </LinearLayout>
 
         <ImageButton

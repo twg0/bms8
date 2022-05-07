@@ -175,6 +175,8 @@ public class MainActivity extends AppCompatActivity {
                                     Intent intent = new Intent(MainActivity.this, master.class);
                                     intent.putExtra("email", email);
                                     intent.putExtra("id", id2);
+                                    intent.putExtra("name",name);
+
                                     startActivity(intent);
                                     return;
 
@@ -222,7 +224,7 @@ Log.d(" caregiver","");
 
                                             startActivity(intent);
 
-
+                                            return;
 
 
 
@@ -241,7 +243,7 @@ Log.d(" caregiver","");
 
                                         startActivity(intent);
 
-
+                                        return;
 /*
 
                             Intent intent = new Intent(MainActivity.this, input_inform.class);
@@ -270,7 +272,7 @@ Log.d(" caregiver","");
                             Intent intent = new Intent(MainActivity.this, input_inform.class);
                             intent.putExtra("email", email);
                             startActivity(intent);
-
+                            return;
 
                         }
                     });

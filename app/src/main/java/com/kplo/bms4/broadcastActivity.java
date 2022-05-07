@@ -1,6 +1,9 @@
 package com.kplo.bms4;
 
+import static android.speech.tts.TextToSpeech.ERROR;
+
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -8,13 +11,16 @@ import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -35,6 +41,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class broadcastActivity extends AppCompatActivity {
@@ -43,11 +50,14 @@ public class broadcastActivity extends AppCompatActivity {
     String TAG = "broadcast";
 
     Button sttBtn;
-    TextView textView;
+    TextView textView, toolbar, nowtime;
     EditText fileid2;
     final int PERMISSION = 1;
     private RequestQueue queue;
-    String userid, email, vid2, id, content = "";
+    String userid, email, vid2, id, content = "", vname, name;
+    Dialog dialog;
+    Button listen_record;
+    private TextToSpeech tts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +70,15 @@ public class broadcastActivity extends AppCompatActivity {
         vid2 = intent2.getStringExtra("vid");
 
         id = intent2.getStringExtra("id");
-
+        vname = intent2.getStringExtra("vname");
+        name = intent2.getStringExtra("name");
         /////
+        toolbar = findViewById(R.id.toolbar_title);
+        toolbar.setText(vname + "마을이장" + name + "님");
+
+        dialog = new Dialog(this);       // Dialog 초기화
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // 타이틀 제거
+        dialog.setContentView(R.layout.dialog_play);             // xml 레이아웃 파일과 연결
 
 
         if (Build.VERSION.SDK_INT >= 23) { // 퍼미션 체크
@@ -82,6 +99,18 @@ public class broadcastActivity extends AppCompatActivity {
                     mRecognizer.startListening(intent);
 
                 });
+
+
+        listen_record = findViewById(R.id.listen_record);
+        listen_record.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP) // LOLLIPOP이상 버전에서만 실행 가능
+            @Override
+            public void onClick(View v) {
+                Log.d("test","content"+content);
+                speak(content);
+            }
+        });
+
 
 
         Button btn = findViewById(R.id.send);
@@ -219,6 +248,7 @@ public class broadcastActivity extends AppCompatActivity {
         }
     };
 
+/*
 
     @Override
     protected void onStop() {
@@ -227,6 +257,7 @@ public class broadcastActivity extends AppCompatActivity {
             queue.cancelAll(TAG);
         }
     }
+*/
 
     public void addfiles(String url) {
         String TAG = "broadcast";
@@ -238,16 +269,19 @@ public class broadcastActivity extends AppCompatActivity {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             String title2 = dateFormat.format(date);
             Long vid3 = Long.parseLong(vid2);
-
-            js.put("contents", content);
+            nowtime = findViewById(R.id.now_time);
+            nowtime.setText(title2);
+            js.put("villageId", vid3);
             js.put("title", title2);
-            js.put("village_id", vid3);
+            js.put("contents", content);
+
+
 
             Log.d("broad", "contents " + content);
-            Log.d("broad", "villageid " + vid2);
+            Log.d("broad", "villageId " + vid2);
             Log.d("broad", "title " + title2);
 
-content="";
+            content = "";
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -283,6 +317,29 @@ content="";
         Volley.newRequestQueue(this).add(jsonObjReq);
 
 
+    }
+
+    public void showDialog() {
+        dialog.show(); // 다이얼로그 띄우기
+
+    }
+
+    private void speak(String text) {
+        tts = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status != ERROR) {
+                    int result = tts.setLanguage(Locale.KOREA); // 언어 선택
+                    if (result == TextToSpeech.LANG_NOT_SUPPORTED || result == TextToSpeech.LANG_MISSING_DATA) {
+                        Log.e("TTS", "This Language is not supported");
+                    } else {
+                        tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+                    }
+                } else {
+                    Log.e("TTS", "Initialization Failed!");
+                }
+            }
+        });
     }
 
 
