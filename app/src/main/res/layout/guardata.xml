@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#DDDDDD"
+
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/actionbar"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:gravity="left"
+            android:paddingVertical="10dp"
+            android:text="00남 보호자  ㅇㅇㅇ님"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+
+
+        <ImageButton
+            android:id="@+id/logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@color/actionbar"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@drawable/ic_logout" />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="333dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/temp"
+            android:layout_width="222dp"
+            android:layout_height="33dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="22dp"
+            android:hint="온도: 0 c "
+            android:textSize="33dp" />
+
+        <TextView
+            android:id="@+id/humidity"
+            android:layout_width="222dp"
+            android:layout_height="33dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="22dp"
+            android:hint="습도: 0 % "
+            android:textSize="33dp" />
+
+        <TextView
+            android:id="@+id/earthquake"
+            android:layout_width="222dp"
+            android:layout_height="33dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="66dp"
+            android:hint="지진: 이상없음 "
+            android:textSize="33dp" />
+
+        <TextView
+            android:id="@+id/gas"
+            android:layout_width="222dp"
+            android:layout_height="33dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="22dp"
+            android:hint="가스: 이상없음"
+            android:textSize="33dp" />
+    </LinearLayout>
+
+
+</LinearLayout>
