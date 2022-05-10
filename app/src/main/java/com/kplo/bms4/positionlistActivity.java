@@ -1,3 +1,4 @@
+/*
 package com.kplo.bms4;
 
 import android.Manifest;
@@ -114,4 +115,4 @@ txt=findViewById(R.id.positioncontent);
 
 
     }
-}
+}*/

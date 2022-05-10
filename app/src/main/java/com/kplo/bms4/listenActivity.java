@@ -1,3 +1,4 @@
+/*
 package com.kplo.bms4;
 
 import android.content.Intent;
@@ -83,4 +84,4 @@ public class listenActivity extends AppCompatActivity  {
         }
         super.onDestroy();
     }
-}
+}*/

@@ -11,16 +11,21 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kakao.sdk.user.UserApiClient;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 import kotlin.Unit;
@@ -197,7 +202,26 @@ public class commoncaregiver extends AppCompatActivity {
 
 
             }
-        });
+        }){
+            @Override //response를 UTF8로 변경해주는 소스코드
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                try {
+                    String utf8String = new String(response.data, "UTF-8");
+                    return Response.success(utf8String, HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
+                    // log error
+                    return Response.error(new ParseError(e));
+                } catch (Exception e) {
+                    // log error
+                    return Response.error(new ParseError(e));
+                }
+            }
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return super.getParams();
+            }
+
+        };
 
         stringRequest2.setTag(TAG);
         mqueue2.add(stringRequest2);
@@ -254,7 +278,26 @@ public class commoncaregiver extends AppCompatActivity {
 
 
                     }
-                });
+                }){
+                    @Override //response를 UTF8로 변경해주는 소스코드
+                    protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                        try {
+                            String utf8String = new String(response.data, "UTF-8");
+                            return Response.success(utf8String, HttpHeaderParser.parseCacheHeaders(response));
+                        } catch (UnsupportedEncodingException e) {
+                            // log error
+                            return Response.error(new ParseError(e));
+                        } catch (Exception e) {
+                            // log error
+                            return Response.error(new ParseError(e));
+                        }
+                    }
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        return super.getParams();
+                    }
+
+                };
 
                 /*stringRequest.setTag(TAG);*/
                 mqueue2.add(stringRequest);

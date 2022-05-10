@@ -1,3 +1,4 @@
+/*
 package com.kplo.bms4;
 
 import android.content.Intent;
@@ -47,3 +48,4 @@ private Button button;
     }
 }
 
+*/

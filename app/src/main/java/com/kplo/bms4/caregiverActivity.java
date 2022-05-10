@@ -1,3 +1,4 @@
+/*
 package com.kplo.bms4;
 
 import android.content.Intent;
@@ -291,3 +292,4 @@ public class caregiverActivity extends AppCompatActivity {
     }
 
 }
+*/

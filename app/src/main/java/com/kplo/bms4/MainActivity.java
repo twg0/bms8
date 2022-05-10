@@ -16,10 +16,14 @@ import android.os.*;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -28,11 +32,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kakao.sdk.auth.model.OAuthToken;
 import com.kakao.sdk.user.UserApiClient;
 import com.kakao.sdk.user.model.User;
-import com.kplo.bms4.caregiverloginActivity;
+/*import com.kplo.bms4.caregiverloginActivity;*/
 
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.MessageDigest;
@@ -150,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
                             } else {
 
                                 try {
+
                                     map = mapper.readValue(response, Map.class);
                                 } catch (IOException e) {
                                     e.printStackTrace();
@@ -239,6 +245,7 @@ Log.d(" caregiver","");
                                             intent.putExtra("email", email);
                                             intent.putExtra("Role", Role);
                                             intent.putExtra("name", name);
+                                            Log.d("send name","send name"+name);
                                         intent.putExtra("id", id2);
 
                                         startActivity(intent);
@@ -253,7 +260,27 @@ Log.d(" caregiver","");
 
 
                                     }
-                                });
+                                }){
+                                    @Override //response를 UTF8로 변경해주는 소스코드
+                                    protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                                        try {
+                                            String utf8String = new String(response.data, "UTF-8");
+                                            return Response.success(utf8String, HttpHeaderParser.parseCacheHeaders(response));
+                                        } catch (UnsupportedEncodingException e) {
+                                            // log error
+                                            return Response.error(new ParseError(e));
+                                        } catch (Exception e) {
+                                            // log error
+                                            return Response.error(new ParseError(e));
+                                        }
+                                    }
+                                    @Override
+                                    protected Map<String, String> getParams() throws AuthFailureError {
+                                        return super.getParams();
+                                    }
+
+                                };
+
 
                                 stringRequest2.setTag(TAG);
                                 mqueue2.add(stringRequest2);
@@ -275,7 +302,31 @@ Log.d(" caregiver","");
                             return;
 
                         }
-                    });
+                    }){
+                        @Override //response를 UTF8로 변경해주는 소스코드
+                        protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                            try {
+                                String utf8String = new String(response.data, "UTF-8");
+                                return Response.success(utf8String, HttpHeaderParser.parseCacheHeaders(response));
+                            } catch (UnsupportedEncodingException e) {
+                                // log error
+                                return Response.error(new ParseError(e));
+                            } catch (Exception e) {
+                                // log error
+                                return Response.error(new ParseError(e));
+                            }
+                        }
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            return super.getParams();
+                        }
+
+                    };
+
+
+
+
+
 
                     stringRequest.setTag(TAG);
                     mqueue.add(stringRequest);

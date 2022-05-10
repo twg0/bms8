@@ -1,3 +1,4 @@
+/*
 package com.kplo.bms4;
 
 import android.content.Intent;
@@ -39,15 +40,21 @@ public class chiefboard_activity extends AppCompatActivity {
     private RequestQueue mqueue;
     String TAG = "ch";
     ObjectMapper mapper = new ObjectMapper();
-    /*Map<String, String> map[];*/
+    */
+/*Map<String, String> map[];*//*
+
     Map<String, String> map;
 
+*/
 /*
     String[] fileid, contents;
+*//*
+
 */
 /*
     String fileid, contents,Role;
-*/
+*//*
+
     String fileid="a", contents="b",Role;
 
     Integer cnt = 0;
@@ -85,6 +92,7 @@ public class chiefboard_activity extends AppCompatActivity {
                         map = mapper.readValue(response, Map.class);
 
 
+*/
 /*
  while(cnt<2) {
 
@@ -92,7 +100,8 @@ public class chiefboard_activity extends AppCompatActivity {
 
                             cnt++;
                         }
-*/
+*//*
+
 
 
 
@@ -106,9 +115,14 @@ public class chiefboard_activity extends AppCompatActivity {
                     Log.d(TAG, "handleSignInResult:size2 " + map);
 
                     cnt=0;
+*/
 /*
         fileid = new String[2];
         contents = new String[2];*//*
+*/
+/*
+
+*//*
 
 */
 /*
@@ -122,10 +136,13 @@ public class chiefboard_activity extends AppCompatActivity {
                     }
 
 *//*
+*/
+/*
 
 
                     Role=map.get("role");
-*/
+*//*
+
 
 
 
@@ -149,9 +166,11 @@ public class chiefboard_activity extends AppCompatActivity {
                             if (position >= 0) {
 
                                 Intent intent = new Intent(chiefboard_activity.this, positionlistActivity.class);
-                   /* intent.putExtra("file_id", fileid[position]);
+                   */
+/* intent.putExtra("file_id", fileid[position]);
                     intent.putExtra("contents", contents[position]);
-*/
+*//*
+
                                 intent.putExtra("file_id", fileid);
                                 intent.putExtra("contents", contents);
 
@@ -188,19 +207,23 @@ public class chiefboard_activity extends AppCompatActivity {
 
 
 
+*/
 /*
         while(i<cnt) {
             list.add(fileid[i]);
-        }*/
+        }*//*
 
 
 
 
 
+
+*/
 /*
         fileid[0] = "hi";
         contents[0] = "by";
-        list.add(fileid[0]);*/
+        list.add(fileid[0]);*//*
+
 
 
 
@@ -240,3 +263,4 @@ public class chiefboard_activity extends AppCompatActivity {
 
 }
 
+*/

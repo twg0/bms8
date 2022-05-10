@@ -1,3 +1,4 @@
+/*
 package com.kplo.bms4;
 
 import android.content.Intent;
@@ -90,6 +91,7 @@ public class caregiverloginActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
+*/
 /*
         Button button2 = (Button)findViewById(R.id.loginbutton);
 
@@ -101,7 +103,8 @@ public class caregiverloginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
 
-        });*/
+        });*//*
+
 
 
         Button buttonhome= (Button)findViewById(R.id.homebutton);
@@ -135,7 +138,8 @@ public class caregiverloginActivity extends AppCompatActivity {
 
                 Log.i(TAG, "email " + user.getKakaoAccount().getEmail());
 
-                Intent intent = new Intent(caregiverloginActivity.this, caregiverActivity.class);
+                Intent intent = new Intent(caregiverloginActivity.this,
+                        caregiverActivity.class);
                 intent.putExtra("id",id);
                 intent.putExtra("email",email);
                 intent.putExtra("username",username);
@@ -158,4 +162,4 @@ public class caregiverloginActivity extends AppCompatActivity {
 
 
 
-        }
+        }*/

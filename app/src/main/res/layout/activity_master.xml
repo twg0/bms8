@@ -93,6 +93,7 @@
             android:paddingLeft="50dp"
             android:visibility="visible"
             />
+
     </LinearLayout>
     <FrameLayout
         android:layout_width="match_parent"
@@ -114,6 +115,7 @@
             android:layout_marginLeft="50dp"
             android:layout_marginTop="20dp"
             />
+
         <Button
             android:id="@+id/notice"
             android:layout_width="180dp"
@@ -132,6 +134,7 @@
         android:layout_height="wrap_content">
         <Button
             android:id="@+id/emergency"
+
             android:text="마을 비상 사이렌"
             android:textStyle="bold"
             android:textSize="20dp"

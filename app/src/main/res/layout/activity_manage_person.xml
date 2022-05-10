@@ -43,13 +43,14 @@
         android:layout_below="@id/toolbar"
         android:background="#95BCF2"
         >
+
         <TextView
             android:id="@+id/person_title_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ㅇㅇ마을 전체 사용자"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="10dp"
+            android:text="ㅇㅇ마을 전체 사용자" />
 
         <ImageButton
             android:id="@+id/plus"

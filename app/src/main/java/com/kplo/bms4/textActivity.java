@@ -1,3 +1,4 @@
+/*
 package com.kplo.bms4;
 
 import android.content.Intent;
@@ -42,4 +43,4 @@ public class textActivity extends AppCompatActivity {
 
 
     }
-}
+}*/
