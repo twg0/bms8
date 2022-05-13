@@ -6,6 +6,11 @@
     <string name="naver_client_name">xxx</string>
     <string name="kakao_app_key">	521bf7574294e3600fbdf3d1ae00e2c4</string>
     <string name="tap_on_mic">Tap on mic to speak</string>
+    <string name="msg_token_fmt">Token .</string>
+    <string name="channel_description">hi my name is kim </string>
+    <string name="channel_name">test</string>
+
+
 
     <string-array name="title">
         <item>20220423</item>

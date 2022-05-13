@@ -1,6 +1,9 @@
 package com.kplo.bms4;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -14,6 +17,7 @@ import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.os.*;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
@@ -29,6 +33,8 @@ import com.android.volley.toolbox.Volley;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.kakao.sdk.auth.model.OAuthToken;
 import com.kakao.sdk.user.UserApiClient;
 import com.kakao.sdk.user.model.User;
@@ -55,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     String email;
     String id2;
     Map<String, String> map;
-    String name, villname, vid2, Role,url2;
+    String name, villname, vid2, Role, url2;
     private RequestQueue mqueue, mqueue2;
     ObjectMapper mapper = new ObjectMapper();
     String guardid;
@@ -66,6 +72,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        createNotificationChannel();
+/*
+
+
+
+        String token = FirebaseMessaging.getInstance().getToken().getResult();
+        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(new OnSuccessListener<String>() {
+            @Override
+            public void onSuccess(String token) {
+                Log.d("find","find"+token);
+            }
+        });
+*/
+
+
+        /////
         Intent intent = getIntent();
         mqueue = Volley.newRequestQueue(this);
         mqueue2 = Volley.newRequestQueue(this);
@@ -75,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public Unit invoke(OAuthToken oAuthToken, Throwable throwable) {
                 if (oAuthToken != null) {
-                    Log.i("user", oAuthToken.getAccessToken() + " " + oAuthToken.getRefreshToken());
+                    Log.i("user2222222", oAuthToken.getAccessToken() + " " + oAuthToken.getRefreshToken());
                 }
                 if (throwable != null) {
                     Log.w(TAG, "invoke: " + throwable.getLocalizedMessage());
@@ -174,14 +196,14 @@ public class MainActivity extends AppCompatActivity {
 
                                 // Class class = new ObjectMapper().readValue(response, Class.class);
 
-                Log.d("chief","");
+                                Log.d("chief", "");
                                 if (Role.equals("ROLE_ADMIN"))//
                                 {
-                                    Log.d("chief","suces");
+                                    Log.d("chief", "suces");
                                     Intent intent = new Intent(MainActivity.this, master.class);
                                     intent.putExtra("email", email);
                                     intent.putExtra("id", id2);
-                                    intent.putExtra("name",name);
+                                    intent.putExtra("name", name);
 
                                     startActivity(intent);
                                     return;
@@ -210,28 +232,23 @@ public class MainActivity extends AppCompatActivity {
                                             Log.d(TAG, "handleSignInResult:size2 " + map);
 
 
-
                                             guardid = String.valueOf(map.get("id"));
-
-
 
 
                                             // Class class = new ObjectMapper().readValue(response, Class.class);
 
 
+                                            Log.d(" caregiver", "");
 
-Log.d(" caregiver","");
-
-                                                Intent intent = new Intent(MainActivity.this, commoncaregiver.class);
-                                                intent.putExtra("email", email);
-                                                intent.putExtra("Role", Role);
-                                                intent.putExtra("name", name);
+                                            Intent intent = new Intent(MainActivity.this, commoncaregiver.class);
+                                            intent.putExtra("email", email);
+                                            intent.putExtra("Role", Role);
+                                            intent.putExtra("name", name);
                                             intent.putExtra("id", id2);
 
                                             startActivity(intent);
 
                                             return;
-
 
 
                                         }
@@ -241,11 +258,11 @@ Log.d(" caregiver","");
                                     public void onErrorResponse(VolleyError error) {
                                         Log.d("main", "you dont have old");
 
-                                            Intent intent = new Intent(MainActivity.this, common.class);
-                                            intent.putExtra("email", email);
-                                            intent.putExtra("Role", Role);
-                                            intent.putExtra("name", name);
-                                            Log.d("send name","send name"+name);
+                                        Intent intent = new Intent(MainActivity.this, common.class);
+                                        intent.putExtra("email", email);
+                                        intent.putExtra("Role", Role);
+                                        intent.putExtra("name", name);
+                                        Log.d("send name", "send name" + name);
                                         intent.putExtra("id", id2);
 
                                         startActivity(intent);
@@ -260,7 +277,7 @@ Log.d(" caregiver","");
 
 
                                     }
-                                }){
+                                }) {
                                     @Override //response를 UTF8로 변경해주는 소스코드
                                     protected Response<String> parseNetworkResponse(NetworkResponse response) {
                                         try {
@@ -274,6 +291,7 @@ Log.d(" caregiver","");
                                             return Response.error(new ParseError(e));
                                         }
                                     }
+
                                     @Override
                                     protected Map<String, String> getParams() throws AuthFailureError {
                                         return super.getParams();
@@ -284,7 +302,6 @@ Log.d(" caregiver","");
 
                                 stringRequest2.setTag(TAG);
                                 mqueue2.add(stringRequest2);
-
 
 
                                 /////
@@ -302,7 +319,7 @@ Log.d(" caregiver","");
                             return;
 
                         }
-                    }){
+                    }) {
                         @Override //response를 UTF8로 변경해주는 소스코드
                         protected Response<String> parseNetworkResponse(NetworkResponse response) {
                             try {
@@ -316,16 +333,13 @@ Log.d(" caregiver","");
                                 return Response.error(new ParseError(e));
                             }
                         }
+
                         @Override
                         protected Map<String, String> getParams() throws AuthFailureError {
                             return super.getParams();
                         }
 
                     };
-
-
-
-
 
 
                     stringRequest.setTag(TAG);
@@ -397,75 +411,26 @@ Log.d(" caregiver","");
 
     }
 
-/*
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(/*CHANNEL_ID*/"0", name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
 
-    private void jsonToObjectUrl() {
-        final ObjectMapper mapper = new ObjectMapper();
-
-        final Handler handler = new Handler();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    email="user1";
-                    userinfo info = mapper.readValue(new URL("http://10.0.2.2:8080/api/users/" + email), userinfo.class);
-
-                    Log.d("json string -> object\n", " " + info.getRole());
-
-
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-
-                            Log.d("json string -> object\n", " " + info.getRole());
-name=info.getName();
-                            if (name.isEmpty()) {
-                                Intent intent = new Intent(MainActivity.this, input_inform.class);
-                                intent.putExtra("email", email);
-                                startActivity(intent);
-
-                            }
-
-                            else{
-
-
-*/
-/*
-
-                                if (  )//피보호자 리스트가 없는경우
-                                {
-                                    Intent intent = new Intent(MainActivity.this, common.class);
-                                    intent.putExtra("email", email);
-                                    startActivity(intent);
-
-                                } else {//있는경우
-
-                                    Intent intent = new Intent(MainActivity.this, common.class);
-                                    intent.putExtra("email", email);
-                                    startActivity(intent);
-                                }
-*//*
-
-
-
-                            }
-
-
-
-
-                        }
-                    });
-
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
     }
 
-*/
 
 }
+
+
+
+

@@ -39,12 +39,12 @@ public class Person_info_guardActivity extends AppCompatActivity {
     LinearLayout linearLayout;
     TextView name2, relation, age2, address, phone, email2, registration, toolbar;
     String name, email, role, vname, id;
-    private RequestQueue queue, queue2;
+
     String TAG = "personinfo";
     ImageButton img;
     ObjectMapper mapper = new ObjectMapper();
     Map<String, String> map;
-    private RequestQueue mqueue, mqueue2;
+    private RequestQueue mqueue, mqueue2, queue2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +60,7 @@ public class Person_info_guardActivity extends AppCompatActivity {
         queue2 = Volley.newRequestQueue(this);
         mqueue = Volley.newRequestQueue(this);
         mqueue2 = Volley.newRequestQueue(this);
+
 
         String url = " http://10.0.2.2:8080/api/users/" + email;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -86,7 +87,7 @@ public class Person_info_guardActivity extends AppCompatActivity {
                     name2 = findViewById(R.id.name);
 
                     age2 = findViewById(R.id.age);
-                    address = findViewById(R.id.addre);
+                    /*address = findViewById(R.id.addre);*/
                     phone = findViewById(R.id.phon);
                     email2 = findViewById(R.id.emai);
                     registration = findViewById(R.id.regis);
@@ -126,11 +127,14 @@ public class Person_info_guardActivity extends AppCompatActivity {
 
         };
 
+
         stringRequest.setTag(TAG);
         mqueue2.add(stringRequest);
 
 
+/*
         linearLayout = findViewById(R.id.guard_info);
+*/
         queue2 = Volley.newRequestQueue(this);
 
         if (role.equals("ROLE_USER"))

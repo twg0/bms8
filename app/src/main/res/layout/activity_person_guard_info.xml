@@ -94,25 +94,6 @@
 
 
 
-        <LinearLayout
-            android:layout_width="111dp"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-
-            <TextView
-                android:id="@+id/info_address"
-                android:layout_width="55dp"
-                android:layout_height="match_parent"
-                android:text="주소 : " />
-
-            <TextView
-                android:id="@+id/addre"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="0  " />
-
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="111dp"
@@ -154,6 +135,41 @@
 
         </LinearLayout>
 
+
+//////////////
+
+
+        <TextView
+            android:id="@+id/guardinfo_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="20dp"
+            android:text="피보호자 정보"
+            android:textSize="20dp" />
+
+        <LinearLayout
+            android:layout_width="111dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/guardinfo_name"
+                android:layout_width="55dp"
+                android:layout_height="match_parent"
+                android:text="이름 : " />
+
+            <TextView
+                android:id="@+id/guardname"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="0  " />
+
+        </LinearLayout>
+
+
+
+
+
         <LinearLayout
             android:layout_width="111dp"
             android:layout_height="match_parent"
@@ -161,13 +177,53 @@
 
 
             <TextView
-                android:id="@+id/info_regislation"
+                android:id="@+id/guardinfo_address"
                 android:layout_width="55dp"
                 android:layout_height="match_parent"
-                android:text="등록일 : " />
+                android:text="주소 : " />
 
             <TextView
-                android:id="@+id/regis"
+                android:id="@+id/guardaddre"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="0  " />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="111dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/guardinfo_phone"
+                android:layout_width="55dp"
+                android:layout_height="match_parent"
+                android:text="연락처 : " />
+
+            <TextView
+                android:id="@+id/guardphon"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="0  " />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="111dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/guardinfo_email"
+                android:layout_width="55dp"
+                android:layout_height="match_parent"
+                android:text="이메일 : " />
+
+            <TextView
+                android:id="@+id/guardemai"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="0  " />
@@ -177,50 +233,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/guard_info"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingHorizontal="50dp">
 
-        <TextView
-            android:id="@+id/info_guard_title"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:text="ㅇㅇㅇ님(단말기)" />
-
-        <TextView
-            android:id="@+id/info_guard_age"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="나이 : " />
-
-        <TextView
-            android:id="@+id/info_guard_device"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="단말기 : " />
-
-        <TextView
-            android:id="@+id/info_guard_address"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="주소 : " />
-
-        <TextView
-            android:id="@+id/info_guard_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="연락처 : " />
-
-        <TextView
-            android:id="@+id/info_guard_regislation"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="등록일 : " />
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

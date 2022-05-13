@@ -201,7 +201,6 @@ public class broadcastActivity extends AppCompatActivity {
             for (int i = 0; i < matches.size(); i++) {
 /*
 */
-
                 content += matches.get(i);
             }
 
@@ -242,7 +241,6 @@ public class broadcastActivity extends AppCompatActivity {
             js.put("villageId", vid3);
             js.put("title", title2);
             js.put("contents", content);
-
 
 
             Log.d("broad", "contents " + content);

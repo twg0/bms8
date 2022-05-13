@@ -157,7 +157,7 @@ public class addvillage extends AppCompatActivity {
                                         Long vid = Long.parseLong(vid_data[i]);
 
                                         addvill(id,vid, url2);
-
+                                    Log.d("","villsuccess");
 
 //////////////////////////////
 

@@ -69,14 +69,14 @@
         <!--<activity android:name=".chiefActivity"></activity>-->
         <activity android:name=".userjoinActivity"></activity>
         <activity android:name=".signupActivity"></activity>
-        <activity android:name=".loginActivity"></activity>
+       <!-- <activity android:name=".loginActivity"></activity>
         <activity android:name=".caregiverActivity"></activity>
-        <activity android:name=".caregiverloginActivity"></activity>
+        <activity android:name=".caregiverloginActivity"></activity>-->
 <!--
         <activity android:name=".chiefloginActivity"></activity>
 -->
-        <activity android:name=".chiefboard_activity"></activity>
-        <activity android:name=".caregiverboardActivity"></activity>
+        <!--<activity android:name=".chiefboard_activity"></activity>
+        <activity android:name=".caregiverboardActivity"></activity>-->
         <activity android:name=".caregiverjoinActivity"></activity>
         <!--<activity android:name=".chiefjoinActivity"></activity>-->
         <activity android:name=".weatherActivity"></activity>
@@ -92,13 +92,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".listenActivity"></activity>
-        <activity android:name=".userloginActivity"></activity>
+
+
         <activity android:name=".statementActivity"></activity>
-        <activity android:name=".userActivity"></activity>
-        <activity android:name=".textActivity"></activity>
+
         <activity android:name=".villageaddActivity"></activity>
-        <activity android:name=".positionlistActivity"></activity>
+
         <activity android:name=".oldjoinActivity"></activity>
         <activity android:name=".broadcast_notice"></activity>
         <activity android:name=".common"></activity>
@@ -113,6 +112,16 @@
         <activity android:name=".Person_infomasterActivity"></activity>
         <activity android:name=".Person_info_guardActivity"></activity>
 
+        <service
+            android:name=".MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+
     </application>
+
 
 </manifest>

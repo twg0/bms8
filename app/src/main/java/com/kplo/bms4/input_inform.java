@@ -1,9 +1,12 @@
 package com.kplo.bms4;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.android.volley.AuthFailureError;
@@ -25,12 +29,19 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceIdReceiver;
+import com.google.firebase.installations.FirebaseInstallations;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.kakao.sdk.user.UserApiClient;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import kotlin.Unit;
@@ -45,6 +56,7 @@ public class input_inform extends AppCompatActivity {
     RadioButton radioButton;
     LinearLayout linearLayout;
     EditText name, birth, phone, guard_name, guard_birth, master_id;
+    public static String token;
 
     int flag = 0;
 
@@ -52,6 +64,9 @@ public class input_inform extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_inform);
+
+        gettoken();
+
 
         //입력된 정보
         name = (EditText) findViewById(R.id.input_name);
@@ -266,7 +281,7 @@ public class input_inform extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                VolleyLog.d(TAG, "Error: cargiver " + error.getMessage());
             }
         }) {
 
@@ -317,7 +332,7 @@ public class input_inform extends AppCompatActivity {
                         });*/
 
                         Intent intent;
-                        intent = new Intent(getApplicationContext(), master.class);
+                        intent = new Intent(getApplicationContext(), addvillage.class);
                         intent.putExtra("email", email);
 
 
@@ -346,7 +361,34 @@ public class input_inform extends AppCompatActivity {
 
         Volley.newRequestQueue(this).add(jsonObjReq);
 
+
     }
 
+    public String gettoken() {
 
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w("input", "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                       token = task.getResult();
+
+                        // Log and toast
+/*
+                        String msg = getString(R.string.msg_token_fmt, token);
+*/
+                        Log.d(" input", token);
+                    }
+                });
+
+        return token;
+
+    }
 }
+
+

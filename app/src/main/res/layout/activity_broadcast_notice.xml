@@ -43,13 +43,14 @@
         android:layout_below="@id/toolbar"
         android:background="#95BCF2"
         >
+
         <TextView
             android:id="@+id/notice_title_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ㅇㅇ마을 방송 게시판"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="10dp"
+            android:text=" 방송 게시판" />
 <!--
         <ImageButton
             android:id="@+id/plus"

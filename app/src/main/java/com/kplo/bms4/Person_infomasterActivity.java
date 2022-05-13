@@ -89,7 +89,7 @@ ImageButton logout;
                     name2 = findViewById(R.id.name);
 
                     age2 = findViewById(R.id.age);
-                    address = findViewById(R.id.addre);
+                    /*address = findViewById(R.id.addre);*/
                     phone = findViewById(R.id.phon);
                     email2 = findViewById(R.id.emai);
                     registration = findViewById(R.id.regis);

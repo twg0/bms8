@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "913658624618",
+    "project_id": "emergency-a2d12",
+    "storage_bucket": "emergency-a2d12.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:913658624618:android:4f3e417e7d1919ebe0a813",
+        "android_client_info": {
+          "package_name": "com.kplo.bms4"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "913658624618-7c5fuftvv712besnov4qggrv23r8mhtc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWT5qzka7aQVB5l8lgB3fnI2fOlSvVAVE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "913658624618-7c5fuftvv712besnov4qggrv23r8mhtc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

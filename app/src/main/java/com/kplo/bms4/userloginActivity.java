@@ -1,3 +1,4 @@
+/*
 package com.kplo.bms4;
 
 import android.content.Intent;
@@ -139,4 +140,4 @@ public class userloginActivity extends AppCompatActivity {
 
     }
 
-}
+}*/

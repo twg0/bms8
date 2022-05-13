@@ -86,7 +86,7 @@ public class Person_infoActivity extends AppCompatActivity {
                     name2 = findViewById(R.id.name);
 
                     age2 = findViewById(R.id.age);
-                    address = findViewById(R.id.addre);
+
                     phone = findViewById(R.id.phon);
                     email2 = findViewById(R.id.emai);
                     registration = findViewById(R.id.regis);
@@ -134,7 +134,7 @@ public class Person_infoActivity extends AppCompatActivity {
 
 
 
-        linearLayout = findViewById(R.id.guard_info);
+        /*linearLayout = findViewById(R.id.guard_info);*/
         queue2 = Volley.newRequestQueue(this);
 
         toolbar = findViewById(R.id.toolbar_title);
