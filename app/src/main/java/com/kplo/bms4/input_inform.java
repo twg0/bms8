@@ -57,6 +57,7 @@ public class input_inform extends AppCompatActivity {
     LinearLayout linearLayout;
     EditText name, birth, phone, guard_name, guard_birth, master_id;
     public static String token;
+    String email, id;
 
     int flag = 0;
 
@@ -77,10 +78,9 @@ public class input_inform extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        String email;
         email = intent.getStringExtra("email");
 
-
+        Log.d("input", "i" + email);
         //Check box 이벤트 등록
         checkBox = findViewById(R.id.checkbox);
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -194,6 +194,7 @@ public class input_inform extends AppCompatActivity {
         String TAG = "a";
         JSONObject js = new JSONObject();
         try {
+
             js.put("email", email);
             js.put("username", name);
             js.put("phoneNumber", phone);
@@ -209,11 +210,12 @@ public class input_inform extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         Log.d(TAG, response.toString() + " i am queen");
 
-                        Intent intent;
-                        intent = new Intent(getApplicationContext(), common.class);
-                        intent.putExtra("email", email);
 
-                        startActivity(intent);
+                        Intent intent2= new Intent(input_inform.this, addvillage.class);
+                       Log.d(" ","why email not "+email);
+                        intent2.putExtra("email", email);
+
+                        startActivity(intent2);
                         /*finish();*/
                     }
                 }, new Response.ErrorListener() {
@@ -271,9 +273,8 @@ public class input_inform extends AppCompatActivity {
                         */
 
                         Intent intent;
-                        intent = new Intent(getApplicationContext(), commoncaregiver.class);
+                        intent = new Intent(input_inform.this, addvillage.class);
                         intent.putExtra("email", email);
-
 
                         startActivity(intent);
                         /*finish();*/
@@ -332,7 +333,7 @@ public class input_inform extends AppCompatActivity {
                         });*/
 
                         Intent intent;
-                        intent = new Intent(getApplicationContext(), addvillage.class);
+                        intent = new Intent(input_inform.this, addvillage.class);
                         intent.putExtra("email", email);
 
 
@@ -376,7 +377,7 @@ public class input_inform extends AppCompatActivity {
                         }
 
                         // Get new FCM registration token
-                       token = task.getResult();
+                        token = task.getResult();
 
                         // Log and toast
 /*

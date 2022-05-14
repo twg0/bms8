@@ -49,6 +49,7 @@ public class addvillage extends AppCompatActivity {
     ObjectMapper mapper = new ObjectMapper();
     Map<String, String> map;
     ArrayList<villageselect_VO> items;
+    ImageButton img;
 
     String id2, username, Role, vid2;
     private RequestQueue mqueue, mqueue2;
@@ -56,10 +57,11 @@ public class addvillage extends AppCompatActivity {
     String vid;
     String Name;
     EditText nickname, address;
-    String email;
+    String email, id;
     ImageButton select;
     Integer size = 0;
     String[] vid_data, vid_name;
+    Long id3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,15 +69,98 @@ public class addvillage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addvillage);
         Intent intent = getIntent();
-        id2 = intent.getStringExtra("id");
-        Long id = Long.parseLong(id2);
+
+        email = intent.getStringExtra("email");
+
+        Log.d("", "email" + email);
+
         mqueue2 = Volley.newRequestQueue(this);
         mqueue = Volley.newRequestQueue(this);
         Button send = findViewById(R.id.reg_button);
         listView = findViewById(R.id.villlist);
+        img = findViewById(R.id.logout);
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
+                    @Override
+                    public Unit invoke(Throwable throwable) {
+                        return null;
+                    }
+                });
 
 
-        String url = " http://10.0.2.2:8080/api/villages" ;
+                Intent intent2 = new Intent(addvillage.this, MainActivity.class);
+                startActivity(intent2);
+                finish();
+            }
+        });
+
+
+
+        String url3 = " http://10.0.2.2:8080/api/users/" + email;
+        Log.d("url", "url3" + url3);
+        StringRequest stringRequest2 = new StringRequest(Request.Method.GET, url3, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                if (response.isEmpty()) {
+
+                    return;
+                } else {
+
+                    try {
+                        map = mapper.readValue(response, Map.class);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    Log.d("", "" + response);
+                    id = String.valueOf(map.get("id"));
+
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("addvill", "no data");
+
+
+
+
+
+            }
+        }) {
+            @Override //response를 UTF8로 변경해주는 소스코드
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                try {
+                    String utf8String = new String(response.data, "UTF-8");
+                    return Response.success(utf8String, HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
+                    // log error
+                    return Response.error(new ParseError(e));
+                } catch (Exception e) {
+                    // log error
+                    return Response.error(new ParseError(e));
+                }
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return super.getParams();
+            }
+
+        };
+
+        stringRequest2.setTag(TAG);
+        mqueue2.add(stringRequest2);
+
+/////////////////////
+
+        String url = " http://10.0.2.2:8080/api/villages";
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -153,21 +238,17 @@ public class addvillage extends AppCompatActivity {
                                         Log.d("select", "this " + i);
 
 
-             String url2 = " http://10.0.2.2:8080/api/users/" + id + "/villages?villageId=" + vid_data[i];
+                                        String url2 = " http://10.0.2.2:8080/api/users/" + id + "/villages?villageId=" + vid_data[i];
                                         Long vid = Long.parseLong(vid_data[i]);
-
-                                        addvill(id,vid, url2);
-                                    Log.d("","villsuccess");
+                                        id3 = Long.parseLong(id);
+                                        addvill(id3, vid, url2);
+                                        Log.d("", "villsuccess");
 
 //////////////////////////////
 
                                     }
 
                                 }
-/*
-Intent intent=new Intent(manage_person_delete.this,master.class);
-
-                                startActivity(intent);*/
 
 
                             }

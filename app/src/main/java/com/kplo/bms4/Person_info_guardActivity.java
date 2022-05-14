@@ -37,8 +37,8 @@ public class Person_info_guardActivity extends AppCompatActivity {
     Intent intent;
     int trigger;
     LinearLayout linearLayout;
-    TextView name2, relation, age2, address, phone, email2, registration, toolbar;
-    String name, email, role, vname, id;
+    TextView name2, relation, age2, address, phone, email2, registration, toolbar,gname2,gphone2,gaddress2,gemail2;
+    String name, email, role, vname, id,gname, gemail,gaddress,gphone;
 
     String TAG = "personinfo";
     ImageButton img;
@@ -130,6 +130,80 @@ public class Person_info_guardActivity extends AppCompatActivity {
 
         stringRequest.setTag(TAG);
         mqueue2.add(stringRequest);
+//////
+
+
+        String url3 = " http://10.0.2.2:8080/api/users/" + id+"/ward";
+        StringRequest stringRequest2 = new StringRequest(Request.Method.GET, url3, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                if (response.isEmpty()) {
+
+                    return;
+                } else {
+
+                    try {
+                        map = mapper.readValue(response, Map.class);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    Log.d("", "" + response);
+                    String phonenum,usernam,emails,adres;
+
+                    phonenum = map.get("phoneNumber");
+                    usernam = map.get("username");
+                    emails = map.get("email");
+                    adres = map.get("address");
+
+                    gname2 = findViewById(R.id.guardname);
+
+
+                    gaddress2 = findViewById(R.id.guardaddre);
+                    gphone2 = findViewById(R.id.guardphon);
+                    gemail2 = findViewById(R.id.guardemai);
+
+
+                    gname2.setText(usernam);
+                    gemail2.setText(emails);
+                    gphone2.setText(phonenum);
+                    gaddress2.setText(adres);
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("infoguard", "no guarddata");
+
+
+            }
+        }){
+            @Override //response를 UTF8로 변경해주는 소스코드
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                try {
+                    String utf8String = new String(response.data, "UTF-8");
+                    return Response.success(utf8String, HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
+                    // log error
+                    return Response.error(new ParseError(e));
+                } catch (Exception e) {
+                    // log error
+                    return Response.error(new ParseError(e));
+                }
+            }
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return super.getParams();
+            }
+
+        };
+
+
+        stringRequest2.setTag(TAG);
+        mqueue.add(stringRequest2);
 
 
 /*
@@ -137,8 +211,7 @@ public class Person_info_guardActivity extends AppCompatActivity {
 */
         queue2 = Volley.newRequestQueue(this);
 
-        if (role.equals("ROLE_USER"))
-            linearLayout.setVisibility(View.INVISIBLE);
+
 
         toolbar = findViewById(R.id.toolbar_title);
         toolbar.setText(vname + "마을" + name + "님");

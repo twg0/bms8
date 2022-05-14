@@ -2,7 +2,13 @@ package com.kplo.bms4;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +30,9 @@ import com.android.volley.toolbox.Volley;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kakao.sdk.user.UserApiClient;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
@@ -37,11 +46,18 @@ public class common extends AppCompatActivity {
     ImageButton person_info2;
     ImageButton logout;
     Integer trigger = 0; // 주민(0)과 보호자(1) 구분 플래그
-    String id, villname, vid, vname2,vname;
+    String id, villname, vid, vname2, vname, main;
     ObjectMapper mapper = new ObjectMapper();
-    Map<String, String> map;
+    ObjectMapper mapper2 = new ObjectMapper();
+    String city;
+
+    Map<String, String> map, map2;
     String Role, name, email;
     private RequestQueue mqueue, mqueue2;
+    TextView weather2;
+
+
+
 
 
     @Override
@@ -64,9 +80,156 @@ public class common extends AppCompatActivity {
         Log.d("common", " Role" + Role);
         text = findViewById(R.id.toolbar_title);
 
+        weather2 = findViewById(R.id.weather);
+
+        String url2 = " http://10.0.2.2:8080/api/users/" + id+"/villages";
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url2, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                if (response.isEmpty()) {
+
+                    return;
+                } else {
+
+                    try {
+                        JSONObject json=new JSONObject(response);
+                        Log.d("", "res" + json);
+
+                        JSONObject json2=json.optJSONObject("address");
+                        Log.d("com", "address " + json2);
+
+
+                        city = (json2.optString("city")) ;
+                        Log.d("com", "city" + city);
+
+                        String url = " https://api.openweathermap.org/data/2.5/weather?q="+ city+"&appid=b6fbd4253485afbad2502ce04bdb87ef";
+                        StringRequest stringRequest3 = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+
+                                if (response.isEmpty()) {
+
+                                    return;
+                                } else {
+
+                                    try {
+                                        JSONObject json=new JSONObject(response);
+                                        Log.d("", "res" + json);
+
+                                        JSONObject json2=json.optJSONObject("main");
+                                        Log.d("com", "com" + json2);
+
+
+                                        double temp2;
+                                        temp2 = (json2.optDouble("temp")) - 273.15;
+                                        int temp3;
+                                        temp3=(int)temp2;
+                                        weather2.setText(String.valueOf(temp3)+"c");
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    /*
+
+                                     */
+
+
+                                    /*
+                                     */
+
+
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.d("infoguard", "no userdata");
+
+
+                            }
+                        }) {
+                            @Override //response를 UTF8로 변경해주는 소스코드
+                            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                                try {
+                                    String utf8String = new String(response.data, "UTF-8");
+                                    return Response.success(utf8String, HttpHeaderParser.parseCacheHeaders(response));
+                                } catch (UnsupportedEncodingException e) {
+                                    // log error
+                                    return Response.error(new ParseError(e));
+                                } catch (Exception e) {
+                                    // log error
+                                    return Response.error(new ParseError(e));
+                                }
+                            }
+
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+                                return super.getParams();
+                            }
+
+                        };
+
+                        stringRequest3.setTag(TAG);
+                        mqueue.add(stringRequest3);
+
+
+/////
+
+
+                        /////
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    /*
+
+                     */
+
+
+                    /*
+                     */
+
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("infoguard", "no userdata");
+
+
+            }
+        }) {
+            @Override //response를 UTF8로 변경해주는 소스코드
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                try {
+                    String utf8String = new String(response.data, "UTF-8");
+                    return Response.success(utf8String, HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
+                    // log error
+                    return Response.error(new ParseError(e));
+                } catch (Exception e) {
+                    // log error
+                    return Response.error(new ParseError(e));
+                }
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return super.getParams();
+            }
+
+        };
+
+        stringRequest.setTag(TAG);
+        mqueue2.add(stringRequest);
 
 
 
+
+
+/////
 
         weather = findViewById(R.id.weatherbtn);
 
@@ -102,9 +265,8 @@ public class common extends AppCompatActivity {
         });
 
 
-
-        String url2 = " http://10.0.2.2:8080/api/users/" + id + "/villages";
-        StringRequest stringRequest2 = new StringRequest(Request.Method.GET, url2, new Response.Listener<String>() {
+        String url3 = " http://10.0.2.2:8080/api/users/" + id + "/villages";
+        StringRequest stringRequest2 = new StringRequest(Request.Method.GET, url3, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -142,7 +304,6 @@ public class common extends AppCompatActivity {
                     });
 
 
-
                     notice = findViewById(R.id.notice);
                     notice.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -158,9 +319,6 @@ public class common extends AppCompatActivity {
                             startActivity(intent2);
                         }
                     });
-
-
-
 
 
                 }
@@ -182,7 +340,7 @@ public class common extends AppCompatActivity {
 
 
             }
-        }){
+        }) {
             @Override //response를 UTF8로 변경해주는 소스코드
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
                 try {
@@ -196,6 +354,7 @@ public class common extends AppCompatActivity {
                     return Response.error(new ParseError(e));
                 }
             }
+
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 return super.getParams();
@@ -255,7 +414,7 @@ public class common extends AppCompatActivity {
 
 
                     }
-                }){
+                }) {
                     @Override //response를 UTF8로 변경해주는 소스코드
                     protected Response<String> parseNetworkResponse(NetworkResponse response) {
                         try {
@@ -269,6 +428,7 @@ public class common extends AppCompatActivity {
                             return Response.error(new ParseError(e));
                         }
                     }
+
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         return super.getParams();

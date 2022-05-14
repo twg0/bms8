@@ -4,12 +4,15 @@
     <!-- 인터넷 권한선언 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <queries>
         <intent>
-            <action android:name="android.intent.action.TTS_SERVICE"/>
+            <action android:name="android.intent.action.TTS_SERVICE" />
 
 
         </intent>
@@ -26,15 +29,19 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:debuggable="true"
         android:theme="@style/myTheme"
-        android:usesCleartextTraffic="true"
-    android:requestLegacyExternalStorage="true"
-        >
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+        android:usesCleartextTraffic="true">
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
 
-        <meta-data android:name="com.kakao.sdk.AppKey" android:value="521bf7574294e3600fbdf3d1ae00e2c4" />
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="521bf7574294e3600fbdf3d1ae00e2c4" />
 
         <activity
             android:name=".MainActivity"
@@ -53,15 +60,16 @@
 
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
-            android:exported="true"
-            >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
-                <data android:host="oauth"
+                <data
+                    android:host="oauth"
                     android:scheme="kakao521bf7574294e3600fbdf3d1ae00e2c4" />
             </intent-filter>
         </activity>
@@ -69,12 +77,12 @@
         <!--<activity android:name=".chiefActivity"></activity>-->
         <activity android:name=".userjoinActivity"></activity>
         <activity android:name=".signupActivity"></activity>
-       <!-- <activity android:name=".loginActivity"></activity>
-        <activity android:name=".caregiverActivity"></activity>
-        <activity android:name=".caregiverloginActivity"></activity>-->
-<!--
-        <activity android:name=".chiefloginActivity"></activity>
--->
+        <!-- <activity android:name=".loginActivity"></activity>
+         <activity android:name=".caregiverActivity"></activity>
+         <activity android:name=".caregiverloginActivity"></activity>-->
+        <!--
+                <activity android:name=".chiefloginActivity"></activity>
+        -->
         <!--<activity android:name=".chiefboard_activity"></activity>
         <activity android:name=".caregiverboardActivity"></activity>-->
         <activity android:name=".caregiverjoinActivity"></activity>
@@ -84,7 +92,9 @@
         <activity android:name=".broadcast_notice_master"></activity>
         <activity android:name=".usermanageActivity"></activity>
         <activity android:name=".addvillage"></activity>
-        <activity android:name=".state_data" android:exported="true">
+        <activity
+            android:name=".state_data"
+            android:exported="true">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

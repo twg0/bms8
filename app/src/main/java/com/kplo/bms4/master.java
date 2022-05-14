@@ -31,6 +31,9 @@ import com.android.volley.toolbox.Volley;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kakao.sdk.user.UserApiClient;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -48,6 +51,8 @@ public class master extends AppCompatActivity {
     private RequestQueue mqueue, mqueue2;
     ObjectMapper mapper = new ObjectMapper();
     Map<String, String> map;
+    TextView weather2;
+    String city;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +76,167 @@ public class master extends AppCompatActivity {
 
         mqueue = Volley.newRequestQueue(this);
         mqueue2 = Volley.newRequestQueue(this);
+
+
+
+
+
+        weather2 = findViewById(R.id.weather);
+
+        String url3 = " http://10.0.2.2:8080/api/admins/" + id+"/villages";
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url3, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                if (response.isEmpty()) {
+
+                    return;
+                } else {
+
+                    try {
+                        JSONObject json=new JSONObject(response);
+                        Log.d("", "res" + json);
+
+                        JSONObject json2=json.optJSONObject("address");
+                        Log.d("com", "address " + json2);
+
+
+                        city = (json2.optString("city")) ;
+                        Log.d("com", "city" + city);
+
+                        String url = " https://api.openweathermap.org/data/2.5/weather?q="+ city+"&appid=b6fbd4253485afbad2502ce04bdb87ef";
+                        StringRequest stringRequest3 = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+
+                                if (response.isEmpty()) {
+
+                                    return;
+                                } else {
+
+                                    try {
+                                        JSONObject json=new JSONObject(response);
+                                        Log.d("", "res" + json);
+
+                                        JSONObject json2=json.optJSONObject("main");
+                                        Log.d("com", "master" + json2);
+
+
+                                        double temp2;
+                                        temp2 = (json2.optDouble("temp")) - 273.15;
+                                        int temp3;
+                                        temp3=(int)temp2;
+                                        weather2.setText(String.valueOf(temp3)+"c");
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    /*
+
+                                     */
+
+
+                                    /*
+                                     */
+
+
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.d("infoguard", "no userdata");
+
+
+                            }
+                        }) {
+                            @Override //response를 UTF8로 변경해주는 소스코드
+                            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                                try {
+                                    String utf8String = new String(response.data, "UTF-8");
+                                    return Response.success(utf8String, HttpHeaderParser.parseCacheHeaders(response));
+                                } catch (UnsupportedEncodingException e) {
+                                    // log error
+                                    return Response.error(new ParseError(e));
+                                } catch (Exception e) {
+                                    // log error
+                                    return Response.error(new ParseError(e));
+                                }
+                            }
+
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+                                return super.getParams();
+                            }
+
+                        };
+
+                        stringRequest3.setTag(TAG);
+                        mqueue.add(stringRequest3);
+
+
+/////
+
+
+                        /////
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    /*
+
+                     */
+
+
+                    /*
+                     */
+
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("infoguard", "no userdata");
+
+
+            }
+        }) {
+            @Override //response를 UTF8로 변경해주는 소스코드
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                try {
+                    String utf8String = new String(response.data, "UTF-8");
+                    return Response.success(utf8String, HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
+                    // log error
+                    return Response.error(new ParseError(e));
+                } catch (Exception e) {
+                    // log error
+                    return Response.error(new ParseError(e));
+                }
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return super.getParams();
+            }
+
+        };
+
+        stringRequest.setTag(TAG);
+        mqueue2.add(stringRequest);
+
+
+
+
+
+
+
+
+        //////
+
+
+
 
         StringRequest stringRequest2 = new StringRequest(Request.Method.GET, url2, new Response.Listener<String>() {
             @Override
@@ -153,7 +319,7 @@ public class master extends AppCompatActivity {
 
 
         mqueue = Volley.newRequestQueue(this);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+        StringRequest stringRequest3 = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, "handleSignInResult:repsonse " + response);
@@ -253,8 +419,8 @@ public class master extends AppCompatActivity {
 
         };
 
-        stringRequest.setTag(TAG);
-        mqueue.add(stringRequest);
+        stringRequest3.setTag(TAG);
+        mqueue.add(stringRequest3);
 
         //////
 
