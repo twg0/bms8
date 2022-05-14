@@ -44,7 +44,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onNewToken(@NonNull String token) {
 
-        String url2 = " http://10.0.2.2:8080/api/notification/register";
+        String url2 = " http://10.0.2.2:8080/api/notification/token";
 
 
             String TAG = "token ";
