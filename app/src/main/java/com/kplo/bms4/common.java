@@ -196,7 +196,7 @@ public class common extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("infoguard", "no userdata");
+                Log.d("common", "no city in village data");
 
 
             }
@@ -326,7 +326,7 @@ public class common extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("commoncaregiver", "no village");
+                Log.d("common", "no village");
 
 
 

@@ -79,8 +79,10 @@ public class input_inform extends AppCompatActivity {
 
         Intent intent = getIntent();
         email = intent.getStringExtra("email");
+        id=intent.getStringExtra("id");
 
         Log.d("input", "i" + email);
+        Log.d("input", "idddddddddddd" +id);
         //Check box 이벤트 등록
         checkBox = findViewById(R.id.checkbox);
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -138,7 +140,7 @@ public class input_inform extends AppCompatActivity {
                 String p2;
                 p2 = phone.getText().toString();
                 if (flag == 0) {
-                    url = " http://10.0.2.2:8080/api/users";
+                    url = " http://10.0.2.2:8080/api/users/"+id;
                     usersignupclick(name2, email, url, p2);
                     /*
                     UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
@@ -151,7 +153,7 @@ public class input_inform extends AppCompatActivity {
 
                     /*finish();*/
                 } else if (flag == 1) {
-                    url = " http://10.0.2.2:8080/api/users";
+                    url = " http://10.0.2.2:8080/api/users/"+id;
                     caregiverignupclick(name2, email, url, p2);
                    /* UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
                         @Override
@@ -166,7 +168,8 @@ public class input_inform extends AppCompatActivity {
 */
 
                 } else {
-                    url = " http://10.0.2.2:8080/api/users";
+                    url = " http://10.0.2.2:8080/api/users/"+id;
+
 
                     chiefsignupclick(name2, email, url, p2);
                    /* UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
@@ -195,7 +198,9 @@ public class input_inform extends AppCompatActivity {
         JSONObject js = new JSONObject();
         try {
 
+/*
             js.put("email", email);
+*/
             js.put("username", name);
             js.put("phoneNumber", phone);
         } catch (JSONException e) {
@@ -204,7 +209,7 @@ public class input_inform extends AppCompatActivity {
 
         // Make request for JSONObject
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                Request.Method.POST, url, js,
+                Request.Method.PUT, url, js,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -249,7 +254,7 @@ public class input_inform extends AppCompatActivity {
 
         JSONObject js = new JSONObject();
         try {
-            js.put("email", email);
+            /*js.put("email", email);*/
             js.put("username", name);
             js.put("phoneNumber", phone);
 
@@ -259,7 +264,7 @@ public class input_inform extends AppCompatActivity {
 
         // Make request for JSONObject
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                Request.Method.POST, url, js,
+                Request.Method.PUT, url, js,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -309,7 +314,9 @@ public class input_inform extends AppCompatActivity {
 
         JSONObject js = new JSONObject();
         try {
+/*
             js.put("email", email);
+*/
             js.put("username", name);
             js.put("phoneNumber", phone);
 
@@ -320,7 +327,7 @@ public class input_inform extends AppCompatActivity {
 
         // Make request for JSONObject
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                Request.Method.POST, url, js,
+                Request.Method.PUT, url, js,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {

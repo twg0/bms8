@@ -6,6 +6,7 @@ import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,12 +19,23 @@ public class statementActivity extends AppCompatActivity {
 
 ImageButton img;
 
+TextView gas,earth,weird;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_state_data);
+
+        gas=findViewById(R.id.gas);
+        earth=findViewById(R.id.earth_quake);
+        weird=findViewById(R.id.strange_act);
+
+
+
+
+
 
         Intent intent = getIntent();
 
