@@ -45,7 +45,7 @@ import kotlin.jvm.functions.Function2;
 public class MainActivity extends AppCompatActivity {
     private Button kakaoAuth;
     private final static String TAG = "main";
-    String email,phone;
+    String email, phone;
     String id2;
     Map<String, String> map;
     String name, villname, vid2, Role, url2;
@@ -103,11 +103,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (UserApiClient.getInstance().isKakaoTalkLoginAvailable(MainActivity.this)) {
                     UserApiClient.getInstance().loginWithKakaoTalk(MainActivity.this, callback);
-        Log.d("main","mainkakao clicked");
+                    Log.d("main", "mainkakao clicked");
 
                 } else {
                     UserApiClient.getInstance().loginWithKakaoAccount(MainActivity.this, callback);
-                    Log.d("main","mainkakao clicked");
+                    Log.d("main", "mainkakao clicked");
 
                 }
 
@@ -150,7 +150,12 @@ public class MainActivity extends AppCompatActivity {
                     String TAG = "main";
 
                     emailregister();
-                    /*loginapi();*/
+/*
+loginapi();
+*/
+
+
+
                     /*choosecommonormaster();*/
 
 //////////////////////////////////////////
@@ -207,11 +212,9 @@ public class MainActivity extends AppCompatActivity {
 
                     Log.i(TAG, "email " + user.getKakaoAccount().getEmail());
 
-                }
-                else
-                {
+                } else {
 
-                    Log.d("main","Login to kakao first");
+                    Log.d("main", "Login to kakao first");
                 }
 
                 if (throwable != null) {
@@ -267,13 +270,12 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         Log.d(TAG, response.toString() + " i am queen");
                         Log.d(TAG, "emailregister");
-
+                        Log.d(TAG, "emailregister");
 
                         ////// choosemastaeror 시작
 
-choosecommonormaster();
-                        ////// choosemastaeror 끝
-
+                        loginapi();
+////// choosemastaeror 끝
 
 
                     }
@@ -282,7 +284,7 @@ choosecommonormaster();
             public void onErrorResponse(VolleyError error) {
                 Log.d(TAG, "email register failed: " + error.getMessage());
 
-        choosecommonormaster();
+                loginapi();
             }
         }) {
 
@@ -309,11 +311,12 @@ choosecommonormaster();
 
 ////////////
         String pwd = "password";
-        Log.d("loginapi", "email" + email);
+        Log.d("loginapi", "email " + email);
 /*
         String url = " http://10.0.2.2:8080/api/login?email="+email+"&password="+pwd;
 */
-        String url = " http://10.0.2.2:8080/api/login";
+
+        String url = " http://10.0.2.2:8080/login";
 
 
         Log.d("main", "url" + url);
@@ -325,13 +328,16 @@ choosecommonormaster();
                 Log.d("main", "mainresponse" + response);
                 Log.d(TAG, response.toString() + " i am queen");
                 Log.d(TAG, "login api success");
+                choosecommonormaster();
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", error.getMessage());
-                Log.d("error", "loginapi");
+                Log.d("error login ", "login api");
+
+
             }
         }) {
 
@@ -348,7 +354,7 @@ choosecommonormaster();
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "multipart/form-data; charset=utf-8");
+                headers.put("Content-Type", "application/x-www-form-urlencoded;");
                 return headers;
             }
         };
@@ -359,8 +365,6 @@ choosecommonormaster();
 
 
 ///////////////////
-
-
 
 
         //////////////////
@@ -407,7 +411,7 @@ choosecommonormaster();
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "multipart/form-data; charset=utf-8");
+                headers.put("Content-Type", "application/x-www-form-urlencoded;");
                 return headers;
             }
 
@@ -415,12 +419,10 @@ choosecommonormaster();
 
 
         Volley.newRequestQueue(this).add(jsonObjReq);
-
 */
 
+
     }
-
-
 
 
     public void choosecommonormaster() {
@@ -454,20 +456,17 @@ choosecommonormaster();
                     id2 = String.valueOf(map.get("id"));
 
 
-                    Log.d("main","phone"+phone);
+                    Log.d("main", "phone" + phone);
 
-                if(name.equals("TEMP_NAME"))
-                {
+                    if (name.equals("TEMP_NAME")) {
 
-                    Intent intent = new Intent(MainActivity.this, input_inform.class);
-                    intent.putExtra("email", email);
-                    Log.d("main","id2222222222222222211111111111"+id2);
-                    intent.putExtra("id", id2);
-                    startActivity(intent);
-                    return;
-                }
-
-
+                        Intent intent = new Intent(MainActivity.this, input_inform.class);
+                        intent.putExtra("email", email);
+                        Log.d("main", "id2222222222222222211111111111" + id2);
+                        intent.putExtra("id", id2);
+                        startActivity(intent);
+                        return;
+                    }
 
 
                     Integer size = 0;
@@ -594,7 +593,7 @@ choosecommonormaster();
 
                 Intent intent = new Intent(MainActivity.this, input_inform.class);
                 intent.putExtra("email", email);
-                Log.d("main","id999999"+id2);
+                Log.d("main", "id999999" + id2);
                 intent.putExtra("id", id2);
                 startActivity(intent);
                 return;

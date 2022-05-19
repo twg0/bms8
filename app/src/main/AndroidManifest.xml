@@ -123,7 +123,7 @@
         <activity android:name="com.alddeul.capstone.Person_info_guardActivity"></activity>
 
         <service
-            android:name="com.alddeul.capstone.MyFirebaseMessagingService"
+            android:name=".MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
