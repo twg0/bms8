@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">bms4</string>
+    <string name="app_name">capstone</string>
     //naverlogin
     <string name="naver_client_id">xxx</string>
     <string name="naver_client_secret">xxx</string>

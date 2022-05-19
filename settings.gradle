@@ -19,5 +19,5 @@ dependencyResolutionManagement {
 
     }
 }
-rootProject.name = "bms4"
+rootProject.name = "capstone"
 include ':app'

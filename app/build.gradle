@@ -6,7 +6,7 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "com.kplo.bms4"
+        applicationId "com.alddeul.capstone"
         minSdk 21
         targetSdk 31
         versionCode 1
@@ -48,10 +48,11 @@ dependencies {
 */
 // firebase
     implementation 'com.google.firebase:firebase-auth:21.0.3'
-    implementation platform('com.google.firebase:firebase-bom:30.0.0')
+    implementation platform('com.google.firebase:firebase-bom:29.3.1')
 
     implementation 'com.google.android.gms:play-services-auth:20.1.0'
-
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-firestore'
 
     implementation 'com.google.firebase:firebase-analytics'
 
@@ -78,7 +79,7 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.2'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.2'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-    implementation 'com.google.firebase:firebase-messaging:23.0.0'
+    implementation 'com.google.firebase:firebase-messaging:23.0.4'
 
 
     testImplementation 'junit:junit:4.13.2'
