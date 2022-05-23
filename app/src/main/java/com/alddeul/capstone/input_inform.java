@@ -203,7 +203,6 @@ public class input_inform extends AppCompatActivity {
 
 
                         Intent intent2= new Intent(input_inform.this, addvillage.class);
-                       Log.d(" ","why email not "+email);
                         intent2.putExtra("email", email);
 
                         startActivity(intent2);
@@ -213,6 +212,8 @@ public class input_inform extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
+                Log.d("input ","error during register session"+email);
+
             }
         }) {
 

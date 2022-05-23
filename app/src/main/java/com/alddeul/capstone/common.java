@@ -1,5 +1,6 @@
 package com.alddeul.capstone;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -21,6 +22,9 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.kakao.sdk.user.UserApiClient;
 
 import org.json.JSONException;
@@ -28,6 +32,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.Map;
 
 import kotlin.Unit;
@@ -42,15 +47,12 @@ public class common extends AppCompatActivity {
     String id, villname, vid, vname2, vname, main;
     ObjectMapper mapper = new ObjectMapper();
     ObjectMapper mapper2 = new ObjectMapper();
-    String city;
+    String city, token;
 
     Map<String, String> map, map2;
-    String Role, name, email;
-    private RequestQueue mqueue, mqueue2;
+    String Role, name, email,message,title;
+    private RequestQueue mqueue, mqueue2, queue;
     TextView weather2;
-
-
-
 
 
     @Override
@@ -59,23 +61,32 @@ public class common extends AppCompatActivity {
         setContentView(R.layout.activity_common);
         mqueue = Volley.newRequestQueue(this);
         mqueue2 = Volley.newRequestQueue(this);
+        queue = Volley.newRequestQueue(this);
+
         Intent intent = getIntent();
         String TAG = "comon";
+
 
         id = intent.getStringExtra("id");
 
         Role = intent.getStringExtra("Role");
         name = intent.getStringExtra("name");
         email = intent.getStringExtra("email");
-
+        message= intent.getStringExtra("message");
+        title= intent.getStringExtra("title");
         Log.d("common", " id" + id);
 
         Log.d("common", " Role" + Role);
+        Log.d("common", " message" +message);
+
+        gettoken();
+
+
         text = findViewById(R.id.toolbar_title);
 
         weather2 = findViewById(R.id.weather);
 
-        String url2 = " http://10.0.2.2:8080/api/users/" + id+"/villages";
+        String url2 = " http://10.0.2.2:8080/api/users/" + id + "/villages";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url2, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -86,17 +97,17 @@ public class common extends AppCompatActivity {
                 } else {
 
                     try {
-                        JSONObject json=new JSONObject(response);
+                        JSONObject json = new JSONObject(response);
                         Log.d("", "res" + json);
 
-                        JSONObject json2=json.optJSONObject("address");
+                        JSONObject json2 = json.optJSONObject("address");
                         Log.d("com", "address " + json2);
 
 
-                        city = (json2.optString("city")) ;
+                        city = (json2.optString("city"));
                         Log.d("com", "city" + city);
 
-                        String url = " https://api.openweathermap.org/data/2.5/weather?q="+ city+"&appid=b6fbd4253485afbad2502ce04bdb87ef";
+                        String url = " https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=b6fbd4253485afbad2502ce04bdb87ef";
                         StringRequest stringRequest3 = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
@@ -107,18 +118,18 @@ public class common extends AppCompatActivity {
                                 } else {
 
                                     try {
-                                        JSONObject json=new JSONObject(response);
+                                        JSONObject json = new JSONObject(response);
                                         Log.d("", "res" + json);
 
-                                        JSONObject json2=json.optJSONObject("main");
+                                        JSONObject json2 = json.optJSONObject("main");
                                         Log.d("com", "com" + json2);
 
 
                                         double temp2;
                                         temp2 = (json2.optDouble("temp")) - 273.15;
                                         int temp3;
-                                        temp3=(int)temp2;
-                                        weather2.setText(String.valueOf(temp3)+"c");
+                                        temp3 = (int) temp2;
+                                        weather2.setText(String.valueOf(temp3) + "c");
 
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -217,9 +228,6 @@ public class common extends AppCompatActivity {
 
         stringRequest.setTag(TAG);
         mqueue2.add(stringRequest);
-
-
-
 
 
 /////
@@ -438,6 +446,160 @@ public class common extends AppCompatActivity {
 
 
     }
+
+
+    public String gettoken() {
+
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w("input", "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        token = task.getResult();
+
+/*
+                        String msg = getString(R.string.msg_token_fmt, token);
+*/
+                        Log.d(" token value", token);
+
+                        /*sendtoken();*/
+                        sendearthquaketoken();
+                    }
+                });
+
+        return token;
+
+    }
+
+
+    public void sendtoken() {
+
+/*
+        myFirebaseMessagingService=(MyFirebaseMessagingService)getApplicationContext();
+*/
+/*
+        String url2 = " http://10.0.2.2:8080/api/notification/token?token="+token;
+*/
+
+        String url2 = " http://10.0.2.2:8080/api/notification/token";
+
+        String TAG = "token ";
+
+
+        Log.d(" ", " token" + token);
+
+
+        Log.d("common", "url2" + url2);
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url2, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, response.toString() + " i am queen");
+                Log.d(TAG, "send token success");
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("error send token ", "");
+
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("token", token);
+
+
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/x-www-form-urlencoded;");
+                return headers;
+            }
+        };
+
+
+        stringRequest.setTag(TAG);
+        queue.add(stringRequest);
+
+
+    }
+
+
+        public void sendearthquaketoken() {
+
+/*
+        myFirebaseMessagingService=(MyFirebaseMessagingService)getApplicationContext();
+*/
+/*
+        String url2 = " http://10.0.2.2:8080/api/notification/token?token="+token;
+*/
+
+        String url2 = " http://10.0.2.2:8080/api/notification/test";
+
+        String TAG = "token test ";
+
+
+        Log.d(" ", " token" + token);
+
+
+        Log.d("common", "url2" + url2);
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url2, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("common", response.toString() + " i am queen");
+                Log.d(TAG, "send earthtoken success");
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("error send earthtoken ", "");
+
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("token", token);
+
+
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
+                return headers;
+            }
+        };
+
+
+        stringRequest.setTag(TAG);
+        queue.add(stringRequest);
+
+
+    }
+
 
 
     @Override

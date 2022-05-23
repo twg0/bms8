@@ -54,12 +54,6 @@
                 android:layout_marginRight="22dp"
                 android:layout_height="111dp" />
 
-            <Button
-                android:id="@+id/villageadd"
-                android:layout_width="111dp"
-                android:hint="마을등록"
-                android:layout_height="111dp" />
-
 
         </LinearLayout>
 

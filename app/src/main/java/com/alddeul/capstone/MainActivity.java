@@ -35,7 +35,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpCookie;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import kotlin.Unit;
@@ -51,8 +53,9 @@ public class MainActivity extends AppCompatActivity {
     String name, villname, vid2, Role, url2;
     private RequestQueue mqueue, mqueue2;
     ObjectMapper mapper = new ObjectMapper();
-    String guardid;
+    String guardid, message, title;
     private RequestQueue queue;
+    public static String  Cookies ="1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        createNotificationChannel();
+        /*createNotificationChannel();*/
 /*
 
 
@@ -77,6 +80,9 @@ public class MainActivity extends AppCompatActivity {
 
         /////
         Intent intent = getIntent();
+        message = intent.getStringExtra("message");
+        title = intent.getStringExtra("title");
+
         mqueue = Volley.newRequestQueue(this);
         mqueue2 = Volley.newRequestQueue(this);
         queue = Volley.newRequestQueue(this);
@@ -166,49 +172,6 @@ loginapi();
                     /*jsonToObjectUrl();*/
 
                     Log.d("", "flag");
-/*
-
-                    if (name.isEmpty()) {
-                        Intent intent = new Intent(MainActivity.this, input_inform.class);
-                        intent.putExtra("email", email);
-                        startActivity(intent);
-
-                    } else {
-
-                        if (Role.equals("ROLE_CHIEF"))//
-                        {
-                            Intent intent = new Intent(MainActivity.this, master.class);
-                            intent.putExtra("email", email);
-                            startActivity(intent);
-
-
-                        }
-                         else {//
-
-*/
-/*
-                            if (  )//피보호자 리스트가 없는경우
-                            {
-                                Intent intent = new Intent(MainActivity.this, common.class);
-                                intent.putExtra("email", email);
-                                startActivity(intent);
-
-                            } else {//있는경우
-
-                                Intent intent = new Intent(MainActivity.this, common.class);
-                                intent.putExtra("email", email);
-                                startActivity(intent);
-                            }
-*/
-                    /*
-
-
-
-                        }
-
-
-                    }
-*/
 
                     Log.i(TAG, "email " + user.getKakaoAccount().getEmail());
 
@@ -229,23 +192,6 @@ loginapi();
 
     }
 
-    private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = getString(R.string.channel_name);
-            String description = getString(R.string.channel_description);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(/*CHANNEL_ID*/"0", name, importance);
-            channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-
-    }
-
     public void emailregister() {
 
         String url3 = " http://10.0.2.2:8080/api/users?email=" + email;
@@ -262,7 +208,6 @@ loginapi();
             e.printStackTrace();
         }
 
-        // Make request for JSONObject
         JsonObjectRequest jsonObjReq2 = new JsonObjectRequest(
                 Request.Method.POST, url3, js2,
                 new Response.Listener<JSONObject>() {
@@ -270,11 +215,10 @@ loginapi();
                     public void onResponse(JSONObject response) {
                         Log.d(TAG, response.toString() + " i am queen");
                         Log.d(TAG, "emailregister");
-                        Log.d(TAG, "emailregister");
 
                         ////// choosemastaeror 시작
-
-                        loginapi();
+                        choosecommonormaster();
+                        /*loginapi();*/
 ////// choosemastaeror 끝
 
 
@@ -283,8 +227,9 @@ loginapi();
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(TAG, "email register failed: " + error.getMessage());
+                choosecommonormaster();
 
-                loginapi();
+                /*loginapi();*/
             }
         }) {
 
@@ -297,6 +242,7 @@ loginapi();
                 headers.put("Content-Type", "application/json; charset=utf-8");
                 return headers;
             }
+
 
         };
 
@@ -328,15 +274,28 @@ loginapi();
                 Log.d("main", "mainresponse" + response);
                 Log.d(TAG, response.toString() + " i am queen");
                 Log.d(TAG, "login api success");
-                choosecommonormaster();
+
+                /*
+                CookieManager cookieManager = User_Resource.cookieManager; //전역에서 동일한 주소로 세팅을 하기 위해 static 변수로 만들었습니다
+
+                cookies = http_conn.getHeaderFields().get("Set-Cookie");
+                cookieManager.put( url.toURI() , http_conn.getHeaderFields());
+                List<HttpCookie> list_cookies = cookieManager.getCookieStore().getCookies();
+
+                for(int i = 0; i < list_cookies.size(); i++) {
+                    HttpCookie httpCookie = list_cookies.get(i);
+                    cookieManager.getCookieStore().add(url.toURI(), httpCookie);
+
+                }
+*/
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", error.getMessage());
-                Log.d("error login ", "login api");
-
+                Log.d("error login ", "login api error");
+                choosecommonormaster();
 
             }
         }) {
@@ -356,7 +315,22 @@ loginapi();
                 HashMap<String, String> headers = new HashMap<String, String>();
                 headers.put("Content-Type", "application/x-www-form-urlencoded;");
                 return headers;
+
+
             }
+            ///
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                // since we don't know which of the two underlying network vehicles
+                // will Volley use, we have to handle and store session cookies manually
+                Log.i("response",response.headers.toString());
+                Map<String, String> responseHeaders = response.headers;
+                 Cookies = responseHeaders.get("Set-Cookie");
+                Log.i("cookies",Cookies);
+                return super.parseNetworkResponse(response);
+            }
+            ////
+
         };
 
 
@@ -368,58 +342,6 @@ loginapi();
 
 
         //////////////////
-
-/*
-
-        JSONObject js = new JSONObject();
-        try {
-
-            js.put("email", email);
-
-            js.put("password", pwd);
-
-            Log.d("this", "here ");
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Log.d("this", "here error");
-        }
-
-
-        // Make request for JSONObject
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                Request.Method.POST, url, js,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d(TAG, response.toString() + " i am queen");
-                        Log.d(TAG, "login api success");
-                        /////
-
-
-                        //////
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Login failed : " + error.getMessage());
-            }
-        }) {
-
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "application/x-www-form-urlencoded;");
-                return headers;
-            }
-
-        };
-
-
-        Volley.newRequestQueue(this).add(jsonObjReq);
-*/
 
 
     }
@@ -474,7 +396,6 @@ loginapi();
 
                     // Class class = new ObjectMapper().readValue(response, Class.class);
 
-                    Log.d("chief", "");
                     if (Role.equals("ROLE_ADMIN"))//
                     {
                         Log.d("chief", "suces");
@@ -523,7 +444,9 @@ loginapi();
                                 intent.putExtra("Role", Role);
                                 intent.putExtra("name", name);
                                 intent.putExtra("id", id2);
-
+                                intent.putExtra("message", message);
+                                intent.putExtra("title", title);
+                                intent.putExtra("guardid",guardid);
                                 startActivity(intent);
 
                                 return;
@@ -536,13 +459,15 @@ loginapi();
                         public void onErrorResponse(VolleyError error) {
                             Log.d("main", "you dont have old");
 
+
                             Intent intent = new Intent(MainActivity.this, common.class);
                             intent.putExtra("email", email);
                             intent.putExtra("Role", Role);
                             intent.putExtra("name", name);
                             Log.d("send name", "send name" + name);
                             intent.putExtra("id", id2);
-
+                            intent.putExtra("message", message);
+                            intent.putExtra("title", title);
                             startActivity(intent);
 
                             return;
@@ -593,7 +518,7 @@ loginapi();
 
                 Intent intent = new Intent(MainActivity.this, input_inform.class);
                 intent.putExtra("email", email);
-                Log.d("main", "id999999" + id2);
+                Log.d("main", "id999" + id2);
                 intent.putExtra("id", id2);
                 startActivity(intent);
                 return;

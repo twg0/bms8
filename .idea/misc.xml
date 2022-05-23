@@ -34,6 +34,7 @@
         <entry key="..\:/Users/junho/AndroidStudioProjects/bms13 volley server/app/src/main/res/drawable/border.xml" value="0.1" />
         <entry key="..\:/Users/junho/AndroidStudioProjects/bms13 volley server/app/src/main/res/drawable/custom_progressbar.xml" value="0.137" />
         <entry key="..\:/Users/junho/AndroidStudioProjects/bms13 volley server/app/src/main/res/drawable/dash_line.xml" value="0.137" />
+        <entry key="..\:/Users/junho/AndroidStudioProjects/bms13 volley server/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1115" />
         <entry key="..\:/Users/junho/AndroidStudioProjects/bms13 volley server/app/src/main/res/drawable/pause_button.xml" value="0.1275" />
         <entry key="..\:/Users/junho/AndroidStudioProjects/bms13 volley server/app/src/main/res/drawable/play_vector.xml" value="0.1275" />
         <entry key="..\:/Users/junho/AndroidStudioProjects/bms13 volley server/app/src/main/res/drawable/stop_button.xml" value="0.1275" />
@@ -52,7 +53,7 @@
         <entry key="..\:/Users/junho/AndroidStudioProjects/bms13 volley server/app/src/main/res/layout/activity_person_info.xml" value="0.264" />
         <entry key="..\:/Users/junho/AndroidStudioProjects/bms13 volley server/app/src/main/res/layout/activity_person_masterinfo.xml" value="0.2" />
         <entry key="..\:/Users/junho/AndroidStudioProjects/bms13 volley server/app/src/main/res/layout/activity_personinfo.xml" value="0.13697916666666668" />
-        <entry key="..\:/Users/junho/AndroidStudioProjects/bms13 volley server/app/src/main/res/layout/activity_state_data.xml" value="0.176" />
+        <entry key="..\:/Users/junho/AndroidStudioProjects/bms13 volley server/app/src/main/res/layout/activity_state_data.xml" value="0.264" />
         <entry key="..\:/Users/junho/AndroidStudioProjects/bms13 volley server/app/src/main/res/layout/addvillage.xml" value="0.2" />
         <entry key="..\:/Users/junho/AndroidStudioProjects/bms13 volley server/app/src/main/res/layout/board.xml" value="0.2" />
         <entry key="..\:/Users/junho/AndroidStudioProjects/bms13 volley server/app/src/main/res/layout/broadcast_content.xml" value="0.13697916666666668" />

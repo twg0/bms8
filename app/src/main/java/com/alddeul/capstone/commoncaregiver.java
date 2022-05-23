@@ -1,9 +1,12 @@
 package com.alddeul.capstone;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,10 +20,15 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.kakao.sdk.user.UserApiClient;
 
 import org.json.JSONException;
@@ -28,10 +36,15 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.CookieHandler;
+import java.net.CookiePolicy;
+import java.net.CookieStore;
+import java.util.HashMap;
 import java.util.Map;
 
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
+import okhttp3.Cookie;
 
 public class commoncaregiver extends AppCompatActivity {
     TextView text;
@@ -39,13 +52,15 @@ public class commoncaregiver extends AppCompatActivity {
     ImageButton person_info2;
     ImageButton logout;
     Integer trigger = 0; // 주민(0)과 보호자(1) 구분 플래그
-    String id, villname, vid, vname2,vname;
+    String id, villname, vid, vname2, vname;
     ObjectMapper mapper = new ObjectMapper();
     Map<String, String> map;
     String Role, name, email;
-    private RequestQueue mqueue, mqueue2;
+    private RequestQueue mqueue, mqueue2,queue;
     String city;
     TextView weather2;
+    String token, token2,message,title,guardid;
+    MainActivity m= new MainActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,27 +68,41 @@ public class commoncaregiver extends AppCompatActivity {
         setContentView(R.layout.activity_commoncaregiver);
         mqueue = Volley.newRequestQueue(this);
         mqueue2 = Volley.newRequestQueue(this);
+        queue = Volley.newRequestQueue(this);
         Intent intent = getIntent();
-        String TAG = "comon";
+        String TAG = "comoncare";
 
         id = intent.getStringExtra("id");
 
         Role = intent.getStringExtra("Role");
         name = intent.getStringExtra("name");
         email = intent.getStringExtra("email");
+        message = intent.getStringExtra("message");
+        title= intent.getStringExtra("title");
+        guardid= intent.getStringExtra("guardid");
 
+        Log.d("commoncare", " body" +message);
         Log.d("commoncare", " id" + id);
-
+        Log.d("commoncare", " cookie" + m.Cookies);
         Log.d("commoncare", " Role" + Role);
         text = findViewById(R.id.toolbar_title);
+        gettoken();
+/*
+
+        Intent intent1=new Intent(getApplicationContext(),MyFirebaseMessagingService.class);
+        startService(intent1);
+*/
+
+        /*
 
 
-
-
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(500); // 0.5초간 진동
+*/
 
         weather2 = findViewById(R.id.weather);
 
-        String url2 = " http://10.0.2.2:8080/api/users/" + id+"/villages";
+        String url2 = " http://10.0.2.2:8080/api/users/" + id + "/villages";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url2, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -84,17 +113,17 @@ public class commoncaregiver extends AppCompatActivity {
                 } else {
 
                     try {
-                        JSONObject json=new JSONObject(response);
+                        JSONObject json = new JSONObject(response);
                         Log.d("", "res" + json);
 
-                        JSONObject json2=json.optJSONObject("address");
-                        Log.d("com", "address " + json2);
+                        JSONObject json2 = json.optJSONObject("address");
+                        Log.d("comcare", "address " + json2);
 
 
-                        city = (json2.optString("city")) ;
-                        Log.d("com", "city" + city);
+                        city = (json2.optString("city"));
+                        Log.d("comcare", "city" + city);
 
-                        String url = " https://api.openweathermap.org/data/2.5/weather?q="+ city+"&appid=b6fbd4253485afbad2502ce04bdb87ef";
+                        String url = " https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=b6fbd4253485afbad2502ce04bdb87ef";
                         StringRequest stringRequest3 = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
@@ -105,18 +134,18 @@ public class commoncaregiver extends AppCompatActivity {
                                 } else {
 
                                     try {
-                                        JSONObject json=new JSONObject(response);
+                                        JSONObject json = new JSONObject(response);
                                         Log.d("", "res" + json);
 
-                                        JSONObject json2=json.optJSONObject("main");
-                                        Log.d("com", "com" + json2);
+                                        JSONObject json2 = json.optJSONObject("main");
+                                        Log.d("comcare", "comcare" + json2);
 
 
                                         double temp2;
                                         temp2 = (json2.optDouble("temp")) - 273.15;
                                         int temp3;
-                                        temp3=(int)temp2;
-                                        weather2.setText(String.valueOf(temp3)+"c");
+                                        temp3 = (int) temp2;
+                                        weather2.setText(String.valueOf(temp3) + "c");
 
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -135,7 +164,7 @@ public class commoncaregiver extends AppCompatActivity {
                         }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                Log.d("infoguard", "no userdata");
+                                Log.d("infoguard", "no weatherdata");
 
 
                             }
@@ -217,12 +246,7 @@ public class commoncaregiver extends AppCompatActivity {
         mqueue2.add(stringRequest);
 
 
-
-
-
-
         //////
-
 
 
         weather = findViewById(R.id.weatherbtn);
@@ -259,7 +283,6 @@ public class commoncaregiver extends AppCompatActivity {
         });
 
 
-
         String url3 = " http://10.0.2.2:8080/api/users/" + id + "/villages";
         StringRequest stringRequest2 = new StringRequest(Request.Method.GET, url3, new Response.Listener<String>() {
             @Override
@@ -288,6 +311,90 @@ public class commoncaregiver extends AppCompatActivity {
                     // Class class = new ObjectMapper().readValue(response, Class.class);
 
 
+
+                    person_info2 = findViewById(R.id.person_info);
+                    person_info2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+
+                            String url = " http://10.0.2.2:8080/api/users/" + email;
+
+                            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    Log.d("TAG ", "handleSignInResult:repsonse " + response);
+
+                                    if (response.isEmpty()) {
+
+
+                                        return;
+                                    } else {
+
+                                        try {
+                                            map = mapper.readValue(response, Map.class);
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                        Log.d("TAG ", "handleSignInResult:size2 " + map);
+                                        String Role;
+
+                                        Role = map.get("role");
+                                        name = map.get("username");
+                                        id = String.valueOf(map.get("id"));
+                                        Role = "ROLE_USER";
+                                        Log.d("TAG ", "handleSignInResult:size22222 " + Role);
+
+                                        Intent intent2 = new Intent(commoncaregiver.this, Person_info_guardActivity.class);
+                                        intent2.putExtra("Role", Role);
+                                        intent2.putExtra("name", name);
+                                        intent2.putExtra("email", email);
+                                        intent2.putExtra("id", id);
+                                        intent2.putExtra("vname",vname);
+
+                                        startActivity(intent2);
+                                    }
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+
+
+                                }
+                            }) {
+                                @Override //response를 UTF8로 변경해주는 소스코드
+                                protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                                    try {
+                                        String utf8String = new String(response.data, "UTF-8");
+                                        return Response.success(utf8String, HttpHeaderParser.parseCacheHeaders(response));
+                                    } catch (UnsupportedEncodingException e) {
+                                        // log error
+                                        return Response.error(new ParseError(e));
+                                    } catch (Exception e) {
+                                        // log error
+                                        return Response.error(new ParseError(e));
+                                    }
+                                }
+
+                                @Override
+                                protected Map<String, String> getParams() throws AuthFailureError {
+                                    return super.getParams();
+                                }
+
+                            };
+
+                            /*stringRequest.setTag(TAG);*/
+                            mqueue2.add(stringRequest);
+
+
+                        }
+                    });
+
+
+
+
+
                     guard_data = findViewById(R.id.guard_data);
 
 
@@ -300,11 +407,11 @@ public class commoncaregiver extends AppCompatActivity {
                             Intent intent2 = new Intent(commoncaregiver.this, state_data.class);
                             intent2.putExtra("nickname", vname);
                             intent2.putExtra("name", name);
+                            intent2.putExtra("message", message);
                             startActivity(intent2);
 
                         }
                     });
-
 
 
                     Button play = findViewById(R.id.play_button);
@@ -314,10 +421,11 @@ public class commoncaregiver extends AppCompatActivity {
                             Intent intent = new Intent(commoncaregiver.this, broadcast_play.class);
                             intent.putExtra("vid", vid);
                             intent.putExtra("vname", vname);
+                            intent.putExtra("name", name);
+
                             startActivity(intent);
                         }
                     });
-
 
 
                     notice = findViewById(R.id.notice);
@@ -330,14 +438,11 @@ public class commoncaregiver extends AppCompatActivity {
                             intent2.putExtra("vname", vname);
                             intent2.putExtra("name", name);
 
-                            Log.d("common", "vname" + vname);
+                            Log.d("commoncare", "vname" + vname);
 
                             startActivity(intent2);
                         }
                     });
-
-
-
 
 
                 }
@@ -348,14 +453,257 @@ public class commoncaregiver extends AppCompatActivity {
                 Log.d("commoncaregiver", "no village");
 
 
-
-
 /*
 
                             Intent intent = new Intent(MainActivity.this, input_inform.class);
                             intent.putExtra("email", email);
                             startActivity(intent);
 */
+
+            }
+        }) {
+            @Override //response를 UTF8로 변경해주는 소스코드
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                try {
+                    String utf8String = new String(response.data, "UTF-8");
+                    return Response.success(utf8String, HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
+                    // log error
+                    return Response.error(new ParseError(e));
+                } catch (Exception e) {
+                    // log error
+                    return Response.error(new ParseError(e));
+                }
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return super.getParams();
+            }
+
+        };
+
+        stringRequest2.setTag(TAG);
+        mqueue2.add(stringRequest2);
+
+
+
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
+
+    public String gettoken() {
+
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w("input", "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        token = task.getResult();
+
+/*
+                        String msg = getString(R.string.msg_token_fmt, token);
+*/
+                        Log.d(" token value", token);
+
+                        /*sendtoken();*/
+                        sendearthquaketoken();
+                    }
+                });
+
+        return token;
+
+    }
+
+
+    public void sendtoken() {
+
+/*
+        myFirebaseMessagingService=(MyFirebaseMessagingService)getApplicationContext();
+*/
+/*
+        String url2 = " http://10.0.2.2:8080/api/notification/token?token="+token;
+*/
+
+        String url2 = " http://10.0.2.2:8080/api/notification/token";
+
+        String TAG = "token ";
+
+
+        Log.d(" ", " token" + token);
+
+
+
+
+        Log.d("main", "url2" + url2);
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url2, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, response.toString() + " i am queen");
+                Log.d(TAG, "send token success");
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("error send token ", "comcare");
+
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("token",token);
+
+
+
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/x-www-form-urlencoded;");
+                return headers;
+            }
+
+
+
+        };
+
+
+        stringRequest.setTag(TAG);
+        queue.add(stringRequest);
+
+
+
+    }
+
+
+    public void sendearthquaketoken() {
+
+/*
+        myFirebaseMessagingService=(MyFirebaseMessagingService)getApplicationContext();
+*/
+/*
+        String url2 = " http://10.0.2.2:8080/api/notification/token?token="+token;
+*/
+
+        String url2 = " http://10.0.2.2:8080/api/notification/test";
+
+        String TAG = "caregiver token test ";
+
+
+        Log.d(" ", " token" + token);
+
+
+        Log.d("commoncare", "url2" + url2);
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url2, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("commoncare", response.toString() + " i am queen");
+                Log.d(TAG, "send earthtoken success");
+
+              
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("error send earthtoken ", "");
+
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("token", token);
+
+
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
+
+
+                return headers;
+
+            }
+
+
+        };
+
+
+        stringRequest.setTag(TAG);
+        queue.add(stringRequest);
+
+
+    }
+
+
+    public void getstatedata(){
+
+
+        String url2 = " http://10.0.2.2:8080/messages/"+guardid;
+
+        String TAG = "caregiver ";
+
+
+        Log.d("commoncare", "url2" + url2);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url2, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                if (response.isEmpty()) {
+
+                    return;
+                } else {
+
+                    try {
+                        map = mapper.readValue(response, Map.class);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    Log.d("", "" + response);
+                    String phonenum;
+                    phonenum = map.get("temperature");
+
+
+
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("caregiver", "no userdata");
 
 
             }
@@ -380,97 +728,11 @@ public class commoncaregiver extends AppCompatActivity {
 
         };
 
-        stringRequest2.setTag(TAG);
-        mqueue2.add(stringRequest2);
+
+        stringRequest.setTag(TAG);
+        mqueue2.add(stringRequest);
 
 
-        person_info2 = findViewById(R.id.person_info);
-        person_info2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-
-
-                String url = " http://10.0.2.2:8080/api/users/" + email;
-
-                StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("TAG", "handleSignInResult:repsonse " + response);
-
-                        if (response.isEmpty()) {
-
-
-                            return;
-                        } else {
-
-                            try {
-                                map = mapper.readValue(response, Map.class);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-
-                            Log.d("TAG", "handleSignInResult:size2 " + map);
-                            String Role;
-
-                            Role = map.get("role");
-                            name = map.get("username");
-                            id = String.valueOf(map.get("id"));
-                            Role = "ROLE_USER";
-                            Log.d("TAG", "handleSignInResult:size22222 " + Role);
-
-                            Intent intent2 = new Intent(commoncaregiver.this, Person_info_guardActivity.class);
-                            intent2.putExtra("Role", Role);
-                            intent2.putExtra("name", name);
-                            intent2.putExtra("email", email);
-                            intent2.putExtra("id", id);
-
-                            startActivity(intent2);
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-
-                    }
-                }){
-                    @Override //response를 UTF8로 변경해주는 소스코드
-                    protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                        try {
-                            String utf8String = new String(response.data, "UTF-8");
-                            return Response.success(utf8String, HttpHeaderParser.parseCacheHeaders(response));
-                        } catch (UnsupportedEncodingException e) {
-                            // log error
-                            return Response.error(new ParseError(e));
-                        } catch (Exception e) {
-                            // log error
-                            return Response.error(new ParseError(e));
-                        }
-                    }
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        return super.getParams();
-                    }
-
-                };
-
-                /*stringRequest.setTag(TAG);*/
-                mqueue2.add(stringRequest);
-
-
-            }
-        });
-
-
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
     }
 
 

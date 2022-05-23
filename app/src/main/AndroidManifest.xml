@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name = "android.permission.VIBRATE"/>
+
 
     <queries>
         <intent>
@@ -75,8 +77,8 @@
         </activity>
 
         <!--<activity android:name=".chiefActivity"></activity>-->
-        <activity android:name="com.alddeul.capstone.userjoinActivity"></activity>
-        <activity android:name="com.alddeul.capstone.signupActivity"></activity>
+        <activity android:name=".userjoinActivity"></activity>
+        <activity android:name=".signupActivity"></activity>
         <!-- <activity android:name=".loginActivity"></activity>
          <activity android:name=".caregiverActivity"></activity>
          <activity android:name=".caregiverloginActivity"></activity>-->
@@ -85,42 +87,37 @@
         -->
         <!--<activity android:name=".chiefboard_activity"></activity>
         <activity android:name=".caregiverboardActivity"></activity>-->
-        <activity android:name="com.alddeul.capstone.caregiverjoinActivity"></activity>
+        <activity android:name=".caregiverjoinActivity"></activity>
         <!--<activity android:name=".chiefjoinActivity"></activity>-->
-        <activity android:name="com.alddeul.capstone.weatherActivity"></activity>
-        <activity android:name="com.alddeul.capstone.broadcastActivity"></activity>
-        <activity android:name="com.alddeul.capstone.broadcast_notice_master"></activity>
-        <activity android:name="com.alddeul.capstone.usermanageActivity"></activity>
-        <activity android:name="com.alddeul.capstone.addvillage"></activity>
+        <activity android:name=".weatherActivity"></activity>
+        <activity android:name=".broadcastActivity"></activity>
+        <activity android:name=".broadcast_notice_master"></activity>
+        <activity android:name=".usermanageActivity"></activity>
+        <activity android:name=".addvillage"></activity>
         <activity
             android:name="com.alddeul.capstone.state_data"
-            android:exported="true">
+           >
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
 
-        <activity android:name="com.alddeul.capstone.statementActivity"></activity>
+        <activity android:name=".statementActivity"></activity>
 
-        <activity android:name="com.alddeul.capstone.villageaddActivity"></activity>
+        <activity android:name=".villageaddActivity"></activity>
 
-        <activity android:name="com.alddeul.capstone.oldjoinActivity"></activity>
-        <activity android:name="com.alddeul.capstone.broadcast_notice"></activity>
+        <activity android:name=".oldjoinActivity"></activity>
+        <activity android:name=".broadcast_notice"></activity>
         <activity android:name="com.alddeul.capstone.common"></activity>
         <activity android:name="com.alddeul.capstone.master"></activity>
         <activity android:name="com.alddeul.capstone.Person_infoActivity"></activity>
-        <activity android:name="com.alddeul.capstone.input_inform"></activity>
-        <activity android:name="com.alddeul.capstone.broadcast_play"></activity>
-        <activity android:name="com.alddeul.capstone.commoncaregiver"></activity>
-        <activity android:name="com.alddeul.capstone.manage_person"></activity>
-        <activity android:name="com.alddeul.capstone.manage_person_delete"></activity>
-        <activity android:name="com.alddeul.capstone.manage_person_plus"></activity>
-        <activity android:name="com.alddeul.capstone.Person_infomasterActivity"></activity>
-        <activity android:name="com.alddeul.capstone.Person_info_guardActivity"></activity>
+        <activity android:name=".input_inform"></activity>
+        <activity android:name=".broadcast_play"></activity>
+        <activity android:name=".commoncaregiver"></activity>
+        <activity android:name=".manage_person"></activity>
+        <activity android:name=".manage_person_delete"></activity>
+        <activity android:name=".manage_person_plus"></activity>
+        <activity android:name=".Person_infomasterActivity"></activity>
+        <activity android:name=".Person_info_guardActivity"></activity>
 
         <service
             android:name=".MyFirebaseMessagingService"

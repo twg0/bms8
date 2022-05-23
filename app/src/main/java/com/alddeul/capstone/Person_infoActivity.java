@@ -142,7 +142,7 @@ public class Person_infoActivity extends AppCompatActivity {
 
 
         String url2 = " http://10.0.2.2:8080/api/users/" + id;
-
+/*
         Button villageadd = findViewById(R.id.villageadd);
         villageadd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,7 +151,7 @@ public class Person_infoActivity extends AppCompatActivity {
                 intent.putExtra("id", id);
                 startActivity(intent);
             }
-        });
+        });*/
         img = findViewById(R.id.logout);
         img.setOnClickListener(new View.OnClickListener() {
             @Override

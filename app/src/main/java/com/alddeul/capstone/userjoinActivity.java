@@ -1,3 +1,4 @@
+/*
 package com.alddeul.capstone;
 
 import android.os.Bundle;
@@ -40,7 +41,9 @@ public class userjoinActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                /*tv.setText(response);*/
+                */
+/*tv.setText(response);*//*
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -74,12 +77,16 @@ public class userjoinActivity extends AppCompatActivity {
                queue.add(stringRequest);
 
 
+*/
 /*
                Intent intent3= new Intent(userjoinActivity.this,chiefActivity.class);
-*/
+*//*
 
 
-               /*startActivity(intent3);*/
+
+               */
+/*startActivity(intent3);*//*
+
 
 
 
@@ -101,3 +108,4 @@ public class userjoinActivity extends AppCompatActivity {
 
 
 }
+*/

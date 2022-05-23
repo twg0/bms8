@@ -56,6 +56,7 @@ public class Person_info_guardActivity extends AppCompatActivity {
         role = intent.getStringExtra("Role");
         name = intent.getStringExtra("name");
         email = intent.getStringExtra("email");
+        vname = intent.getStringExtra("vname");
 
         queue2 = Volley.newRequestQueue(this);
         mqueue = Volley.newRequestQueue(this);
@@ -218,7 +219,7 @@ public class Person_info_guardActivity extends AppCompatActivity {
 
 
         String url2 = " http://10.0.2.2:8080/api/users/" + id;
-
+/*
         Button villageadd = findViewById(R.id.villageadd);
         villageadd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -228,6 +229,8 @@ public class Person_info_guardActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        */
+
         img = findViewById(R.id.logout);
         img.setOnClickListener(new View.OnClickListener() {
             @Override

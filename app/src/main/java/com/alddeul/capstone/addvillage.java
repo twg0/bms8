@@ -45,7 +45,7 @@ import kotlin.jvm.functions.Function1;
 public class addvillage extends AppCompatActivity {
 
     TextView chieftxt;
-    String TAG = "chief";
+    String TAG = "addvill";
     ObjectMapper mapper = new ObjectMapper();
     Map<String, String> map;
     ArrayList<villageselect_VO> items;
@@ -62,6 +62,7 @@ public class addvillage extends AppCompatActivity {
     Integer size = 0;
     String[] vid_data, vid_name;
     Long id3;
+    private RequestQueue queue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,10 +74,11 @@ public class addvillage extends AppCompatActivity {
         email = intent.getStringExtra("email");
 
         Log.d("", "email" + email);
+        queue = Volley.newRequestQueue(this);
 
         mqueue2 = Volley.newRequestQueue(this);
         mqueue = Volley.newRequestQueue(this);
-        Button send = findViewById(R.id.reg_button);
+
         listView = findViewById(R.id.villlist);
         img = findViewById(R.id.logout);
         img.setOnClickListener(new View.OnClickListener() {
@@ -98,9 +100,8 @@ public class addvillage extends AppCompatActivity {
         });
 
 
-
         String url3 = " http://10.0.2.2:8080/api/users/" + email;
-        Log.d("url", "url3" + url3);
+        Log.d("addvill", "url3" + url3);
         StringRequest stringRequest2 = new StringRequest(Request.Method.GET, url3, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -117,9 +118,9 @@ public class addvillage extends AppCompatActivity {
                     }
 
 
-                    Log.d("", "" + response);
+                    Log.d("addvill", "" + response);
                     id = String.valueOf(map.get("id"));
-
+                    getvilages();
 
                 }
             }
@@ -127,9 +128,6 @@ public class addvillage extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("addvill", "no data");
-
-
-
 
 
             }
@@ -160,6 +158,29 @@ public class addvillage extends AppCompatActivity {
 
 /////////////////////
 
+        /*getvilages();*/
+
+
+/*
+
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Long vid = Long.parseLong(vid2);
+                String url = " http://10.0.2.2:8080/api/users/" + id + "/villages?villageId=" + vid;
+
+                addvill(id2, vid, url);
+
+            }
+        });
+*/
+
+    }
+
+    public void getvilages() {
+
+
         String url = " http://10.0.2.2:8080/api/villages";
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -178,8 +199,8 @@ public class addvillage extends AppCompatActivity {
                         });
 
 
-                        Log.d(" asdsadsad", " prm" + paramMap);
-                        Log.d(" asdsadsad", " size" + paramMap.size());
+                        Log.d(" addvill", " prm" + paramMap);
+                        Log.d(" addvill", " size" + paramMap.size());
                         size = paramMap.size();
 
                         String[] vid_data = new String[paramMap.size()];
@@ -209,7 +230,7 @@ public class addvillage extends AppCompatActivity {
 
                         listView.setAdapter(adapter);
 
-
+                        Button send = findViewById(R.id.reg_button);
                         send.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -235,14 +256,14 @@ public class addvillage extends AppCompatActivity {
 
                                 for (int i = 0; i < count; i++) {
                                     if (adapter.isChecked(i)) {
-                                        Log.d("select", "this " + i);
+                                        Log.d("addvill", "this " + i);
 
 
                                         String url2 = " http://10.0.2.2:8080/api/users/" + id + "/villages?villageId=" + vid_data[i];
                                         Long vid = Long.parseLong(vid_data[i]);
                                         id3 = Long.parseLong(id);
                                         addvill(id3, vid, url2);
-                                        Log.d("", "villsuccess");
+                                        Log.d("addvill", "villsuccess");
 
 //////////////////////////////
 
@@ -256,7 +277,7 @@ public class addvillage extends AppCompatActivity {
 
 
                     } catch (IOException e) {
-                        Log.d("error2222", "");
+                        Log.d("addvill", "io exception");
                         e.printStackTrace();
 
                     }
@@ -271,6 +292,7 @@ public class addvillage extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
+                Log.d(TAG, "error while get mapping villages");
 
             }
         }) {
@@ -299,20 +321,6 @@ public class addvillage extends AppCompatActivity {
         stringRequest.setTag(TAG);
         mqueue.add(stringRequest);
 
-/*
-
-        send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Long vid = Long.parseLong(vid2);
-                String url = " http://10.0.2.2:8080/api/users/" + id + "/villages?villageId=" + vid;
-
-                addvill(id2, vid, url);
-
-            }
-        });
-*/
 
     }
 
@@ -320,11 +328,11 @@ public class addvillage extends AppCompatActivity {
     public void addvill(Long id, Long vid, String url2) {
 
         String TAG = "aaa";
-        Log.d(" ", "id " + id);
-        Log.d(" ", " " + url2);
+        Log.d("addvill ", "id " + id);
+        Log.d(" addvill", " addvill url " + url2);
 
 
-        Log.d(" ", " vid " + vid);
+        Log.d(" addvill", " vid " + vid);
 
         JSONObject js = new JSONObject();
 

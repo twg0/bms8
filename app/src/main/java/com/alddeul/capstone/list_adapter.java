@@ -1,3 +1,4 @@
+/*
 package com.alddeul.capstone;
 
 import android.content.Context;
@@ -39,4 +40,4 @@ public class list_adapter extends ArrayAdapter<listitemActivity> {
 
         return super.getView(position, convertView, parent);
     }
-}
+}*/

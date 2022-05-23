@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -23,20 +24,23 @@ import java.util.Date;
 
 public class state_data extends AppCompatActivity {
     private LineChart lineChart;
-    TextView textView1, textView2, textView3,toolbar;
-String vname,name;
+    TextView textView1, textView2, textView3, toolbar;
+    String vname, name, message;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_state_data);
 
-        Intent intent =getIntent();
-        vname= intent.getStringExtra("nickname");
-        name= intent.getStringExtra("name");
+        Intent intent = getIntent();
+        vname = intent.getStringExtra("nickname");
+        name = intent.getStringExtra("name");
+        message = intent.getStringExtra("message");
+        toolbar = findViewById(R.id.toolbar_title);
+        toolbar.setText(vname + "마을" + name + "님");
 
-        toolbar=findViewById(R.id.toolbar_title);
-        toolbar.setText( vname+"마을"+ name+"님");
 
+        Log.d("state", "message" + message);
         ArrayList<Entry> entry_chart1 = new ArrayList<>(); // 데이터를 담을 Arraylist
         ArrayList<Entry> entry_chart2 = new ArrayList<>();
         ArrayList<Entry> entry_chart3 = new ArrayList<>();
@@ -50,21 +54,20 @@ String vname,name;
         entry_chart1.add(new Entry(1712, (float) 19.2));
         entry_chart1.add(new Entry(1713, (float) 20.4));
         entry_chart1.add(new Entry(1714, (float) 22.8));
-        entry_chart1.add(new Entry(1715, (float) 21.9));
 
-        entry_chart2.add(new Entry(1710, (float) 21.3)); //entry_chart1에 좌표 데이터를 담는다.
+
+        entry_chart2.add(new Entry(1710, (float) 21.3)); //entry_chart2에 좌표 데이터를 담는다.
         entry_chart2.add(new Entry(1711, (float) 29.2));
         entry_chart2.add(new Entry(1712, (float) 28.2));
         entry_chart2.add(new Entry(1713, (float) 25.4));
         entry_chart2.add(new Entry(1714, (float) 23.8));
-        entry_chart2.add(new Entry(1715, (float) 19.9));
 
-        entry_chart3.add(new Entry(1710, (float) 26.3)); //entry_chart1에 좌표 데이터를 담는다.
+        entry_chart3.add(new Entry(1710, (float) 26.3)); //entry_chart3에 좌표 데이터를 담는다.
         entry_chart3.add(new Entry(1711, (float) 27.2));
         entry_chart3.add(new Entry(1712, (float) 31.2));
         entry_chart3.add(new Entry(1713, (float) 25.4));
         entry_chart3.add(new Entry(1714, (float) 21.8));
-        entry_chart3.add(new Entry(1715, (float) 27.9));
+
 
         LineDataSet lineDataSet1 = new LineDataSet(entry_chart1, "Temperature"); // 데이터가 담긴 Arraylist 를 LineDataSet 으로 변환한다.
         LineDataSet lineDataSet2 = new LineDataSet(entry_chart2, "Humidity");
@@ -77,9 +80,11 @@ String vname,name;
         lineDataSet3.setColor(Color.BLUE);
         lineDataSet3.setCircleColor(Color.BLUE);
 
+
         chartData.addDataSet(lineDataSet1); // 해당 LineDataSet 을 적용될 차트에 들어갈 DataSet 에 넣는다.
         chartData.addDataSet(lineDataSet2);
         chartData.addDataSet(lineDataSet3);
+
 
         XAxis xAxis = lineChart.getXAxis(); // x 축 설정
         xAxis.setPosition(XAxis.XAxisPosition.TOP); //x 축 표시에 대한 위치 설정
@@ -90,13 +95,18 @@ String vname,name;
             @Override
             public String getFormattedValue(float value) {
 
-                Date date = new Date();
-                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+//                Date date = new Date();
+//                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+//
+//                String now_time = sdf.format(date);
+//                return now_time;
 
-                String now_time = sdf.format(date);
-                return now_time;
+                String now_time =""+(int)(value/100)+":"+(int)(value%100);
+              return now_time;
+
             }
         });
+
 
         YAxis yAxisRight = lineChart.getAxisRight(); //Y축의 오른쪽면 설정
         yAxisRight.setDrawLabels(false);
@@ -114,8 +124,26 @@ String vname,name;
         textView2 = findViewById(R.id.earth_quake);
         textView3 = findViewById(R.id.strange_act);
 
+        String earth, wierd, gas;
+
+
         textView1.setText("이상없음");
         textView2.setText("이상없음");
         textView3.setText("이상없음");
+
+
+
+        try {
+            if (message.charAt(0) == '가')
+                textView1.setText(message);
+
+            if (message.charAt(0) == '지')
+                textView2.setText(message);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            Log.d("state", "message empty");
+        }
+
+
     }
 }
