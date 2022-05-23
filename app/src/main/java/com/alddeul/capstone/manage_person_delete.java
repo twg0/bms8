@@ -33,13 +33,13 @@ public class manage_person_delete extends AppCompatActivity implements View.OnCl
 
     ListView listView;
 
-    String vid;
+    String vid, vname, name;
     ArrayList<Delete_personVO> items;
     Button deleteBtn, closeBtn;
     private RequestQueue mqueue;
     Integer size;
     private static String TAG = "delete";
-    private RequestQueue queue,queue2;
+    private RequestQueue queue, queue2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +48,8 @@ public class manage_person_delete extends AppCompatActivity implements View.OnCl
         queue2 = Volley.newRequestQueue(this);
         Intent intent = getIntent();
         vid = intent.getStringExtra("vid");
+        vname = intent.getStringExtra("vname");
+        name = intent.getStringExtra("name");
         String[] id_data = intent.getStringArrayExtra("id");
 
         Log.d("manage", "vid" + vid);
@@ -96,15 +98,14 @@ public class manage_person_delete extends AppCompatActivity implements View.OnCl
                         size = paramMap.size();
 
                         String[] ti_data = new String[paramMap.size()];
-                        String[] con_data = new String[paramMap.size()];
+
 
                         for (int i = 0; i < paramMap.size(); i++) {
 
                             ti_data[i] = paramMap.get(i).get("username").toString();
+
                             Log.d(TAG, " tidata2  " + ti_data[i]);
-/*
-                            con_data[i] = paramMap.get(i).get("contents").toString();
-                            Log.d(TAG, " condata  " + con_data[i]);*/
+
 
                         }
 
@@ -151,22 +152,22 @@ public class manage_person_delete extends AppCompatActivity implements View.OnCl
                                         Log.d("delete", "this " + i);
 
 //
-                                        String url2 = " http://10.0.2.2:8080/api/users/"+id_data[i];
-
+                                        String url2 = " http://10.0.2.2:8080/api/users/" + id_data[i];
 
 
                                         StringRequest stringRequest2 = new StringRequest(Request.Method.DELETE, url2, new Response.Listener<String>() {
                                             @Override
                                             public void onResponse(String response) {
-                                                Log.d("er","hi"+response);
+                                                Log.d("er", "hi" + response);
 
-
+                                                for (int i = 0; i < paramMap.size(); i++)
+                                                    ti_data[i] = null;
 
                                             }
                                         }, new Response.ErrorListener() {
                                             @Override
                                             public void onErrorResponse(VolleyError error) {
-                                                Log.d("error",error.getMessage());
+                                                Log.d("error", error.getMessage());
                                             }
                                         }) {
 
@@ -190,20 +191,25 @@ public class manage_person_delete extends AppCompatActivity implements View.OnCl
 
                                     }
 
-                                }
-/*
-Intent intent=new Intent(manage_person_delete.this,master.class);
 
+                                }
+                               /* Intent intent = new Intent(manage_person_delete.this, master.class);
+                                intent.putExtra();
                                 startActivity(intent);*/
 
 
+                                finish();
+                                Intent intent = new Intent(manage_person_delete.this, manage_person.class);
+                                intent.putExtra("vid", vid);
+                                intent.putExtra("vname", vname);
+                                intent.putExtra("name", name);
+                                startActivity(intent);
 
                             }
                         });
 
 
-                        closeBtn.setOnClickListener(manage_person_delete.this);
-
+                        closeBtn.setOnClickListener(manage_person_delete. this);
 
                     } catch (IOException e) {
                         Log.d("error2222", "");
@@ -223,7 +229,7 @@ Intent intent=new Intent(manage_person_delete.this,master.class);
 
 
             }
-        }){
+        }) {
             @Override //response를 UTF8로 변경해주는 소스코드
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
                 try {
@@ -237,6 +243,7 @@ Intent intent=new Intent(manage_person_delete.this,master.class);
                     return Response.error(new ParseError(e));
                 }
             }
+
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 return super.getParams();
@@ -255,7 +262,17 @@ Intent intent=new Intent(manage_person_delete.this,master.class);
 
     @Override
     public void onClick(View view) {
-        if (view == closeBtn)
+
+        if (view == closeBtn) {
             finish();
+            Log.d("managedelete", "close");
+            Intent intent = new Intent(manage_person_delete.this, manage_person.class);
+            intent.putExtra("vid", vid);
+            intent.putExtra("vname", vname);
+            intent.putExtra("name", name);
+            startActivity(intent);
+        }
+
     }
+
 }

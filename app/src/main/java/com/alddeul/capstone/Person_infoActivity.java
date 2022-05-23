@@ -89,7 +89,7 @@ public class Person_infoActivity extends AppCompatActivity {
 
                     phone = findViewById(R.id.phon);
                     email2 = findViewById(R.id.emai);
-                    registration = findViewById(R.id.regis);
+                    /*registration = findViewById(R.id.regis);*/
 
                     name2.setText(name);
                     email2.setText(email);

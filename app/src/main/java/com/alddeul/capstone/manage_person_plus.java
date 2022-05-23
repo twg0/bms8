@@ -28,7 +28,7 @@ public class manage_person_plus extends AppCompatActivity {
     String TAG = "plus";
     private RequestQueue queue;
 
-    String url;
+    String url,name,vname;
     String vid, id;
     EditText id2;
     ImageButton img;
@@ -38,6 +38,8 @@ public class manage_person_plus extends AppCompatActivity {
         setContentView(R.layout.activity_manage_person_plus);
         Intent intent = getIntent();
         vid = intent.getStringExtra("vid");
+        name= intent.getStringExtra("name");
+        vname= intent.getStringExtra("vname");
         queue = Volley.newRequestQueue(this);
 
          img = findViewById(R.id.info_input);
@@ -62,6 +64,11 @@ public class manage_person_plus extends AppCompatActivity {
                 /*adduser(url);*/
                 add(url,vid2);
 
+                Intent intent = new Intent(manage_person_plus.this, manage_person.class);
+                intent.putExtra("vid",vid);
+                intent.putExtra("vname",vname);
+                intent.putExtra("name",name);
+                startActivity(intent);
             }
         });
     }

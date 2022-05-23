@@ -36,7 +36,7 @@ import kotlin.jvm.functions.Function1;
 public class master extends AppCompatActivity {
 
     ImageButton img, logout2;
-    String name2, vname2, email, role, id, vid2;
+    String name2, vname2, email, role, id, vid2,vname;
     TextView toolbar;
     private RequestQueue mqueue, mqueue2;
     ObjectMapper mapper = new ObjectMapper();
@@ -423,6 +423,8 @@ public class master extends AppCompatActivity {
                 intent.putExtra("email", email);
                 intent.putExtra("Role", role);
                 intent.putExtra("id", id);
+                intent.putExtra("vname", vname);
+
                 startActivity(intent);
             }
         });

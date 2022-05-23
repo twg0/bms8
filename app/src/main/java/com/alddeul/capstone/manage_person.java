@@ -74,7 +74,8 @@ public class manage_person extends AppCompatActivity /*implements AdapterView.On
 
                 intent2 = new Intent(manage_person.this, manage_person_plus.class);
                 intent2.putExtra("vid",vid2);
-
+                intent2.putExtra("vname",vname);
+                intent2.putExtra("name",name);
                 startActivity(intent2);
             }
         });

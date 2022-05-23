@@ -91,7 +91,9 @@ public class Person_info_guardActivity extends AppCompatActivity {
                     /*address = findViewById(R.id.addre);*/
                     phone = findViewById(R.id.phon);
                     email2 = findViewById(R.id.emai);
+/*
                     registration = findViewById(R.id.regis);
+*/
 
                     name2.setText(name);
                     email2.setText(email);
@@ -274,6 +276,10 @@ public class Person_info_guardActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         /*tv.setText(response);*/
                         Log.d(" ", " 탈퇴완료");
+
+                        Intent intent = new Intent(Person_info_guardActivity.this,MainActivity.class);
+                        startActivity(intent);
+
                     }
                 }, new Response.ErrorListener() {
                     @Override

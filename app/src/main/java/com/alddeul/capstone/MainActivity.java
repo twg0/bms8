@@ -80,8 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
         /////
         Intent intent = getIntent();
-        message = intent.getStringExtra("message");
-        title = intent.getStringExtra("title");
+
 
         mqueue = Volley.newRequestQueue(this);
         mqueue2 = Volley.newRequestQueue(this);

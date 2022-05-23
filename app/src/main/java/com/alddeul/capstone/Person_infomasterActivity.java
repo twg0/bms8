@@ -58,6 +58,7 @@ ImageButton logout;
         role = intent.getStringExtra("Role");
         name=intent.getStringExtra("name");
         email=intent.getStringExtra("email");
+        vname=intent.getStringExtra("vname");
 
 
         queue2 = Volley.newRequestQueue(this);
@@ -92,7 +93,6 @@ ImageButton logout;
                     /*address = findViewById(R.id.addre);*/
                     phone = findViewById(R.id.phon);
                     email2 = findViewById(R.id.emai);
-                    registration = findViewById(R.id.regis);
 
                     name2.setText(name);
                     email2.setText(email);
