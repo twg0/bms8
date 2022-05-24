@@ -67,7 +67,7 @@ public class broadcast_play extends AppCompatActivity {
 
         toolbar.setText(vname + " 마을" + name + " 님");
         /*progressBar = findViewById(R.id.progressbar);*/
-        progressBar.setProgress(30);
+
 
         mqueue2 = Volley.newRequestQueue(this);
 

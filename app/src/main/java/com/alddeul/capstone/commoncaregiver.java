@@ -56,11 +56,11 @@ public class commoncaregiver extends AppCompatActivity {
     ObjectMapper mapper = new ObjectMapper();
     Map<String, String> map;
     String Role, name, email;
-    private RequestQueue mqueue, mqueue2,queue;
+    private RequestQueue mqueue, mqueue2, queue;
     String city;
     TextView weather2;
-    String token, token2,message,title,guardid,lat,lon;
-    MainActivity m= new MainActivity();
+    String token, token2, message, title, guardid, lat, lon;
+    MainActivity m = new MainActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,10 +78,10 @@ public class commoncaregiver extends AppCompatActivity {
         name = intent.getStringExtra("name");
         email = intent.getStringExtra("email");
         message = intent.getStringExtra("message");
-        title= intent.getStringExtra("title");
-        guardid= intent.getStringExtra("guardid");
+        title = intent.getStringExtra("title");
+        guardid = intent.getStringExtra("guardid");
 
-        Log.d("commoncare", " body" +message);
+        Log.d("commoncare", " body" + message);
         Log.d("commoncare", " id" + id);
         Log.d("commoncare", " cookie" + m.Cookies);
         Log.d("commoncare", " Role" + Role);
@@ -132,7 +132,7 @@ public class commoncaregiver extends AppCompatActivity {
                         Log.d("com", "city" + city);
 
 
-                        String url = " https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon="+lon+"&appid=b6fbd4253485afbad2502ce04bdb87ef";
+                        String url = " https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=b6fbd4253485afbad2502ce04bdb87ef";
 
 /*
                         String url = " https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=b6fbd4253485afbad2502ce04bdb87ef";
@@ -324,7 +324,6 @@ public class commoncaregiver extends AppCompatActivity {
                     // Class class = new ObjectMapper().readValue(response, Class.class);
 
 
-
                     person_info2 = findViewById(R.id.person_info);
                     person_info2.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -364,7 +363,7 @@ public class commoncaregiver extends AppCompatActivity {
                                         intent2.putExtra("name", name);
                                         intent2.putExtra("email", email);
                                         intent2.putExtra("id", id);
-                                        intent2.putExtra("vname",vname);
+                                        intent2.putExtra("vname", vname);
 
                                         startActivity(intent2);
                                     }
@@ -405,9 +404,6 @@ public class commoncaregiver extends AppCompatActivity {
                     });
 
 
-
-
-
                     guard_data = findViewById(R.id.guard_data);
 
 
@@ -415,13 +411,15 @@ public class commoncaregiver extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
 
-
+                            getstatedata();
                             ///////
-                            Intent intent2 = new Intent(commoncaregiver.this, state_data.class);
+                          /*  Intent intent2 = new Intent(commoncaregiver.this, state_data.class);
                             intent2.putExtra("nickname", vname);
                             intent2.putExtra("name", name);
-                            intent2.putExtra("message", message);
-                            startActivity(intent2);
+                            intent2.putExtra("guradId", guardid);
+
+
+                            startActivity(intent2);*/
 
                         }
                     });
@@ -500,7 +498,6 @@ public class commoncaregiver extends AppCompatActivity {
         mqueue2.add(stringRequest2);
 
 
-
     }
 
 
@@ -557,8 +554,6 @@ public class commoncaregiver extends AppCompatActivity {
         Log.d(" ", " token" + token);
 
 
-
-
         Log.d("main", "url2" + url2);
 
 
@@ -582,8 +577,7 @@ public class commoncaregiver extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("token",token);
-
+                params.put("token", token);
 
 
                 return params;
@@ -597,13 +591,11 @@ public class commoncaregiver extends AppCompatActivity {
             }
 
 
-
         };
 
 
         stringRequest.setTag(TAG);
         queue.add(stringRequest);
-
 
 
     }
@@ -634,8 +626,6 @@ public class commoncaregiver extends AppCompatActivity {
             public void onResponse(String response) {
                 Log.d("commoncare", response.toString() + " i am queen");
                 Log.d(TAG, "send earthtoken success");
-
-              
 
 
             }
@@ -678,10 +668,10 @@ public class commoncaregiver extends AppCompatActivity {
     }
 
 
-    public void getstatedata(){
+    public void getstatedata() {
 
 
-        String url2 = " http://10.0.2.2:8080/messages/"+guardid;
+        String url2 = " http://10.0.2.2:8080/api/messages/detect/" + guardid;
 
         String TAG = "caregiver ";
 
@@ -706,10 +696,17 @@ public class commoncaregiver extends AppCompatActivity {
 
                     Log.d("", "" + response);
                     String phonenum;
+/*
                     phonenum = map.get("temperature");
+*/
 
+                    Intent intent2 = new Intent(commoncaregiver.this, state_data.class);
+                    intent2.putExtra("nickname", vname);
+                    intent2.putExtra("name", name);
+                    intent2.putExtra("guradId", guardid);
+                    Log.d("caregiver", "guard" + guardid);
 
-
+                    startActivity(intent2);
 
                 }
             }
@@ -720,7 +717,7 @@ public class commoncaregiver extends AppCompatActivity {
 
 
             }
-        }){
+        }) {
             @Override //response를 UTF8로 변경해주는 소스코드
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
                 try {
@@ -734,6 +731,7 @@ public class commoncaregiver extends AppCompatActivity {
                     return Response.error(new ParseError(e));
                 }
             }
+
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 return super.getParams();
