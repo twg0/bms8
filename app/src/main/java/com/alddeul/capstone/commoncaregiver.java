@@ -59,7 +59,7 @@ public class commoncaregiver extends AppCompatActivity {
     private RequestQueue mqueue, mqueue2,queue;
     String city;
     TextView weather2;
-    String token, token2,message,title,guardid;
+    String token, token2,message,title,guardid,lat,lon;
     MainActivity m= new MainActivity();
 
     @Override
@@ -115,15 +115,28 @@ public class commoncaregiver extends AppCompatActivity {
                     try {
                         JSONObject json = new JSONObject(response);
                         Log.d("", "res" + json);
+                        JSONObject json2 = json.optJSONObject("location");
+                        Log.d("com", "location " + json2);
 
-                       /* JSONObject json2 = json.optJSONObject("address");
-                        Log.d("comcare", "address " + json2);
-*/
+                        try {
 
-                        city = (json.optString("city"));
-                        Log.d("comcare", "city" + city);
+                            lon = (json2.optString("longitude"));
+                            lat = (json2.optString("latitude"));
 
+
+                        } catch (NullPointerException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        Log.d("com", "city" + city);
+
+
+                        String url = " https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon="+lon+"&appid=b6fbd4253485afbad2502ce04bdb87ef";
+
+/*
                         String url = " https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=b6fbd4253485afbad2502ce04bdb87ef";
+*/
                         StringRequest stringRequest3 = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {

@@ -50,7 +50,7 @@ public class common extends AppCompatActivity {
     String city, token;
 
     Map<String, String> map, map2;
-    String Role, name, email, message, title;
+    String Role, name, email, message, title,lat,lon;
     private RequestQueue mqueue, mqueue2, queue;
     TextView weather2;
 
@@ -99,12 +99,15 @@ public class common extends AppCompatActivity {
                     try {
                         JSONObject json = new JSONObject(response);
                         Log.d("", "res" + json);
-/*
-                        JSONObject json2 = json.optJSONObject("city");
-                        Log.d("com", "address " + json2);*/
+                        JSONObject json2 = json.optJSONObject("location");
+                        Log.d("com", "location " + json2);
 
                         try {
-                            city = (json.optString("city"));
+
+                            lon = (json2.optString("longitude"));
+                            lat = (json2.optString("latitude"));
+
+
                         } catch (NullPointerException e) {
                             e.printStackTrace();
                         }
@@ -112,7 +115,12 @@ public class common extends AppCompatActivity {
 
                         Log.d("com", "city" + city);
 
+
+                        String url = " https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon="+lon+"&appid=b6fbd4253485afbad2502ce04bdb87ef";
+
+/*
                         String url = " https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=b6fbd4253485afbad2502ce04bdb87ef";
+*/
                         StringRequest stringRequest3 = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
