@@ -132,6 +132,7 @@ public class state_data extends AppCompatActivity {
         textView3.setText("이상없음");
 
 
+/*
 
         try {
             if (message.charAt(0) == '가')
@@ -144,6 +145,7 @@ public class state_data extends AppCompatActivity {
             Log.d("state", "message empty");
         }
 
+*/
 
     }
 }

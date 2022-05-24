@@ -24,6 +24,9 @@ import com.android.volley.toolbox.Volley;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kakao.sdk.user.UserApiClient;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -38,13 +41,14 @@ public class Person_info_guardActivity extends AppCompatActivity {
     int trigger;
     LinearLayout linearLayout;
     TextView name2, relation, age2, address, phone, email2, registration, toolbar,gname2,gphone2,gaddress2,gemail2;
-    String name, email, role, vname, id,gname, gemail,gaddress,gphone;
+    String name, email, role, vname, id,gname, gemail,gaddress,gphone,oldid;
 
-    String TAG = "personinfo";
+    String TAG = "personinfo",city,town;
     ImageButton img;
     ObjectMapper mapper = new ObjectMapper();
     Map<String, String> map;
     private RequestQueue mqueue, mqueue2, queue2;
+   String phonenum,usernam,emails,adres;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,12 +158,114 @@ public class Person_info_guardActivity extends AppCompatActivity {
 
 
                     Log.d("", "" + response);
-                    String phonenum,usernam,emails,adres;
+/*
+                    final String phonenum,usernam,emails,adres;
+*/
 
                     phonenum = map.get("phoneNumber");
                     usernam = map.get("username");
                     emails = map.get("email");
-                    adres = map.get("address");
+                    oldid=String.valueOf(map.get("id"));
+                    //////////////
+
+
+
+
+                    String url2 = " http://10.0.2.2:8080/api/users/" + oldid + "/villages";
+                    StringRequest stringRequest = new StringRequest(Request.Method.GET, url2, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                            if (response.isEmpty()) {
+
+                                return;
+                            } else {
+
+                                try {
+                                    JSONObject json = new JSONObject(response);
+                                    Log.d("", "res" + json);
+
+
+
+                                    try {
+
+                                        city = (json.optString("city"));
+                                        town = (json.optString("town"));
+
+                                        adres = city+", "+town;
+
+                                        gname2 = findViewById(R.id.guardname);
+
+
+                                        gaddress2 = findViewById(R.id.guardaddre);
+                                        gphone2 = findViewById(R.id.guardphon);
+                                        gemail2 = findViewById(R.id.guardemai);
+
+
+                                        gname2.setText(usernam);
+                                        gemail2.setText(emails);
+                                        gphone2.setText(phonenum);
+                                        gaddress2.setText(adres);
+
+                                    } catch (NullPointerException e) {
+                                        e.printStackTrace();
+                                    }
+
+
+                                    Log.d("com", "city" + city);
+
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                /*
+
+                                 */
+
+
+                                /*
+                                 */
+
+
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("infoguard", "no city in village data");
+
+
+                        }
+                    }) {
+                        @Override //response를 UTF8로 변경해주는 소스코드
+                        protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                            try {
+                                String utf8String = new String(response.data, "UTF-8");
+                                return Response.success(utf8String, HttpHeaderParser.parseCacheHeaders(response));
+                            } catch (UnsupportedEncodingException e) {
+                                // log error
+                                return Response.error(new ParseError(e));
+                            } catch (Exception e) {
+                                // log error
+                                return Response.error(new ParseError(e));
+                            }
+                        }
+
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            return super.getParams();
+                        }
+
+                    };
+
+                    stringRequest.setTag(TAG);
+                    mqueue2.add(stringRequest);
+
+
+
+                    /////////////////
+                  /*  adres = city+" "+town;
 
                     gname2 = findViewById(R.id.guardname);
 
@@ -172,7 +278,7 @@ public class Person_info_guardActivity extends AppCompatActivity {
                     gname2.setText(usernam);
                     gemail2.setText(emails);
                     gphone2.setText(phonenum);
-                    gaddress2.setText(adres);
+                    gaddress2.setText(adres);*/
 
                 }
             }

@@ -1,3 +1,4 @@
+/*
 package com.alddeul.capstone;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -84,4 +85,4 @@ public class userinfo {
         this.additionalProperties = additionalProperties;
     }
 
-}
+}*/

@@ -88,25 +88,6 @@ public class usermanageActivity extends AppCompatActivity /*implements AdapterVi
 
         listView = findViewById(R.id.broad_list);
 
-        String str = "[   \n" +
-                "    {\n" +
-                "        \"id\": \"200\",\n" +
-                "        \"name\": \"Alexia Milano\",\n" +
-                "        \"email\": \"minalo@gmail.com\",\n" +
-                "        \"prenom\": \"xx-xx-xxxx,x - street, x - country\"\n" +
-                "\n" +
-                "    }, {\n" +
-                "        \"id\": \"201\",\n" +
-                "        \"name\": \"Johnny Depp\",\n" +
-                "        \"email\": \"johnny_depp@gmail.com\",\n" +
-                "        \"prenom\": \"xx-xx-xxxx,x - street, x - country\"\n" +
-                "\n" +
-                "    }\n" +
-                "]";
-
-        Log.d(" asdsadsad", " 11" + str);
-
-
 
 
 

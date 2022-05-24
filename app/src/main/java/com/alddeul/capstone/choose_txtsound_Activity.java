@@ -1,3 +1,4 @@
+/*
 package com.alddeul.capstone;
 
 import android.content.Intent;
@@ -17,3 +18,4 @@ public class choose_txtsound_Activity extends AppCompatActivity {
 
     }
 }
+*/

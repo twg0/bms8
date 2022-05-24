@@ -1,3 +1,4 @@
+/*
 package com.alddeul.capstone;
 
 import android.content.Intent;
@@ -48,11 +49,15 @@ public class signupActivity extends AppCompatActivity {
         name2=findViewById(R.id.name);
 
 
-        /**/
+        */
+/**//*
 
+
+*/
 /*
         guard_user_id=findViewById(R.id.oldpersonalID);
-*/
+*//*
+
 
 
 
@@ -66,11 +71,16 @@ public class signupActivity extends AppCompatActivity {
 // Optional Parameters to pass as POST request
 
 ////
-        /*
+        */
+/*
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                *//*tv.setText(response);*//*
+                *//*
+*/
+/*tv.setText(response);*//*
+*/
+/*
             }
         }, new Response.ErrorListener() {
             @Override
@@ -82,24 +92,33 @@ public class signupActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-              *//*  params.put("user_id", id);
+              *//*
+*/
+/*  params.put("user_id", id);
                 params.put("device_id",device.getText().toString());
 *//*
+*/
+/*
                 params.put("email",email);
                 params.put("username", name2.getText().toString());
                 params.put("Role", Role.getText().toString());
 *//*
+*/
+/*
                 params.put("birthday", birth.getText().toString());
 
 
 
                 params.put("guard_user_id", guard_user_id.getText().toString());*//*
+*/
+/*
                 return params;
             }
         };
 
 
-        stringRequest.setTag(TAG);*/
+        stringRequest.setTag(TAG);*//*
+
 
 
         img=findViewById(R.id.info_input);
@@ -108,9 +127,11 @@ public class signupActivity extends AppCompatActivity {
            @Override
            public void onClick(View view) {
 
+*/
 /*
                queue.add(stringRequest);
-*/
+*//*
+
 
                // Adding request to request queue
 
@@ -124,6 +145,7 @@ public class signupActivity extends AppCompatActivity {
 
 
     }
+*/
 /*
     @Override
     protected void onStop() {
@@ -131,7 +153,8 @@ public class signupActivity extends AppCompatActivity {
         if (queue != null) {
             queue.cancelAll(TAG);
         }
-    }*/
+    }*//*
+
 
 
 
@@ -160,9 +183,11 @@ public class signupActivity extends AppCompatActivity {
             }
         }) {
 
-            /**
+            */
+/**
              * Passing some request headers
-             */
+             *//*
+
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
@@ -182,3 +207,4 @@ public class signupActivity extends AppCompatActivity {
     }
 
 }
+*/

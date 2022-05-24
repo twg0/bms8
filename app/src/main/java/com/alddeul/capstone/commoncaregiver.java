@@ -25,6 +25,7 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -40,6 +41,7 @@ import java.net.CookieHandler;
 import java.net.CookiePolicy;
 import java.net.CookieStore;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import kotlin.Unit;
@@ -58,9 +60,11 @@ public class commoncaregiver extends AppCompatActivity {
     String Role, name, email;
     private RequestQueue mqueue, mqueue2, queue;
     String city;
+    Integer size = 0;
     TextView weather2;
     String token, token2, message, title, guardid, lat, lon;
     MainActivity m = new MainActivity();
+    ObjectMapper mapper2 = new ObjectMapper();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -688,38 +692,58 @@ public class commoncaregiver extends AppCompatActivity {
                 } else {
 
                     try {
-                        map = mapper.readValue(response, Map.class);
+
+                        List<Map<String, Object>> paramMap = new ObjectMapper().readValue(response, new TypeReference<List<Map<String, Object>>>() {
+                        });
+
+
+                        Log.d(" care", " prm" + paramMap);
+                        Log.d(" care", " size" + paramMap.size());
+                        size = paramMap.size();
+
+                        String[] temp_data = new String[paramMap.size()];
+                        String[] humid_data = new String[paramMap.size()];
+
+                        for (int i = 0; i < paramMap.size(); i++) {
+
+                            temp_data[i] = paramMap.get(i).get("temperature").toString();
+                            Log.d(TAG, " temp   " + temp_data[i]);
+
+                            humid_data[i] = paramMap.get(i).get("humidity").toString();
+                            Log.d(TAG, " humidity  " + humid_data[i]);
+
+                        }
+
+                        Log.d("care", "respon " + response);
+
+                        Intent intent2 = new Intent(commoncaregiver.this, state_data.class);
+                        intent2.putExtra("nickname", vname);
+                        intent2.putExtra("name", name);
+                        intent2.putExtra("guradId", guardid);
+                        Log.d("caregiver", "guard" + guardid);
+
+                        startActivity(intent2);
+
                     } catch (IOException e) {
+                        Log.d("care", "io exception");
                         e.printStackTrace();
+
                     }
-
-
-                    Log.d("", "" + response);
-                    String phonenum;
-/*
-                    phonenum = map.get("temperature");
-*/
-
-                    Intent intent2 = new Intent(commoncaregiver.this, state_data.class);
-                    intent2.putExtra("nickname", vname);
-                    intent2.putExtra("name", name);
-                    intent2.putExtra("guradId", guardid);
-                    Log.d("caregiver", "guard" + guardid);
-
-                    startActivity(intent2);
-
                 }
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
+        },new Response.ErrorListener()
+            {
+                @Override
+                public void onErrorResponse (VolleyError error){
                 Log.d("caregiver", "no userdata");
 
 
             }
-        }) {
-            @Override //response를 UTF8로 변경해주는 소스코드
-            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+            })
+
+            {
+                @Override //response를 UTF8로 변경해주는 소스코드
+                protected Response<String> parseNetworkResponse (NetworkResponse response){
                 try {
                     String utf8String = new String(response.data, "UTF-8");
                     return Response.success(utf8String, HttpHeaderParser.parseCacheHeaders(response));
@@ -732,19 +756,21 @@ public class commoncaregiver extends AppCompatActivity {
                 }
             }
 
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+                @Override
+                protected Map<String, String> getParams () throws AuthFailureError {
                 return super.getParams();
             }
 
-        };
+            }
+
+            ;
 
 
         stringRequest.setTag(TAG);
         mqueue2.add(stringRequest);
 
 
+        }
+
+
     }
-
-
-}
