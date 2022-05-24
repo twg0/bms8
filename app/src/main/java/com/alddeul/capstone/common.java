@@ -50,7 +50,7 @@ public class common extends AppCompatActivity {
     String city, token;
 
     Map<String, String> map, map2;
-    String Role, name, email,message,title;
+    String Role, name, email, message, title;
     private RequestQueue mqueue, mqueue2, queue;
     TextView weather2;
 
@@ -72,12 +72,12 @@ public class common extends AppCompatActivity {
         Role = intent.getStringExtra("Role");
         name = intent.getStringExtra("name");
         email = intent.getStringExtra("email");
-        message= intent.getStringExtra("message");
-        title= intent.getStringExtra("title");
+        message = intent.getStringExtra("message");
+        title = intent.getStringExtra("title");
         Log.d("common", " id" + id);
 
         Log.d("common", " Role" + Role);
-        Log.d("common", " message" +message);
+        Log.d("common", " message" + message);
 
         gettoken();
 
@@ -99,12 +99,17 @@ public class common extends AppCompatActivity {
                     try {
                         JSONObject json = new JSONObject(response);
                         Log.d("", "res" + json);
+/*
+                        JSONObject json2 = json.optJSONObject("city");
+                        Log.d("com", "address " + json2);*/
 
-                        JSONObject json2 = json.optJSONObject("address");
-                        Log.d("com", "address " + json2);
+                        try {
+                            city = (json.optString("city"));
+                        } catch (NullPointerException e) {
+                            e.printStackTrace();
+                        }
 
 
-                        city = (json2.optString("city"));
                         Log.d("com", "city" + city);
 
                         String url = " https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=b6fbd4253485afbad2502ce04bdb87ef";
@@ -129,7 +134,7 @@ public class common extends AppCompatActivity {
                                         temp2 = (json2.optDouble("temp")) - 273.15;
                                         int temp3;
                                         temp3 = (int) temp2;
-                                        weather2.setText(String.valueOf(temp3) + "c");
+                                        weather2.setText(String.valueOf(temp3) + "°C");
 
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -539,7 +544,7 @@ public class common extends AppCompatActivity {
     }
 
 
-        public void sendearthquaketoken() {
+    public void sendearthquaketoken() {
 
 /*
         myFirebaseMessagingService=(MyFirebaseMessagingService)getApplicationContext();
@@ -599,7 +604,6 @@ public class common extends AppCompatActivity {
 
 
     }
-
 
 
     @Override

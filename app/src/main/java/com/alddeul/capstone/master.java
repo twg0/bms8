@@ -86,12 +86,14 @@ public class master extends AppCompatActivity {
                     try {
                         JSONObject json=new JSONObject(response);
                         Log.d("", "res" + json);
+/*
 
                         JSONObject json2=json.optJSONObject("address");
                         Log.d("com", "address " + json2);
+*/
 
 
-                        city = (json2.optString("city")) ;
+                        city = (json.optString("city")) ;
                         Log.d("com", "city" + city);
 
                         String url = " https://api.openweathermap.org/data/2.5/weather?q="+ city+"&appid=b6fbd4253485afbad2502ce04bdb87ef";
@@ -116,7 +118,7 @@ public class master extends AppCompatActivity {
                                         temp2 = (json2.optDouble("temp")) - 273.15;
                                         int temp3;
                                         temp3=(int)temp2;
-                                        weather2.setText(String.valueOf(temp3)+"c");
+                                        weather2.setText(String.valueOf(temp3)+"°C");
 
                                     } catch (JSONException e) {
                                         e.printStackTrace();
