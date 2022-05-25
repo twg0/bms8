@@ -45,6 +45,8 @@ public class Person_infoActivity extends AppCompatActivity {
     ObjectMapper mapper = new ObjectMapper();
     Map<String, String> map;
     private RequestQueue mqueue, mqueue2;
+    MainActivity m = new MainActivity();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +63,7 @@ public class Person_infoActivity extends AppCompatActivity {
         mqueue = Volley.newRequestQueue(this);
         mqueue2 = Volley.newRequestQueue(this);
 
-        String url = " http://10.0.2.2:8080/api/users/" + email;
+        String url = m.serverip+"api/users/" + email;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -141,7 +143,7 @@ public class Person_infoActivity extends AppCompatActivity {
         toolbar.setText(vname + "마을" + name + "님");
 
 
-        String url2 = " http://10.0.2.2:8080/api/users/" + id;
+        String url2 = m.serverip+"api/users/" + id;
 /*
         Button villageadd = findViewById(R.id.villageadd);
         villageadd.setOnClickListener(new View.OnClickListener() {

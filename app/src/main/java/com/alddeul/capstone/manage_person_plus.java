@@ -27,6 +27,7 @@ import java.util.Map;
 public class manage_person_plus extends AppCompatActivity {
     String TAG = "plus";
     private RequestQueue queue;
+    MainActivity m = new MainActivity();
 
     String url,name,vname;
     String vid, id;
@@ -60,7 +61,7 @@ public class manage_person_plus extends AppCompatActivity {
                 Long vid2 = Long.parseLong(vid);
 
                 Log.d("vid", "vid2 " + vid2);
-                url = " http://10.0.2.2:8080/api/users/" + id+"/villages?villageId=" +vid2;
+                url = m.serverip+"api/users/" + id+"/villages?villageId=" +vid2;
                 /*adduser(url);*/
                 add(url,vid2);
 

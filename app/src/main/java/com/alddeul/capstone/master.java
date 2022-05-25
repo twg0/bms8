@@ -43,6 +43,7 @@ public class master extends AppCompatActivity {
     Map<String, String> map;
     TextView weather2;
     String city;
+    MainActivity m = new MainActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class master extends AppCompatActivity {
         Log.d("im master", "im master");
 
 
-        String url2 = " http://10.0.2.2:8080/api/users/" + email;
+        String url2 = m.serverip+"api/users/" + email;
         String TAG = "master";
 
         mqueue = Volley.newRequestQueue(this);
@@ -73,7 +74,7 @@ public class master extends AppCompatActivity {
 
         weather2 = findViewById(R.id.weather);
 
-        String url3 = " http://10.0.2.2:8080/api/admins/" + id+"/villages";
+        String url3 = m.serverip+"api/admins/" + id+"/villages";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url3, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -317,7 +318,7 @@ public class master extends AppCompatActivity {
 /////////////////
 
 
-        String url = " http://10.0.2.2:8080/api/admins/" + id + "/villages";
+        String url = m.serverip+"api/admins/" + id + "/villages";
 
 
         mqueue = Volley.newRequestQueue(this);

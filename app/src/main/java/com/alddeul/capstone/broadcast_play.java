@@ -39,6 +39,7 @@ public class broadcast_play extends AppCompatActivity {
     ProgressBar progressBar;
     TextView toolbar;
     private Button speak_out;
+    MainActivity m = new MainActivity();
 
     String vname, vid, name;
     ObjectMapper mapper = new ObjectMapper();
@@ -72,7 +73,7 @@ public class broadcast_play extends AppCompatActivity {
         mqueue2 = Volley.newRequestQueue(this);
 
 
-        String url2 = " http://10.0.2.2:8080/api/villages/" + vid + "/files";
+        String url2 = m.serverip+"api/villages/" + vid + "/files";
         StringRequest stringRequest2 = new StringRequest(Request.Method.GET, url2, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

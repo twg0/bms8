@@ -54,6 +54,7 @@ TextView toolbar;
     ObjectMapper mapper = new ObjectMapper();
     ArrayList<HashMap<String, String>> map2;
     private RequestQueue mqueue;
+    MainActivity m = new MainActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +102,7 @@ TextView toolbar;
 
 
 
-        String url = " http://10.0.2.2:8080/api/villages/"+vid2+"/files";
+        String url = m.serverip+"api/villages/"+vid2+"/files";
 
 /*
         try {

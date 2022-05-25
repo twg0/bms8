@@ -50,6 +50,7 @@ public class manage_person extends AppCompatActivity /*implements AdapterView.On
     private RequestQueue mqueue;
     Intent intent2;
     TextView toolbar;
+    MainActivity m = new MainActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +108,7 @@ public class manage_person extends AppCompatActivity /*implements AdapterView.On
         listView = findViewById(R.id.person_list);
 
 
-        String url = " http://10.0.2.2:8080/api/villages/" + vid2 + "/users";
+        String url = m.serverip+"api/villages/" + vid2 + "/users";
         Log.d(" ", "" + url);
 
 /*

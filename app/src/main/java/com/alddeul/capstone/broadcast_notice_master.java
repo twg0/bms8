@@ -51,6 +51,7 @@ public class broadcast_notice_master extends AppCompatActivity /*implements Adap
     String title2,vname,name;
     TextView toolbar;
     private final static String TAG = "broadcast";
+    MainActivity m = new MainActivity();
 
     ObjectMapper mapper = new ObjectMapper();
     ArrayList<HashMap<String, String>> map2;
@@ -122,7 +123,7 @@ public class broadcast_notice_master extends AppCompatActivity /*implements Adap
 
 
 
-        String url = " http://10.0.2.2:8080/api/villages/"+vid2+"/files";
+        String url = m.serverip+"api/villages/"+vid2+"/files";
         Log.d(" ",""+url);
 
 /*

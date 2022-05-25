@@ -48,6 +48,7 @@ public class common extends AppCompatActivity {
     ObjectMapper mapper = new ObjectMapper();
     ObjectMapper mapper2 = new ObjectMapper();
     String city, token;
+    MainActivity m = new MainActivity();
 
     Map<String, String> map, map2;
     String Role, name, email, message, title,lat,lon;
@@ -86,7 +87,7 @@ public class common extends AppCompatActivity {
 
         weather2 = findViewById(R.id.weather);
 
-        String url2 = " http://10.0.2.2:8080/api/users/" + id + "/villages";
+        String url2 = m.serverip+"api/users/" + id + "/villages";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url2, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -281,7 +282,7 @@ public class common extends AppCompatActivity {
         });
 
 
-        String url3 = " http://10.0.2.2:8080/api/users/" + id + "/villages";
+        String url3 = m.serverip+"api/users/" + id + "/villages";
         StringRequest stringRequest2 = new StringRequest(Request.Method.GET, url3, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -387,7 +388,7 @@ public class common extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String url = " http://10.0.2.2:8080/api/users/" + email;
+                String url = m.serverip+"api/users/" + email;
 
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
@@ -501,7 +502,7 @@ public class common extends AppCompatActivity {
         String url2 = " http://10.0.2.2:8080/api/notification/token?token="+token;
 */
 
-        String url2 = " http://10.0.2.2:8080/api/notification/token";
+        String url2 = m.serverip+"api/notification/token";
 
         String TAG = "token ";
 
@@ -563,7 +564,7 @@ public class common extends AppCompatActivity {
         String url2 = " http://10.0.2.2:8080/api/notification/token?token="+token;
 */
 
-        String url2 = " http://10.0.2.2:8080/api/notification/test";
+        String url2 = m.serverip+"api/notification/test";
 
         String TAG = "token test ";
 

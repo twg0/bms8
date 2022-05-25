@@ -40,6 +40,7 @@ public class manage_person_delete extends AppCompatActivity implements View.OnCl
     Integer size;
     private static String TAG = "delete";
     private RequestQueue queue, queue2;
+    MainActivity m = new MainActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +59,7 @@ public class manage_person_delete extends AppCompatActivity implements View.OnCl
         listView = findViewById(R.id.person_list);
 ///////////////////////////////////
 
-        String url = " http://10.0.2.2:8080/api/villages/" + vid + "/users";
+        String url = m.serverip+"api/villages/" + vid + "/users";
         Log.d(" ", "" + url);
 
 /*
@@ -152,7 +153,7 @@ public class manage_person_delete extends AppCompatActivity implements View.OnCl
                                         Log.d("delete", "this " + i);
 
 //
-                                        String url2 = " http://10.0.2.2:8080/api/users/" + id_data[i];
+                                        String url2 = m.serverip+"api/users/" + id_data[i];
 
 
                                         StringRequest stringRequest2 = new StringRequest(Request.Method.DELETE, url2, new Response.Listener<String>() {

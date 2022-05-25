@@ -47,6 +47,7 @@ public class broadcastActivity extends AppCompatActivity {
     Intent intent;
     SpeechRecognizer mRecognizer;
     String TAG = "broadcast";
+    MainActivity m = new MainActivity();
 
     Button sttBtn;
     TextView textView, toolbar, nowtime;
@@ -118,7 +119,7 @@ public class broadcastActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String url = " http://10.0.2.2:8080/api/admins/" + id + "/files";
+                String url = m.serverip+"api/admins/" + id + "/files";
                 Log.d(TAG, "url" + url);
 
                 addfiles(url);

@@ -28,6 +28,7 @@ state_data extends AppCompatActivity {
     TextView textView1, textView2, textView3, toolbar;
     String vname, name, message, temp_data[], humid_data[], time_data[];
     Integer size = 0;
+    MainActivity m = new MainActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

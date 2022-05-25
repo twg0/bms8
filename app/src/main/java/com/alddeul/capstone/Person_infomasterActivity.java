@@ -44,6 +44,7 @@ public class Person_infomasterActivity extends AppCompatActivity {
     ObjectMapper mapper = new ObjectMapper();
     Map<String,String> map;
 ImageButton logout;
+    MainActivity m = new MainActivity();
 
 
     private RequestQueue mqueue, mqueue2;
@@ -65,7 +66,7 @@ ImageButton logout;
         mqueue = Volley.newRequestQueue(this);
         mqueue2 = Volley.newRequestQueue(this);
 
-        String url3 = " http://10.0.2.2:8080/api/users/" + email;
+        String url3 = m.serverip+"api/users/" + email;
         StringRequest stringRequest3 = new StringRequest(Request.Method.GET, url3, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -162,9 +163,9 @@ logout.setOnClickListener(new View.OnClickListener() {
 
 
 
-        String url2 = " http://10.0.2.2:8080/api/admins/"+id;
+        String url2 = m.serverip+"api/admins/"+id;
 
-        String url = " http://10.0.2.2:8080/api/admins/"+id+"/villages";
+        String url = m.serverip+"api/admins/"+id+"/villages";
 
 
         queue = Volley.newRequestQueue(this);

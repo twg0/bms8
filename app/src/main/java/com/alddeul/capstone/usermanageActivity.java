@@ -49,6 +49,7 @@ public class usermanageActivity extends AppCompatActivity /*implements AdapterVi
     ImageButton img, plus2;
     String title2;
     private final static String TAG = "broadcast";
+    MainActivity m = new MainActivity();
 
     ObjectMapper mapper = new ObjectMapper();
     ArrayList<HashMap<String, String>> map2;
@@ -92,7 +93,7 @@ public class usermanageActivity extends AppCompatActivity /*implements AdapterVi
 
 
 
-        String url = " http://10.0.2.2:8080/api/villages/"+vid2+"/files";
+        String url = m.serverip+"villages/"+vid2+"/files";
 
 /*
         try {

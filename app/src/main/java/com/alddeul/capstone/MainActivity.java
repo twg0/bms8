@@ -56,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
     String guardid, message, title;
     private RequestQueue queue;
     public static String  Cookies ="1";
+    public static String  serverip ="http://3.212.91.66:8080/";
+    public static String  local ="http://10.0.2.2:8080/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -193,7 +195,7 @@ loginapi();
 
     public void emailregister() {
 
-        String url3 = " http://10.0.2.2:8080/api/users?email=" + email;
+        String url3 = serverip+"api/users?email=" + email;
         Log.d("main", "url3" + url3);
 
         JSONObject js2 = new JSONObject();
@@ -261,7 +263,7 @@ loginapi();
         String url = " http://10.0.2.2:8080/api/login?email="+email+"&password="+pwd;
 */
 
-        String url = " http://10.0.2.2:8080/login";
+        String url = serverip +"login";
 
 
         Log.d("main", "url" + url);
@@ -349,7 +351,7 @@ loginapi();
     public void choosecommonormaster() {
 
 
-        String url2 = " http://10.0.2.2:8080/api/users/" + email;
+        String url2 = serverip+"api/users/" + email;
         Log.d(TAG, "url2  " + url2);
 
 
@@ -409,7 +411,7 @@ loginapi();
                     }
 ////////
 
-                    String url4 = " http://10.0.2.2:8080/api/users/" + id2 + "/ward";
+                    String url4 = serverip+"api/users/" + id2 + "/ward";
 
                     StringRequest stringRequest2 = new StringRequest(Request.Method.GET, url4, new Response.Listener<String>() {
                         @Override
@@ -517,7 +519,7 @@ loginapi();
 
                 Intent intent = new Intent(MainActivity.this, input_inform.class);
                 intent.putExtra("email", email);
-                Log.d("main", "id999" + id2);
+                Log.d("main", "id " + id2);
                 intent.putExtra("id", id2);
                 startActivity(intent);
                 return;

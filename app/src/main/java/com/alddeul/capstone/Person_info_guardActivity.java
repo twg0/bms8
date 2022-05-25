@@ -49,6 +49,7 @@ public class Person_info_guardActivity extends AppCompatActivity {
     Map<String, String> map;
     private RequestQueue mqueue, mqueue2, queue2;
    String phonenum,usernam,emails,adres;
+    MainActivity m = new MainActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +68,7 @@ public class Person_info_guardActivity extends AppCompatActivity {
         mqueue2 = Volley.newRequestQueue(this);
 
 
-        String url = " http://10.0.2.2:8080/api/users/" + email;
+        String url = m.serverip+"api/users/" + email;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -140,7 +141,7 @@ public class Person_info_guardActivity extends AppCompatActivity {
 //////
 
 
-        String url3 = " http://10.0.2.2:8080/api/users/" + id+"/ward";
+        String url3 = m.serverip+"api/users/" + id+"/ward";
         StringRequest stringRequest2 = new StringRequest(Request.Method.GET, url3, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -171,7 +172,7 @@ public class Person_info_guardActivity extends AppCompatActivity {
 
 
 
-                    String url2 = " http://10.0.2.2:8080/api/users/" + oldid + "/villages";
+                    String url2 = m.serverip+"api/users/" + oldid + "/villages";
                     StringRequest stringRequest = new StringRequest(Request.Method.GET, url2, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -326,7 +327,7 @@ public class Person_info_guardActivity extends AppCompatActivity {
         toolbar.setText(vname + "마을" + name + "님");
 
 
-        String url2 = " http://10.0.2.2:8080/api/users/" + id;
+        String url2 = m.serverip+"api/users/" + id;
 /*
         Button villageadd = findViewById(R.id.villageadd);
         villageadd.setOnClickListener(new View.OnClickListener() {

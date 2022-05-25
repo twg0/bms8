@@ -50,6 +50,7 @@ public class addvillage extends AppCompatActivity {
     Map<String, String> map;
     ArrayList<villageselect_VO> items;
     ImageButton img;
+    MainActivity m = new MainActivity();
 
     String id2, username, Role, vid2;
     private RequestQueue mqueue, mqueue2;
@@ -100,7 +101,7 @@ public class addvillage extends AppCompatActivity {
         });
 
 
-        String url3 = " http://10.0.2.2:8080/api/users/" + email;
+        String url3 = m.serverip+ "api/users/" + email;
         Log.d("addvill", "url3" + url3);
         StringRequest stringRequest2 = new StringRequest(Request.Method.GET, url3, new Response.Listener<String>() {
             @Override
@@ -181,7 +182,7 @@ public class addvillage extends AppCompatActivity {
     public void getvilages() {
 
 
-        String url = " http://10.0.2.2:8080/api/villages";
+        String url = m.serverip+"api/villages";
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -259,7 +260,7 @@ public class addvillage extends AppCompatActivity {
                                         Log.d("addvill", "this " + i);
 
 
-                                        String url2 = " http://10.0.2.2:8080/api/users/" + id + "/villages?villageId=" + vid_data[i];
+                                        String url2 = m.serverip+"api/users/" + id + "/villages?villageId=" + vid_data[i];
                                         Long vid = Long.parseLong(vid_data[i]);
                                         id3 = Long.parseLong(id);
                                         addvill(id3, vid, url2);

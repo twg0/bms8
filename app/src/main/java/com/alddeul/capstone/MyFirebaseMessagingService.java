@@ -42,6 +42,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private RequestQueue mqueue, mqueue2,queue;
     public static String message = "";
     public static String title = "";
+    MainActivity m = new MainActivity();
 
     @Override
     public void onNewToken(@NonNull String token) {

@@ -36,6 +36,7 @@ public class caregiverjoinActivity extends AppCompatActivity {
     String gid;
     String id2, email, id3, id, name;
     EditText old;
+    MainActivity m = new MainActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +68,7 @@ public class caregiverjoinActivity extends AppCompatActivity {
                 id3 = old.getText().toString();
                 Long id = Long.parseLong(id3);
 
-                String url = " http://10.0.2.2:8080/api/users/" + id + "/guardian?guardianId=" + gid;
+                String url = m.serverip+"api/users/" + id + "/guardian?guardianId=" + gid;
 
                 Log.d(TAG, ":url " + url);
 

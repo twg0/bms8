@@ -44,6 +44,7 @@ public class input_inform extends AppCompatActivity {
     EditText name, birth, phone, guard_name, guard_birth, master_id;
     public static String token;
     String email, id;
+    MainActivity m = new MainActivity();
 
     int flag = 0;
 
@@ -126,7 +127,7 @@ public class input_inform extends AppCompatActivity {
                 String p2;
                 p2 = phone.getText().toString();
                 if (flag == 0) {
-                    url = " http://10.0.2.2:8080/api/users/"+id;
+                    url = m.serverip+"api/users/"+id;
                     usersignupclick(name2, email, url, p2);
                     /*
                     UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
@@ -139,7 +140,7 @@ public class input_inform extends AppCompatActivity {
 
                     /*finish();*/
                 } else if (flag == 1) {
-                    url = " http://10.0.2.2:8080/api/users/"+id;
+                    url = m.serverip+"api/users/"+id;
                     caregiverignupclick(name2, email, url, p2);
                    /* UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
                         @Override
@@ -154,7 +155,7 @@ public class input_inform extends AppCompatActivity {
 */
 
                 } else {
-                    url = " http://10.0.2.2:8080/api/users/"+id;
+                    url = m.serverip+"api/users/"+id;
 
 
                     chiefsignupclick(name2, email, url, p2);
