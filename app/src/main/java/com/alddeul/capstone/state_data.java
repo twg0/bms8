@@ -22,10 +22,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class state_data extends AppCompatActivity {
+public class
+state_data extends AppCompatActivity {
     private LineChart lineChart;
     TextView textView1, textView2, textView3, toolbar;
-    String vname, name, message;
+    String vname, name, message, temp_data[], humid_data[], time_data[];
+    Integer size = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,18 @@ public class state_data extends AppCompatActivity {
         vname = intent.getStringExtra("nickname");
         name = intent.getStringExtra("name");
         message = intent.getStringExtra("message");
+        temp_data = intent.getStringArrayExtra("temperature");
+        humid_data = intent.getStringArrayExtra("humidity");
+        time_data = intent.getStringArrayExtra("detect_time");
+        size = intent.getIntExtra("size", size);
+        Log.d("state", "size" + size);
+
+        try {
+            Log.d("state", "temp" + temp_data[0]);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
         toolbar = findViewById(R.id.toolbar_title);
         toolbar.setText(vname + "마을" + name + "님");
 
@@ -101,8 +115,8 @@ public class state_data extends AppCompatActivity {
 //                String now_time = sdf.format(date);
 //                return now_time;
 
-                String now_time =""+(int)(value/100)+":"+(int)(value%100);
-              return now_time;
+                String now_time = "" + (int) (value / 100) + ":" + (int) (value % 100);
+                return now_time;
 
             }
         });

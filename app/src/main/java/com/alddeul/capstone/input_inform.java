@@ -68,7 +68,7 @@ public class input_inform extends AppCompatActivity {
         id=intent.getStringExtra("id");
 
         Log.d("input", "i" + email);
-        Log.d("input", "idddddddddddd" +id);
+        Log.d("input", "idddd" +id);
         //Check box 이벤트 등록
         checkBox = findViewById(R.id.checkbox);
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

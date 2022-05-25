@@ -245,7 +245,9 @@ public class common extends AppCompatActivity {
 
 /////
 
+/*
         weather = findViewById(R.id.weatherbtn);
+*/
 
         weather.setOnClickListener(new View.OnClickListener() {
             @Override

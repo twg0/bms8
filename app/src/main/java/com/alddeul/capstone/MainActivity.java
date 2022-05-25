@@ -383,7 +383,7 @@ loginapi();
 
                         Intent intent = new Intent(MainActivity.this, input_inform.class);
                         intent.putExtra("email", email);
-                        Log.d("main", "id2222222222222222211111111111" + id2);
+                        Log.d("main", "id2222" + id2);
                         intent.putExtra("id", id2);
                         startActivity(intent);
                         return;

@@ -128,6 +128,7 @@ public class commoncaregiver extends AppCompatActivity {
                             lat = (json2.optString("latitude"));
 
 
+
                         } catch (NullPointerException e) {
                             e.printStackTrace();
                         }
@@ -135,8 +136,8 @@ public class commoncaregiver extends AppCompatActivity {
 
                         Log.d("com", "city" + city);
 
+                        String url = " https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon="+lon+"&appid=b6fbd4253485afbad2502ce04bdb87ef";
 
-                        String url = " https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=b6fbd4253485afbad2502ce04bdb87ef";
 
 /*
                         String url = " https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=b6fbd4253485afbad2502ce04bdb87ef";
@@ -266,15 +267,15 @@ public class commoncaregiver extends AppCompatActivity {
         //////
 
 
-        weather = findViewById(R.id.weatherbtn);
+        /*weather = findViewById(R.id.weatherbtn);*/
 
-        weather.setOnClickListener(new View.OnClickListener() {
+/*        weather.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
 
             }
-        });
+        });*/
 
 
         logout = findViewById(R.id.logout);
@@ -703,6 +704,7 @@ public class commoncaregiver extends AppCompatActivity {
 
                         String[] temp_data = new String[paramMap.size()];
                         String[] humid_data = new String[paramMap.size()];
+                        String[] time_data = new String[paramMap.size()];
 
                         for (int i = 0; i < paramMap.size(); i++) {
 
@@ -711,6 +713,8 @@ public class commoncaregiver extends AppCompatActivity {
 
                             humid_data[i] = paramMap.get(i).get("humidity").toString();
                             Log.d(TAG, " humidity  " + humid_data[i]);
+                            time_data[i] = paramMap.get(i).get("detect_time").toString();
+                            Log.d(TAG, " time  " + time_data[i]);
 
                         }
 
@@ -720,7 +724,14 @@ public class commoncaregiver extends AppCompatActivity {
                         intent2.putExtra("nickname", vname);
                         intent2.putExtra("name", name);
                         intent2.putExtra("guradId", guardid);
+                        intent2.putExtra("temperature",temp_data);
+                        intent2.putExtra("humidity",humid_data);
+                        intent2.putExtra("detect_time",time_data);
+                        intent2.putExtra("size",size);
+
+
                         Log.d("caregiver", "guard" + guardid);
+                        Log.d("caregiver", "size " + size);
 
                         startActivity(intent2);
 

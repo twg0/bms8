@@ -63,16 +63,7 @@
             android:textColor="@color/black"
             android:layout_gravity="center_horizontal"
             />
-        <Button
-            android:id="@+id/weatherbtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="날씨 더보기 >"
-            android:textStyle="bold"
-            android:layout_gravity="center_horizontal"
-            android:backgroundTint="@color/background_gray"
-            android:stateListAnimator="@null"
-            />
+
     </LinearLayout>
     <FrameLayout
         android:layout_width="match_parent"
