@@ -2,9 +2,12 @@ package com.alddeul.capstone;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -23,12 +26,13 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class
-state_data extends AppCompatActivity {
+state_data extends AppCompatActivity implements View.OnClickListener{
     private LineChart lineChart;
     TextView textView1, textView2, textView3, toolbar;
     String vname, name, message, temp_data[], humid_data[], time_data[];
     Integer size = 0;
     MainActivity m = new MainActivity();
+    Button button1,button2,button3,button4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +63,6 @@ state_data extends AppCompatActivity {
 
         ArrayList<Entry> entry_chart1 = new ArrayList<>(); // 데이터를 담을 Arraylist
         ArrayList<Entry> entry_chart2 = new ArrayList<>();
-        ArrayList<Entry> entry_chart3 = new ArrayList<>();
 
         lineChart = (LineChart) findViewById(R.id.chart);
 
@@ -78,44 +81,28 @@ state_data extends AppCompatActivity {
         entry_chart2.add(new Entry(1713, (float) 25.4));
         entry_chart2.add(new Entry(1714, (float) 23.8));
 
-        entry_chart3.add(new Entry(1710, (float) 26.3)); //entry_chart3에 좌표 데이터를 담는다.
-        entry_chart3.add(new Entry(1711, (float) 27.2));
-        entry_chart3.add(new Entry(1712, (float) 31.2));
-        entry_chart3.add(new Entry(1713, (float) 25.4));
-        entry_chart3.add(new Entry(1714, (float) 21.8));
-
 
         LineDataSet lineDataSet1 = new LineDataSet(entry_chart1, "Temperature"); // 데이터가 담긴 Arraylist 를 LineDataSet 으로 변환한다.
         LineDataSet lineDataSet2 = new LineDataSet(entry_chart2, "Humidity");
-        LineDataSet lineDataSet3 = new LineDataSet(entry_chart3, "Illuminance");
 
         lineDataSet1.setColor(Color.RED); // 해당 LineDataSet의 색 설정 :: 각 Line 과 관련된 세팅은 여기서 설정한다.
         lineDataSet1.setCircleColor(Color.RED); // 꺾이는 부분 색상
         lineDataSet2.setColor(Color.BLACK);
         lineDataSet2.setCircleColor(Color.BLACK);
-        lineDataSet3.setColor(Color.BLUE);
-        lineDataSet3.setCircleColor(Color.BLUE);
 
 
         chartData.addDataSet(lineDataSet1); // 해당 LineDataSet 을 적용될 차트에 들어갈 DataSet 에 넣는다.
         chartData.addDataSet(lineDataSet2);
-        chartData.addDataSet(lineDataSet3);
 
 
         XAxis xAxis = lineChart.getXAxis(); // x 축 설정
         xAxis.setPosition(XAxis.XAxisPosition.TOP); //x 축 표시에 대한 위치 설정
-
+        xAxis.setLabelCount(5, true); //X축의 데이터를 최대 몇개 까지 나타낼지에 대한 설정 5개 force가 true 이면 반드시 보여줌
         xAxis.setValueFormatter(new ValueFormatter() {
 
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public String getFormattedValue(float value) {
-
-//                Date date = new Date();
-//                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-//
-//                String now_time = sdf.format(date);
-//                return now_time;
 
                 String now_time = "" + (int) (value / 100) + ":" + (int) (value % 100);
                 return now_time;
@@ -137,16 +124,16 @@ state_data extends AppCompatActivity {
         lineChart.setDescription(null);
 
         textView1 = findViewById(R.id.gas);
-        textView2 = findViewById(R.id.earth_quake);
-        textView3 = findViewById(R.id.strange_act);
 
-        String earth, wierd, gas;
+        button1 = findViewById(R.id.button1);
+        button2 = findViewById(R.id.button2);
+        button3 = findViewById(R.id.button3);
+        button4 = findViewById(R.id.button4);
 
-
-        textView1.setText("이상없음");
-        textView2.setText("이상없음");
-        textView3.setText("이상없음");
-
+        button1.setOnClickListener(this);
+        button2.setOnClickListener(this);
+        button3.setOnClickListener(this);
+        button4.setOnClickListener(this);
 
 /*
 
@@ -163,5 +150,35 @@ state_data extends AppCompatActivity {
 
 */
 
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        if(view == button1) {
+
+            button1.setBackgroundResource(R.drawable.background_round);
+            button2.setBackgroundResource(R.drawable.background_round2);
+            button3.setBackgroundResource(R.drawable.background_round2);
+            button4.setBackgroundResource(R.drawable.background_round2);
+        }
+        else if(view == button2){
+            button1.setBackgroundResource(R.drawable.background_round2);
+            button2.setBackgroundResource(R.drawable.background_round);
+            button3.setBackgroundResource(R.drawable.background_round2);
+            button4.setBackgroundResource(R.drawable.background_round2);
+        }
+        else if(view == button3){
+            button1.setBackgroundResource(R.drawable.background_round2);
+            button2.setBackgroundResource(R.drawable.background_round2);
+            button3.setBackgroundResource(R.drawable.background_round);
+            button4.setBackgroundResource(R.drawable.background_round2);
+        }
+        else if(view == button4){
+            button1.setBackgroundResource(R.drawable.background_round2);
+            button2.setBackgroundResource(R.drawable.background_round2);
+            button3.setBackgroundResource(R.drawable.background_round2);
+            button4.setBackgroundResource(R.drawable.background_round);
+        }
     }
 }

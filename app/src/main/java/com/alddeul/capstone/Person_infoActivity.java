@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -32,7 +33,7 @@ import java.util.Map;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 
-public class Person_infoActivity extends AppCompatActivity {
+public class Person_infoActivity extends AppCompatActivity implements View.OnClickListener {
 
     Intent intent;
     int trigger;
@@ -46,11 +47,18 @@ public class Person_infoActivity extends AppCompatActivity {
     Map<String, String> map;
     private RequestQueue mqueue, mqueue2;
     MainActivity m = new MainActivity();
+    EditText input_phone;
+    Button input_button;
+    LinearLayout input_layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person_info);
+
+        input_phone = findViewById(R.id.input_phone);
+        input_button = findViewById(R.id.input_button);
+        input_button.setOnClickListener(this);
 
         intent = getIntent();
         id = intent.getStringExtra("id");
@@ -177,12 +185,19 @@ public class Person_infoActivity extends AppCompatActivity {
         addcaregiver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Person_infoActivity.this, caregiverjoinActivity.class);
-                intent.putExtra("id",id);
-                intent.putExtra("email",email);
-                 intent.putExtra("name",name);
+                if(view == addcaregiver) {
+                    if(input_layout.getVisibility() == View.VISIBLE)
+                        input_layout.setVisibility(View.GONE);
+                    else
+                        input_layout.setVisibility(View.VISIBLE);
+                }
+//                Intent intent = new Intent(Person_infoActivity.this, caregiverjoinActivity.class);
+//                intent.putExtra("id",id);
+//                intent.putExtra("email",email);
+//                 intent.putExtra("name",name);
+//
+//                startActivity(intent);
 
-                startActivity(intent);
             }
         });
 
@@ -230,5 +245,12 @@ public class Person_infoActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view == input_button) {
+            ;
+        }
     }
 }

@@ -51,7 +51,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:layout_margin="25dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginHorizontal="25dp"
         android:background="@drawable/background_round">
 
         <com.github.mikephil.charting.charts.LineChart
@@ -65,78 +66,42 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginVertical="15dp"
         android:layout_marginHorizontal="25dp"
-        android:background="@drawable/background_round"
-        android:orientation="horizontal"
-        android:paddingHorizontal="50dp">
+        android:paddingHorizontal="5dp"
+        android:orientation="horizontal">
 
-        <TextView
+        <Button
+            android:id="@+id/button1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:textStyle="bold"
-            android:text="가스 : "
-            android:layout_marginLeft="30dp"/>
+            android:layout_height="match_parent"
+            android:background="@drawable/background_round"
+            android:paddingHorizontal="3dp"
+            android:text="10분"
+            />
 
-        <TextView
-            android:id="@+id/gas"
+        <Button
+            android:id="@+id/button2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:textStyle="bold"
-            android:layout_marginLeft="60dp"/>
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:background="@drawable/background_round2"
+            android:text="30분"
+            />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginVertical="15dp"
-        android:background="@drawable/background_round"
-        android:orientation="horizontal"
-        android:paddingHorizontal="50dp"
-        android:layout_marginHorizontal="25dp">
-
-        <TextView
+        <Button
+            android:id="@+id/button3"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="지진 : "
-            android:layout_marginLeft="30dp"
-            android:textStyle="bold"/>
+            android:layout_height="match_parent"
+            android:background="@drawable/background_round2"
+            android:text="1시간"
+            />
 
-        <TextView
-            android:id="@+id/earth_quake"
+        <Button
+            android:id="@+id/button4"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:textStyle="bold"
-            android:layout_marginLeft="60dp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginVertical="15dp"
-        android:background="@drawable/background_round"
-        android:orientation="horizontal"
-        android:paddingHorizontal="50dp"
-        android:layout_marginHorizontal="25dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="이상행동 : "
-            android:textStyle="bold"
-            android:layout_marginLeft="7dp"/>
-
-        <TextView
-            android:id="@+id/strange_act"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:textStyle="bold"
-            android:layout_marginLeft="60dp"/>
+            android:layout_height="match_parent"
+            android:background="@drawable/background_round2"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:text="24시간"
+            />
     </LinearLayout>
 </LinearLayout>
