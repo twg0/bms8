@@ -45,17 +45,18 @@ state_data extends AppCompatActivity {
         size = intent.getIntExtra("size", size);
         Log.d("state", "size" + size);
 
+        /*
         try {
             Log.d("state", "temp" + temp_data[0]);
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
-
+*/
         toolbar = findViewById(R.id.toolbar_title);
         toolbar.setText(vname + "마을" + name + "님");
 
 
-        Log.d("state", "message" + message);
+
         ArrayList<Entry> entry_chart1 = new ArrayList<>(); // 데이터를 담을 Arraylist
         ArrayList<Entry> entry_chart2 = new ArrayList<>();
         ArrayList<Entry> entry_chart3 = new ArrayList<>();
