@@ -38,6 +38,7 @@ state_data extends AppCompatActivity implements View.OnClickListener {
     Integer size = 0, cnt = 0;
     MainActivity m = new MainActivity();
     Button button1, button2, button3, button4;
+    Integer  size2=180, size3=360 , size4=86400;
 
     ImageButton logout;
 
@@ -116,22 +117,6 @@ state_data extends AppCompatActivity implements View.OnClickListener {
         }
         else {
 
-/*
-
-            for (int i = 0; i < size; i++) {
-                if (temp_data[i].equals("999.0") || humid_data[i].equals("999.0")) {
-                    i++;
-                } else {
-                    entry_chart1.add(new Entry(1710 + cnt, Float.parseFloat(temp_data[cnt]))); //entry_chart1에 좌표 데이터를 담는다.
-                    entry_chart2.add(new Entry(1710 + cnt, Float.parseFloat(humid_data[cnt])));
-
-                    cnt++;
-                }
-
-                if (cnt == 5)
-                    break;
-            }
-*/
 
 
             for (int i = size - 1; i >= 0; i--) {
@@ -144,10 +129,9 @@ state_data extends AppCompatActivity implements View.OnClickListener {
                     cnt++;
                 }
 
-                /*
-                if (cnt == 5)
-                    break;*/
             }
+
+
 
 /*
 
@@ -233,13 +217,16 @@ state_data extends AppCompatActivity implements View.OnClickListener {
 
         if (view == button1) {
 
+
             button1.setBackgroundResource(R.drawable.background_round);
             button2.setBackgroundResource(R.drawable.background_round2);
             button3.setBackgroundResource(R.drawable.background_round2);
             button4.setBackgroundResource(R.drawable.background_round2);
 
 
-        } else if (view == button2) {
+        }
+
+        else if (view == button2) {
             button1.setBackgroundResource(R.drawable.background_round2);
             button2.setBackgroundResource(R.drawable.background_round);
             button3.setBackgroundResource(R.drawable.background_round2);

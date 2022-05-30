@@ -210,6 +210,12 @@ public class Person_infoActivity extends AppCompatActivity implements View.OnCli
                     public void onResponse(String response) {
                         /*tv.setText(response);*/
                         Log.d(" ", " 탈퇴완료");
+
+
+                        Intent intent = new Intent(Person_infoActivity.this,MainActivity.class);
+                        startActivity(intent);
+
+
                     }
                 }, new Response.ErrorListener() {
                     @Override

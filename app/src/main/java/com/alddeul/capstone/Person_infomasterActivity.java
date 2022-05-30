@@ -219,6 +219,9 @@ logout.setOnClickListener(new View.OnClickListener() {
                     public void onResponse(String response) {
                         /*tv.setText(response);*/
                         Log.d("delete","succ");
+
+                        Intent intent = new Intent(Person_infomasterActivity.this,MainActivity.class);
+                        startActivity(intent);
                     }
                 }, new Response.ErrorListener() {
                     @Override

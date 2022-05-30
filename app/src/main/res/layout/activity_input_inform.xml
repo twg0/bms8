@@ -76,11 +76,39 @@
                 android:inputType="phone" />
         </LinearLayout>
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="상세주소"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/input_address"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:hint="상세주소"
+                android:inputType="phone" />
+
+
+        </LinearLayout>
+<!--
+
         <CheckBox
             android:id="@+id/checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="is unChecked" />
+-->
 
         <RadioGroup
             android:id="@+id/radioGroup"
@@ -94,7 +122,8 @@
                 android:id="@+id/radio1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="주민" />
+                android:text="공용" />
+<!--
 
             <RadioButton
                 android:id="@+id/radio2"
@@ -106,6 +135,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="마을 이장" />
+-->
 
         </RadioGroup>
 

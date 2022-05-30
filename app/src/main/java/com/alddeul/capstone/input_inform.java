@@ -43,7 +43,7 @@ public class input_inform extends AppCompatActivity {
     LinearLayout linearLayout;
     EditText name, birth, phone, guard_name, guard_birth, master_id;
     public static String token;
-    String email, id;
+    String email, id,detailadress;
     MainActivity m = new MainActivity();
 
     int flag = 0;
@@ -71,6 +71,8 @@ public class input_inform extends AppCompatActivity {
         Log.d("input", "i" + email);
         Log.d("input", "idddd" +id);
         //Check box 이벤트 등록
+
+
         checkBox = findViewById(R.id.checkbox);
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -83,7 +85,9 @@ public class input_inform extends AppCompatActivity {
             }
         });
 
+
         checkBox.setVisibility(View.GONE);
+
 
         radioGroup = findViewById(R.id.radioGroup);
         radioGroup.check(R.id.radio1);
@@ -96,21 +100,26 @@ public class input_inform extends AppCompatActivity {
 
                     flag = 0;
 
-                } else if (checkedId == R.id.radio2) {
+                }
+                /*
+                else if (checkedId == R.id.radio2) {
 
-                   /* linearLayout=findViewById(R.id.guard);
-                    linearLayout.setVisibility(View.VISIBLE);*/
+                   *//* linearLayout=findViewById(R.id.guard);
+                    linearLayout.setVisibility(View.VISIBLE);*//*
                     flag = 1;
 
                 } else {
-                   /* linearLayout=findViewById(R.id.guard);
-                    linearLayout.setVisibility(View.GONE);*/
+                   *//* linearLayout=findViewById(R.id.guard);
+                    linearLayout.setVisibility(View.GONE);*//*
 
                     flag = 2;
 
-                }
+                }*/
+
             }
         });
+
+
 
 
         info_input = findViewById(R.id.info_input);
@@ -139,39 +148,51 @@ public class input_inform extends AppCompatActivity {
 */
 
                     /*finish();*/
-                } else if (flag == 1) {
+                }
+/*
+
+                else if (flag == 1) {
                     url = m.serverip+"api/users/"+id;
                     caregiverignupclick(name2, email, url, p2);
-                   /* UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
+                   */
+/* UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
                         @Override
                         public Unit invoke(Throwable throwable) {
                             return null;
                         }
                     });
-*/
+*//*
 
+
+*/
 /*
                     finish();
-*/
+*//*
+
 
                 } else {
                     url = m.serverip+"api/users/"+id;
 
 
                     chiefsignupclick(name2, email, url, p2);
-                   /* UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
+                   */
+/* UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
                         @Override
                         public Unit invoke(Throwable throwable) {
                             return null;
                         }
-                    });*/
+                    });*//*
 
 
+
+*/
 /*
                     finish();
-*/
+*//*
+
 
                 }
+*/
 
 
             }
@@ -190,6 +211,8 @@ public class input_inform extends AppCompatActivity {
 */
             js.put("username", name);
             js.put("phoneNumber", phone);
+            js.put("detailaddress",detailadress);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -235,14 +258,14 @@ public class input_inform extends AppCompatActivity {
 
 
     }
-
+/*
 
     public void caregiverignupclick(String name, String email, String url, String phone) {
         String TAG = "aa";
 
         JSONObject js = new JSONObject();
         try {
-            /*js.put("email", email);*/
+            *//*js.put("email", email);*//*
             js.put("username", name);
             js.put("phoneNumber", phone);
 
@@ -257,20 +280,20 @@ public class input_inform extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d(TAG, response.toString() + " i am queen");
-                      /*  UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
+                      *//*  UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
                             @Override
                             public Unit invoke(Throwable throwable) {
                                 return null;
                             }
                         });
-                        */
+                        *//*
 
                         Intent intent;
                         intent = new Intent(input_inform.this, addvillage.class);
                         intent.putExtra("email", email);
 
                         startActivity(intent);
-                        /*finish();*/
+                        *//*finish();*//*
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -279,9 +302,9 @@ public class input_inform extends AppCompatActivity {
             }
         }) {
 
-            /**
+            *//**
              * Passing some request headers
-             */
+             *//*
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
@@ -302,9 +325,9 @@ public class input_inform extends AppCompatActivity {
 
         JSONObject js = new JSONObject();
         try {
-/*
+*//*
             js.put("email", email);
-*/
+*//*
             js.put("username", name);
             js.put("phoneNumber", phone);
 
@@ -320,12 +343,12 @@ public class input_inform extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d(TAG, response.toString() + " i am queen");
-                       /* UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
+                       *//* UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
                             @Override
                             public Unit invoke(Throwable throwable) {
                                 return null;
                             }
-                        });*/
+                        });*//*
 
                         Intent intent;
                         intent = new Intent(input_inform.this, addvillage.class);
@@ -333,7 +356,7 @@ public class input_inform extends AppCompatActivity {
 
 
                         startActivity(intent);
-                        /*finish();*/
+                        *//*finish();*//*
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -342,9 +365,9 @@ public class input_inform extends AppCompatActivity {
             }
         }) {
 
-            /**
+            *//**
              * Passing some request headers
-             */
+             *//*
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
@@ -358,7 +381,7 @@ public class input_inform extends AppCompatActivity {
         Volley.newRequestQueue(this).add(jsonObjReq);
 
 
-    }
+    }*/
 
     public String gettoken() {
 
