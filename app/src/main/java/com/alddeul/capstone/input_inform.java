@@ -72,7 +72,7 @@ public class input_inform extends AppCompatActivity {
         Log.d("input", "idddd" +id);
         //Check box 이벤트 등록
 
-
+/*
         checkBox = findViewById(R.id.checkbox);
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -86,7 +86,7 @@ public class input_inform extends AppCompatActivity {
         });
 
 
-        checkBox.setVisibility(View.GONE);
+        checkBox.setVisibility(View.GONE);*/
 
 
         radioGroup = findViewById(R.id.radioGroup);
