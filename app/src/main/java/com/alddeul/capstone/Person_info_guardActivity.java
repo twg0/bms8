@@ -193,6 +193,7 @@ public class Person_info_guardActivity extends AppCompatActivity {
                                     try {
 
                                         city = (json.optString("city"));
+
                                         town = (json.optString("town"));
 
                                         adres = city+", "+town+" "+detailaddress;
@@ -268,7 +269,7 @@ public class Person_info_guardActivity extends AppCompatActivity {
 
 
                     /////////////////
-                    adres = city+" "+town;
+                    adres = city+" "+town+" "+detailaddress;
 
                     gname2 = findViewById(R.id.guardname);
 
