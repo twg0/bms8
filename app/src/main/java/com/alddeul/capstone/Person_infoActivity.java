@@ -186,17 +186,16 @@ public class Person_infoActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onClick(View view) {
                 if(view == addcaregiver) {
-                    if(input_layout.getVisibility() == View.VISIBLE)
-                        input_layout.setVisibility(View.GONE);
-                    else
-                        input_layout.setVisibility(View.VISIBLE);
+
+                    Intent intent = new Intent(Person_infoActivity.this, caregiverjoinActivity.class);
+                    intent.putExtra("id",id);
+                    intent.putExtra("email",email);
+                    intent.putExtra("name",name);
+
+                    startActivity(intent);
+
                 }
-//                Intent intent = new Intent(Person_infoActivity.this, caregiverjoinActivity.class);
-//                intent.putExtra("id",id);
-//                intent.putExtra("email",email);
-//                 intent.putExtra("name",name);
-//
-//                startActivity(intent);
+
 
             }
         });

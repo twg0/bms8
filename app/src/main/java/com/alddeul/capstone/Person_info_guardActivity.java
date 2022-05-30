@@ -266,7 +266,7 @@ public class Person_info_guardActivity extends AppCompatActivity {
 
 
                     /////////////////
-                  /*  adres = city+" "+town;
+                    adres = city+" "+town;
 
                     gname2 = findViewById(R.id.guardname);
 
@@ -279,7 +279,7 @@ public class Person_info_guardActivity extends AppCompatActivity {
                     gname2.setText(usernam);
                     gemail2.setText(emails);
                     gphone2.setText(phonenum);
-                    gaddress2.setText(adres);*/
+                    gaddress2.setText(adres);
 
                 }
             }

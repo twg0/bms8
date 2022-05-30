@@ -86,7 +86,9 @@ public class master extends AppCompatActivity {
 
                     try {
                         JSONObject json=new JSONObject(response);
-                        Log.d("", "res" + json); JSONObject json2 = json.optJSONObject("location");
+                        Log.d("", "res" + json);
+                        JSONObject json2 = json.optJSONObject("location");
+                       city=json.optString("city");
                         Log.d("com", "location " + json2);
 
                         try {
@@ -377,6 +379,21 @@ public class master extends AppCompatActivity {
                         }
                     });
 
+                    img = findViewById(R.id.person_info);
+                    img.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(master.this, Person_infomasterActivity.class);
+                            intent.putExtra("name", name2);
+                            intent.putExtra("email", email);
+                            intent.putExtra("Role", role);
+                            intent.putExtra("id", id);
+                            intent.putExtra("vname", vname2);
+
+                            startActivity(intent);
+                        }
+                    });
+
                     Button broad = findViewById(R.id.broadcast);
                     broad.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -426,21 +443,23 @@ public class master extends AppCompatActivity {
         mqueue.add(stringRequest3);
 
         //////
+/*
 
-        img = findViewById(R.id.person_info);
-        img.setOnClickListener(new View.OnClickListener() {
+        Button oldjoin = findViewById(R.id.oldjoin);
+
+        oldjoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(master.this, Person_infomasterActivity.class);
-                intent.putExtra("name", name2);
-                intent.putExtra("email", email);
-                intent.putExtra("Role", role);
-                intent.putExtra("id", id);
-                intent.putExtra("vname", vname);
 
-                startActivity(intent);
+                Intent intent2 = new Intent(master.this, oldjoin.class);
+
+                startActivity(intent2);
+
             }
         });
+
+*/
+
 
 
         logout2 = findViewById(R.id.logout);

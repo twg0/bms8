@@ -326,7 +326,7 @@ loginapi();
                 // will Volley use, we have to handle and store session cookies manually
                 Log.i("response",response.headers.toString());
                 Map<String, String> responseHeaders = response.headers;
-                 Cookies = responseHeaders.get("Set-Cookie");
+                Cookies = responseHeaders.get("Set-Cookie");
                 Log.i("cookies",Cookies);
                 return super.parseNetworkResponse(response);
             }
@@ -379,7 +379,7 @@ loginapi();
                     id2 = String.valueOf(map.get("id"));
 
 
-                    Log.d("main", "phone" + phone);
+                    Log.d("main", "id2 " + id2);
 
                     if (name.equals("TEMP_NAME")) {
 
@@ -412,6 +412,7 @@ loginapi();
 ////////
 
                     String url4 = serverip+"api/users/" + id2 + "/ward";
+                    Log.d("main", "test ");
 
                     StringRequest stringRequest2 = new StringRequest(Request.Method.GET, url4, new Response.Listener<String>() {
                         @Override
@@ -419,8 +420,21 @@ loginapi();
                             Log.d(TAG, "handleSignInResult:repsonse1212 " + response);
 
                             if (response.isEmpty()) {
+                                Log.d("main", "you dont have old");
+
+
+                                Intent intent = new Intent(MainActivity.this, common.class);
+                                intent.putExtra("email", email);
+                                intent.putExtra("Role", Role);
+                                intent.putExtra("name", name);
+                                Log.d("send name", "send name" + name);
+                                intent.putExtra("id", id2);
+                                intent.putExtra("message", message);
+                                intent.putExtra("title", title);
+                                startActivity(intent);
 
                                 return;
+
                             } else {
 
                                 try {
@@ -555,7 +569,6 @@ loginapi();
     }
 
 }
-
 
 
 

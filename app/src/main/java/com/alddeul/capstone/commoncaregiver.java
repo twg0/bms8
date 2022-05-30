@@ -701,7 +701,6 @@ public class commoncaregiver extends AppCompatActivity {
                         Log.d(" care", " prm" + paramMap);
                         Log.d(" care", " size" + paramMap.size());
                         size = paramMap.size();
-
                         String[] temp_data = new String[paramMap.size()];
                         String[] humid_data = new String[paramMap.size()];
                         String[] time_data = new String[paramMap.size()];
@@ -717,6 +716,12 @@ public class commoncaregiver extends AppCompatActivity {
                             Log.d(TAG, " time  " + time_data[i]);
 
                         }
+
+                        Integer  size2=180, size3=360 , size4=86400;
+
+
+
+
 
                         Log.d("care", "respon " + response);
 

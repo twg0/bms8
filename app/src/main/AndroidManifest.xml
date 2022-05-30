@@ -37,6 +37,7 @@
         android:debuggable="true"
         android:theme="@style/myTheme"
         android:usesCleartextTraffic="true">
+
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
@@ -59,7 +60,6 @@
 
         </activity>
 
-
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">
@@ -77,8 +77,6 @@
         </activity>
 
         <!--<activity android:name=".chiefActivity"></activity>-->
-        <activity android:name=".userjoinActivity"></activity>
-        <activity android:name=".signupActivity"></activity>
         <!-- <activity android:name=".loginActivity"></activity>
          <activity android:name=".caregiverActivity"></activity>
          <activity android:name=".caregiverloginActivity"></activity>-->
@@ -96,30 +94,17 @@
         <activity android:name=".addvillage"></activity>
         <activity
             android:name="com.alddeul.capstone.state_data"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            >
 
         </activity>
 
 
-        <activity android:name=".statementActivity"></activity>
 
-        <activity android:name=".villageaddActivity"></activity>
 
-        <activity android:name=".oldjoinActivity"></activity>
+
+        <activity android:name=".oldjoin"></activity>
         <activity android:name=".broadcast_notice"></activity>
-        <activity
-            android:name="com.alddeul.capstone.common"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-            ></activity>
+        <activity android:name="com.alddeul.capstone.common"></activity>
         <activity android:name="com.alddeul.capstone.master"></activity>
         <activity android:name="com.alddeul.capstone.Person_infoActivity"></activity>
         <activity android:name=".input_inform"></activity>

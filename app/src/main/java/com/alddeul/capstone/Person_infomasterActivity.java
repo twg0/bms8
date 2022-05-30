@@ -159,7 +159,7 @@ logout.setOnClickListener(new View.OnClickListener() {
 
 
         toolbar=findViewById(R.id.toolbar_title);
-        toolbar.setText( vname+"마을이장"+ name+"님");
+        toolbar.setText( vname+" 마을이장"+ name+" 님");
 
 
 
