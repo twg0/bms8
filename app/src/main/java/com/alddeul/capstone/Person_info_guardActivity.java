@@ -48,7 +48,7 @@ public class Person_info_guardActivity extends AppCompatActivity {
     ObjectMapper mapper = new ObjectMapper();
     Map<String, String> map;
     private RequestQueue mqueue, mqueue2, queue2;
-   String phonenum,usernam,emails,adres,detailaddress;
+   String phonenum,usernam,emails,adres,address2;
     MainActivity m = new MainActivity();
 
     @Override
@@ -167,7 +167,7 @@ public class Person_info_guardActivity extends AppCompatActivity {
                     usernam = map.get("username");
                     emails = map.get("email");
                     oldid=String.valueOf(map.get("id"));
-                    detailaddress=map.get("detailaddress");
+                    address2=map.get("address");
 
                     //////////////
 
@@ -196,7 +196,7 @@ public class Person_info_guardActivity extends AppCompatActivity {
 
                                         town = (json.optString("town"));
 
-                                        adres = city+", "+town+" "+detailaddress;
+                                        adres = city+", "+town+" "+address2;
 
                                         gname2 = findViewById(R.id.guardname);
 
@@ -269,7 +269,7 @@ public class Person_info_guardActivity extends AppCompatActivity {
 
 
                     /////////////////
-                    adres = city+" "+town+" "+detailaddress;
+                    adres = city+" "+town+" "+address2;
 
                     gname2 = findViewById(R.id.guardname);
 

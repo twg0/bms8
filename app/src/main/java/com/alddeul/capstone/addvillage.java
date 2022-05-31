@@ -268,6 +268,10 @@ public class addvillage extends AppCompatActivity {
 
 //////////////////////////////
 
+                                        Intent intent3=new Intent(addvillage.this,MainActivity.class);
+                                        startActivity(intent3);
+
+
                                     }
 
                                 }
@@ -275,6 +279,8 @@ public class addvillage extends AppCompatActivity {
 
                             }
                         });
+
+
 
 
                     } catch (IOException e) {
@@ -353,6 +359,8 @@ public class addvillage extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d(TAG, response.toString() + " i am queen");
+
+
                     }
                 }, new Response.ErrorListener() {
             @Override

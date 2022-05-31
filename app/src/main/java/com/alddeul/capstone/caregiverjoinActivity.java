@@ -68,11 +68,21 @@ public class caregiverjoinActivity extends AppCompatActivity {
                 id3 = old.getText().toString();
                 Long id = Long.parseLong(id3);
 
-                String url = m.serverip+"api/users/" + id + "/guardian?guardianId=" + gid;
+                String url = m.serverip + "api/users/" + id + "/guardian?guardianId=" + gid;
 
                 Log.d(TAG, ":url " + url);
 
                 add(url, gid);
+
+                Intent intent2 = new Intent(caregiverjoinActivity.this, MainActivity.class);
+               /* intent2.putExtra("id", id2);
+                intent2.putExtra("Role", role);
+                intent2.putExtra("name", id2);
+                intent2.putExtra("email", id2);
+                intent2.putExtra("id", id2);
+                intent2.putExtra("guardid", gid);*/
+
+                startActivity(intent2);
 
 
             }

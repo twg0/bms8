@@ -81,11 +81,13 @@ public class commoncaregiver extends AppCompatActivity {
         Role = intent.getStringExtra("Role");
         name = intent.getStringExtra("name");
         email = intent.getStringExtra("email");
-        message = intent.getStringExtra("message");
-        title = intent.getStringExtra("title");
+       /* message = intent.getStringExtra("message");
+        title = intent.getStringExtra("title");*/
         guardid = intent.getStringExtra("guardid");
 
+/*
         Log.d("commoncare", " body" + message);
+*/
         Log.d("commoncare", " id" + id);
         Log.d("commoncare", " cookie" + m.Cookies);
         Log.d("commoncare", " Role" + Role);

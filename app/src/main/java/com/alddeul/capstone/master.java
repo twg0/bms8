@@ -150,7 +150,7 @@ public class master extends AppCompatActivity {
                         }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                Log.d("infoguard", "no userdata");
+                                Log.d("master", "no temp data");
 
 
                             }
@@ -359,6 +359,12 @@ public class master extends AppCompatActivity {
                             intent2.putExtra("vid", vid2);
                             intent2.putExtra("vname", vname2);
                             intent2.putExtra("name", name2);
+
+
+                             intent2.putExtra("email",email);
+                            intent2.putExtra("Role",role);
+                          intent2.putExtra("id",id);
+
                             startActivity(intent2);
 
                         }

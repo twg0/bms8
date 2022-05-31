@@ -40,7 +40,7 @@ public class manage_person extends AppCompatActivity /*implements AdapterView.On
     Integer size;
     ListView listView;
     AlertDialog alertDialog;
-    String vid2;
+    String vid2,email,role,id;
     ImageButton img;
     String title2,vname,name;
     private static String TAG = "broadcast";
@@ -60,6 +60,11 @@ public class manage_person extends AppCompatActivity /*implements AdapterView.On
         vid2 = intent.getStringExtra("vid");
         vname = intent.getStringExtra("vname");
         name = intent.getStringExtra("name");
+
+        email = intent.getStringExtra("email");
+        role = intent.getStringExtra("Role");
+        id = intent.getStringExtra("id");
+
         Log.d("manageperson", "" + vid2);
 
         mqueue = Volley.newRequestQueue(this);
@@ -182,6 +187,10 @@ public class manage_person extends AppCompatActivity /*implements AdapterView.On
                                 intent2.putExtra("vid",vid2);
                                 intent2.putExtra("vname",vname);
                                 intent2.putExtra("name",name);
+
+                                intent2.putExtra("email",email);
+                                intent2.putExtra("Role",role);
+                                 intent2.putExtra("id",id);
                                 startActivity(intent2);
                             }
                         });

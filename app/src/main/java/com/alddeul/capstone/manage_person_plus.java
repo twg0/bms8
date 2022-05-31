@@ -29,8 +29,8 @@ public class manage_person_plus extends AppCompatActivity {
     private RequestQueue queue;
     MainActivity m = new MainActivity();
 
-    String url,name,vname;
-    String vid, id;
+    String url,name,vname,email,role;
+    String vid, id,id3;
     EditText id2;
     ImageButton img;
     @Override
@@ -41,6 +41,11 @@ public class manage_person_plus extends AppCompatActivity {
         vid = intent.getStringExtra("vid");
         name= intent.getStringExtra("name");
         vname= intent.getStringExtra("vname");
+
+        email = intent.getStringExtra("email");
+        role = intent.getStringExtra("Role");
+        id3 = intent.getStringExtra("id");
+
         queue = Volley.newRequestQueue(this);
 
          img = findViewById(R.id.info_input);
@@ -48,6 +53,7 @@ public class manage_person_plus extends AppCompatActivity {
 
 
         Log.d("vid", "vid " + vid);
+        Log.d("plus ", "id3 " + id3);
 
 
         img.setOnClickListener(new View.OnClickListener() {
@@ -60,16 +66,21 @@ public class manage_person_plus extends AppCompatActivity {
 
                 Long vid2 = Long.parseLong(vid);
 
-                Log.d("vid", "vid2 " + vid2);
+                Log.d("plus ", "vid2 " + vid2);
                 url = m.serverip+"api/users/" + id+"/villages?villageId=" +vid2;
                 /*adduser(url);*/
                 add(url,vid2);
 
-                Intent intent = new Intent(manage_person_plus.this, manage_person.class);
-                intent.putExtra("vid",vid);
-                intent.putExtra("vname",vname);
+                Intent intent = new Intent(manage_person_plus.this, master.class);
+                intent.putExtra("email",email);
                 intent.putExtra("name",name);
+                intent.putExtra("Role",role);
+                intent.putExtra("id",id3);
+
+
+
                 startActivity(intent);
+
             }
         });
     }
@@ -81,7 +92,7 @@ public class manage_person_plus extends AppCompatActivity {
         try {
 
             js.put("villageId", vid2);
-            Log.d("this","here ");
+            Log.d("this","add success ");
 
 
 

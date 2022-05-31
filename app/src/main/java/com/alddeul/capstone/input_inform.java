@@ -43,7 +43,7 @@ public class input_inform extends AppCompatActivity {
     LinearLayout linearLayout;
     EditText name, birth, phone, guard_name, guard_birth, master_id;
     public static String token;
-    String email, id,detailadress;
+    String email, id,adress;
     MainActivity m = new MainActivity();
 
     int flag = 0;
@@ -211,7 +211,7 @@ public class input_inform extends AppCompatActivity {
 */
             js.put("username", name);
             js.put("phoneNumber", phone);
-            js.put("detailaddress",detailadress);
+            js.put("address",adress);
 
         } catch (JSONException e) {
             e.printStackTrace();
