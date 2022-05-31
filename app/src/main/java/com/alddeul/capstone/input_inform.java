@@ -41,9 +41,9 @@ public class input_inform extends AppCompatActivity {
     RadioGroup radioGroup;
     RadioButton radioButton;
     LinearLayout linearLayout;
-    EditText name, birth, phone, guard_name, guard_birth, master_id;
+    EditText name, birth, phone, guard_name, guard_birth, master_id, address2;
     public static String token;
-    String email, id,adress;
+    String email, id, adress;
     MainActivity m = new MainActivity();
 
     int flag = 0;
@@ -59,17 +59,19 @@ public class input_inform extends AppCompatActivity {
         //입력된 정보
         name = (EditText) findViewById(R.id.input_name);
 
+        address2 = (EditText) findViewById(R.id.input_address);
 
         phone = (EditText) findViewById(R.id.input_phone);
         /*guard_name = (EditText) findViewById(R.id.input_guard_name);*/
 
 
+
         Intent intent = getIntent();
         email = intent.getStringExtra("email");
-        id=intent.getStringExtra("id");
+        id = intent.getStringExtra("id");
 
         Log.d("input", "i" + email);
-        Log.d("input", "idddd" +id);
+        Log.d("input", "idddd" + id);
         //Check box 이벤트 등록
 
 /*
@@ -120,8 +122,6 @@ public class input_inform extends AppCompatActivity {
         });
 
 
-
-
         info_input = findViewById(R.id.info_input);
         info_input.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,10 +133,12 @@ public class input_inform extends AppCompatActivity {
                 String name2;
                 name2 = name.getText().toString();
 
+                adress = address2.getText().toString();
+                Log.d("input","adress "+adress);
                 String p2;
                 p2 = phone.getText().toString();
                 if (flag == 0) {
-                    url = m.serverip+"api/users/"+id;
+                    url = m.serverip + "api/users/" + id;
                     usersignupclick(name2, email, url, p2);
                     /*
                     UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
@@ -164,7 +166,7 @@ public class input_inform extends AppCompatActivity {
 *//*
 
 
-*/
+                 */
 /*
                     finish();
 *//*
@@ -185,7 +187,7 @@ public class input_inform extends AppCompatActivity {
 
 
 
-*/
+                 */
 /*
                     finish();
 *//*
@@ -211,7 +213,7 @@ public class input_inform extends AppCompatActivity {
 */
             js.put("username", name);
             js.put("phoneNumber", phone);
-            js.put("address",adress);
+            js.put("address", adress);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -226,7 +228,7 @@ public class input_inform extends AppCompatActivity {
                         Log.d(TAG, response.toString() + " i am queen");
 
 
-                        Intent intent2= new Intent(input_inform.this, addvillage.class);
+                        Intent intent2 = new Intent(input_inform.this, addvillage.class);
                         intent2.putExtra("email", email);
 
                         startActivity(intent2);
@@ -236,7 +238,7 @@ public class input_inform extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
-                Log.d("input ","error during register session"+email);
+                Log.d("input ", "error during register session" + email);
 
             }
         }) {
@@ -303,8 +305,8 @@ public class input_inform extends AppCompatActivity {
         }) {
 
             *//**
-             * Passing some request headers
-             *//*
+     * Passing some request headers
+     *//*
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
@@ -365,9 +367,11 @@ public class input_inform extends AppCompatActivity {
             }
         }) {
 
-            *//**
-             * Passing some request headers
-             *//*
+            */
+
+    /**
+     * Passing some request headers
+     *//*
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
@@ -382,7 +386,6 @@ public class input_inform extends AppCompatActivity {
 
 
     }*/
-
     public String gettoken() {
 
         FirebaseMessaging.getInstance().getToken()
