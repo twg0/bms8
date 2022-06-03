@@ -40,6 +40,7 @@ state_data extends AppCompatActivity implements View.OnClickListener {
     Button button1, button2, button3, button4;
     Integer  size2=180, size3=360 , size4=86400;
 
+
     ImageButton logout;
 
     @Override
@@ -51,6 +52,8 @@ state_data extends AppCompatActivity implements View.OnClickListener {
         vname = intent.getStringExtra("nickname");
         name = intent.getStringExtra("name");
         message = intent.getStringExtra("message");
+
+
       /*  temp_data = intent.getStringArrayExtra("temperature");
         humid_data = intent.getStringArrayExtra("humidity");
         time_data = intent.getStringArrayExtra("detect_time");
@@ -73,6 +76,9 @@ state_data extends AppCompatActivity implements View.OnClickListener {
 
         Log.d("state", "temp" + temp_data[0]);
 
+
+
+
         /*
         try {
             Log.d("state", "temp" + temp_data[0]);
@@ -80,6 +86,9 @@ state_data extends AppCompatActivity implements View.OnClickListener {
             e.printStackTrace();
         }
 */
+
+
+
         toolbar = findViewById(R.id.toolbar_title);
         toolbar.setText(vname + "마을" + name + "님");
 

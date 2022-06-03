@@ -27,6 +27,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kakao.sdk.auth.model.OAuthToken;
 import com.kakao.sdk.user.UserApiClient;
 import com.kakao.sdk.user.model.User;
+import com.kakao.util.helper.Utility;
 /*import com.kplo.bms4.caregiverloginActivity;*/
 
 
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         /*createNotificationChannel();*/
 /*
 
@@ -81,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         /////
+
         Intent intent = getIntent();
 
 
@@ -138,6 +141,11 @@ public class MainActivity extends AppCompatActivity {
 */
 
         /*getHashKey();*/
+
+        String keyHash = Utility.getKeyHash(this);
+        Log.d(TAG, "keyhash : $keyHash"+keyHash);
+
+
 
     }
 

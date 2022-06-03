@@ -4,13 +4,22 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/AndroidStudioProjects/bms/app/src/main/res/drawable/background_round.xml" value="0.1105" />
-        <entry key="..\:/AndroidStudioProjects/bms/app/src/main/res/layout/activity_input_inform.xml" value="0.1578125" />
+        <entry key="..\:/AndroidStudioProjects/bms/app/src/main/res/layout/activity_broadcast_notice.xml" value="0.2" />
+        <entry key="..\:/AndroidStudioProjects/bms/app/src/main/res/layout/activity_broadcast_play.xml" value="0.16822916666666668" />
+        <entry key="..\:/AndroidStudioProjects/bms/app/src/main/res/layout/activity_broadcast_record.xml" value="0.16822916666666668" />
+        <entry key="..\:/AndroidStudioProjects/bms/app/src/main/res/layout/activity_common.xml" value="0.16822916666666668" />
+        <entry key="..\:/AndroidStudioProjects/bms/app/src/main/res/layout/activity_commoncaregiver.xml" value="0.16822916666666668" />
+        <entry key="..\:/AndroidStudioProjects/bms/app/src/main/res/layout/activity_input_inform.xml" value="0.2" />
+        <entry key="..\:/AndroidStudioProjects/bms/app/src/main/res/layout/activity_manage_person.xml" value="0.16822916666666668" />
         <entry key="..\:/AndroidStudioProjects/bms/app/src/main/res/layout/activity_manage_person_plus.xml" value="0.1421875" />
         <entry key="..\:/AndroidStudioProjects/bms/app/src/main/res/layout/activity_master.xml" value="0.175" />
         <entry key="..\:/AndroidStudioProjects/bms/app/src/main/res/layout/activity_person_guard_info.xml" value="0.1421875" />
         <entry key="..\:/AndroidStudioProjects/bms/app/src/main/res/layout/activity_person_info.xml" value="0.2" />
+        <entry key="..\:/AndroidStudioProjects/bms/app/src/main/res/layout/activity_person_masterinfo.xml" value="0.16822916666666668" />
         <entry key="..\:/AndroidStudioProjects/bms/app/src/main/res/layout/activity_state_data.xml" value="0.2" />
         <entry key="..\:/AndroidStudioProjects/bms/app/src/main/res/layout/oldjoin.xml" value="0.2" />
+        <entry key="..\:/AndroidStudioProjects/bms/app/src/main/res/layout/person_content.xml" value="0.16822916666666668" />
+        <entry key="..\:/AndroidStudioProjects/bms/app/src/main/res/layout/positionlist.xml" value="0.16822916666666668" />
         <entry key="..\:/AndroidStudioProjects/bms/app/src/main/res/layout/state.xml" value="0.2015625" />
         <entry key="..\:/Users/junho/AndroidStudioProjects/bms11/app/src/main/res/layout/chief.xml" value="0.19444444444444445" />
         <entry key="..\:/Users/junho/AndroidStudioProjects/bms11/app/src/main/res/layout/chiefjoin.xml" value="0.16799999999999998" />
