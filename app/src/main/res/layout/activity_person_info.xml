@@ -70,14 +70,15 @@
 
             <EditText
                 android:id="@+id/input_phone"
-                android:layout_width="200dp"
+                android:layout_width="210dp"
                 android:layout_height="match_parent"
-                android:hint="등록된 피보호자 전화번호"/>
+                android:inputType="phone"
+                android:hint="등록된 피보호자 아이디"/>
 
             <Button
                 android:id="@+id/input_button"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="30dp"
                 android:layout_gravity="right"
                 android:layout_marginLeft="15dp"
                 android:background="@drawable/round_rec_button"

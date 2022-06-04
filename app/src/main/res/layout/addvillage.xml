@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gray"
-    tools:context=".MainActivity">
+    android:background="#DDDDDD"
+    tools:context=".MainActivity"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,7 +30,7 @@
                 android:layout_marginLeft="20dp"
                 android:gravity="left"
                 android:paddingVertical="10dp"
-                android:text="마을등록"
+                android:text="마을 등록"
                 android:textColor="@color/black"
                 android:textSize="20dp" />
 
@@ -55,31 +56,21 @@
             android:layout_below="@id/toolbar"
             android:background="#95BCF2"
             android:orientation="horizontal">
-
-            <!--
-
-                        &lt;!&ndash; 방송 삭제 비활성화 &ndash;&gt;
-                        <ImageButton
-                            android:id="@+id/select"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginRight="10dp"
-                            android:background="#95BCF2"
-                            android:foreground="?android:attr/selectableItemBackground"
-                            android:src="@drawable/plus_symbol"
-                            app:tint="#990000" />
-            -->
+            <TextView
+                android:id="@+id/notice_title_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text=" 마을 목록" />
 
         </RelativeLayout>
 
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="333dp"
+            android:layout_height="500dp"
             android:layout_marginBottom="20dp"
-
+            android:background="@color/white"
             android:orientation="vertical">
 
             <ListView
@@ -92,10 +83,14 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/reg_button"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:hint="send"
-            android:textSize="22dp" />
+            android:id="@+id/caregiveradd"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/round_rec_button"
+            android:text="등록"
+            android:textSize="20dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -54,13 +54,16 @@ state_data extends AppCompatActivity implements View.OnClickListener {
         message = intent.getStringExtra("message");
 
 
-      /*  temp_data = intent.getStringArrayExtra("temperature");
+        temp_data = intent.getStringArrayExtra("temperature");
         humid_data = intent.getStringArrayExtra("humidity");
         time_data = intent.getStringArrayExtra("detect_time");
         size = intent.getIntExtra("size", size);
-*/
 
 
+
+
+//////////////////////
+/*
         String[] temp_data = new String[10000];
         String[] humid_data = new String[10000];
         String[] time_data = new String[10000];
@@ -74,6 +77,11 @@ state_data extends AppCompatActivity implements View.OnClickListener {
             humid_data[j] = String.valueOf(30 + j);
         }
 
+
+        */
+
+
+        /////////////////
         Log.d("state", "temp" + temp_data[0]);
 
 

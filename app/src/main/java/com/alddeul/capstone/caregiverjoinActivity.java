@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,7 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class caregiverjoinActivity extends AppCompatActivity {
+public class caregiverjoinActivity extends AppCompatActivity implements View.OnClickListener {
     String TAG = "caregiverjoinActivity";
 
     TextView toolbar;
@@ -34,6 +36,8 @@ public class caregiverjoinActivity extends AppCompatActivity {
     private RequestQueue queue;
     private Button btnsend;
     String gid;
+    CheckBox checkBox;
+    LinearLayout address_layout;
     String id2, email, id3, id, name;
     EditText old;
     MainActivity m = new MainActivity();
@@ -54,7 +58,11 @@ public class caregiverjoinActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar_title);
         toolbar.setText(name + "님 피보호자 등록");
+/*
+        checkBox = findViewById(R.id.checkbox);
+        checkBox.setOnClickListener(this);*/
 
+        address_layout = findViewById(R.id.address_layout);
 
         btnsend = findViewById(R.id.send);
 
@@ -75,12 +83,6 @@ public class caregiverjoinActivity extends AppCompatActivity {
                 add(url, gid);
 
                 Intent intent2 = new Intent(caregiverjoinActivity.this, MainActivity.class);
-               /* intent2.putExtra("id", id2);
-                intent2.putExtra("Role", role);
-                intent2.putExtra("name", id2);
-                intent2.putExtra("email", id2);
-                intent2.putExtra("id", id2);
-                intent2.putExtra("guardid", gid);*/
 
                 startActivity(intent2);
 
@@ -138,4 +140,12 @@ public class caregiverjoinActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onClick(View view) {
+        if(view == checkBox)
+            if(checkBox.isChecked())
+                address_layout.setVisibility(View.GONE);
+            else
+                address_layout.setVisibility(View.VISIBLE);
+    }
 }

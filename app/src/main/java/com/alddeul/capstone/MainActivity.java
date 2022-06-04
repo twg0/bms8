@@ -145,8 +145,6 @@ public class MainActivity extends AppCompatActivity {
         String keyHash = Utility.getKeyHash(this);
         Log.d(TAG, "keyhash : $keyHash"+keyHash);
 
-
-
     }
 
 

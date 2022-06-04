@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -36,6 +37,7 @@ import java.util.Map;
 public class input_inform extends AppCompatActivity {
 
     TextView targetTextView;
+    CheckBox box;
     ImageButton info_input;
     CheckBox checkBox;
     RadioGroup radioGroup;
@@ -54,6 +56,10 @@ public class input_inform extends AppCompatActivity {
         setContentView(R.layout.activity_input_inform);
 
         gettoken();
+        box = findViewById(R.id.checkbox2);
+
+
+        linearLayout = findViewById(R.id.address_layout);
 
 
         //입력된 정보
@@ -65,13 +71,37 @@ public class input_inform extends AppCompatActivity {
         /*guard_name = (EditText) findViewById(R.id.input_guard_name);*/
 
 
-
         Intent intent = getIntent();
         email = intent.getStringExtra("email");
         id = intent.getStringExtra("id");
 
         Log.d("input", "i" + email);
         Log.d("input", "idddd" + id);
+
+
+    box.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+
+            if (box.isChecked()) {
+                linearLayout.setVisibility(View.VISIBLE);
+
+                flag=1;
+
+            }
+
+            else
+            {
+                linearLayout.setVisibility(View.INVISIBLE);
+
+                flag=0;
+            }
+
+        }
+    });
+
+
         //Check box 이벤트 등록
 
 /*
@@ -91,37 +121,6 @@ public class input_inform extends AppCompatActivity {
         checkBox.setVisibility(View.GONE);*/
 
 
-        radioGroup = findViewById(R.id.radioGroup);
-        radioGroup.check(R.id.radio1);
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-                if (checkedId == R.id.radio1) {
-                   /* linearLayout=findViewById(R.id.guard);
-                    linearLayout.setVisibility(View.GONE);*/
-
-                    flag = 0;
-
-                }
-                /*
-                else if (checkedId == R.id.radio2) {
-
-                   *//* linearLayout=findViewById(R.id.guard);
-                    linearLayout.setVisibility(View.VISIBLE);*//*
-                    flag = 1;
-
-                } else {
-                   *//* linearLayout=findViewById(R.id.guard);
-                    linearLayout.setVisibility(View.GONE);*//*
-
-                    flag = 2;
-
-                }*/
-
-            }
-        });
-
-
         info_input = findViewById(R.id.info_input);
         info_input.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,15 +130,29 @@ public class input_inform extends AppCompatActivity {
                 String url;
 
                 String name2;
+                name2 = "";
                 name2 = name.getText().toString();
+                adress = "";
 
                 adress = address2.getText().toString();
-                Log.d("input","adress "+adress);
+                Log.d("input", "adress " + adress);
                 String p2;
+                p2 = "";
+
                 p2 = phone.getText().toString();
+                Log.d("input", "p2" + p2);
+
                 if (flag == 0) {
-                    url = m.serverip + "api/users/" + id;
-                    usersignupclick(name2, email, url, p2);
+
+                    if (p2.equals("") || p2 == null || name2.equals("") || name2 == null) {
+                        Toast.makeText(getApplicationContext(), "값을 넣어주세요.", Toast.LENGTH_LONG).show();
+
+                    } else {
+                        url = m.serverip + "api/users/" + id;
+                        Log.d("input", "hi");
+                        usersignupclick(name2, email, url, p2);
+                    }
+
                     /*
                     UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
                         @Override
@@ -151,6 +164,35 @@ public class input_inform extends AppCompatActivity {
 
                     /*finish();*/
                 }
+
+                else if (flag == 1) {
+
+                    if (p2.equals("") || p2 == null || name2.equals("") || name2 == null||adress.equals("") || adress == null) {
+                        Toast.makeText(getApplicationContext(), "값을 넣어주세요.", Toast.LENGTH_LONG).show();
+
+                    } else {
+                        url = m.serverip + "api/users/" + id;
+                        Log.d("input", "hi");
+                        wardsignupclick(name2, email, url, p2,adress);
+                    }
+
+                    /*
+                    UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
+                        @Override
+                        public Unit invoke(Throwable throwable) {
+                            return null;
+                        }
+                    });
+*/
+
+                    /*finish();*/
+                }
+
+
+
+
+
+
 /*
 
                 else if (flag == 1) {
@@ -204,6 +246,66 @@ public class input_inform extends AppCompatActivity {
     }
 
     public void usersignupclick(String name, String email, String url, String phone) {
+        String TAG = "a";
+        JSONObject js = new JSONObject();
+        try {
+
+/*
+            js.put("email", email);
+*/
+            js.put("username", name);
+            js.put("phoneNumber", phone);
+            js.put("address", adress);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        // Make request for JSONObject
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(
+                Request.Method.PUT, url, js,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d(TAG, response.toString() + " i am queen");
+
+
+                        Intent intent2 = new Intent(input_inform.this, addvillage.class);
+                        intent2.putExtra("email", email);
+
+                        startActivity(intent2);
+                        /*finish();*/
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                Log.d("input ", "error during register session" + email);
+
+            }
+        }) {
+
+            /**
+             * Passing some request headers
+             */
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json; charset=utf-8");
+                return headers;
+            }
+
+        };
+
+
+        Volley.newRequestQueue(this).add(jsonObjReq);
+
+
+    }
+
+
+
+    public void wardsignupclick(String name, String email, String url, String phone,String adress) {
         String TAG = "a";
         JSONObject js = new JSONObject();
         try {
@@ -386,6 +488,9 @@ public class input_inform extends AppCompatActivity {
 
 
     }*/
+
+
+
     public String gettoken() {
 
         FirebaseMessaging.getInstance().getToken()
@@ -411,6 +516,10 @@ public class input_inform extends AppCompatActivity {
         return token;
 
     }
+
+
+
+
 }
 
 

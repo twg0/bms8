@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -101,7 +102,7 @@ public class addvillage extends AppCompatActivity {
         });
 
 
-        String url3 = m.serverip+ "api/users/" + email;
+        String url3 = m.serverip + "api/users/" + email;
         Log.d("addvill", "url3" + url3);
         StringRequest stringRequest2 = new StringRequest(Request.Method.GET, url3, new Response.Listener<String>() {
             @Override
@@ -182,7 +183,7 @@ public class addvillage extends AppCompatActivity {
     public void getvilages() {
 
 
-        String url = m.serverip+"api/villages";
+        String url = m.serverip + "api/villages";
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -225,23 +226,35 @@ public class addvillage extends AppCompatActivity {
                             boolean b = false;
                             villageselect_VO item = new villageselect_VO(b, s);
                             items.add(item);
+                            Log.d("item",""+item);
                         }
 
                         MyvillageAdapter adapter = new MyvillageAdapter(items);
 
                         listView.setAdapter(adapter);
 
-                        Button send = findViewById(R.id.reg_button);
+                        Button send = findViewById(R.id.caregiveradd);
                         send.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
 
-                                Integer count;
+                                Integer count=0,size2;
                                 Integer checked;
-                                count = adapter.getCount();
+                                size2 = adapter.getCount();
                                 checked = listView.getCheckedItemPosition();
 
-                                if (count > 0) {
+
+                                for(int i=0;i<size2;i++)
+                                {
+                                    if(adapter.isChecked(i))
+                                        count++;
+
+                                }
+
+
+                                Log.d("add", "cnt" + count);
+
+                                if (count == 1) {
 
                                     if (checked > -1 && checked < count) {
                                         items.remove(checked);
@@ -252,35 +265,41 @@ public class addvillage extends AppCompatActivity {
 
                                     }
 
-                                }
-                                /////
-
-                                for (int i = 0; i < count; i++) {
-                                    if (adapter.isChecked(i)) {
-                                        Log.d("addvill", "this " + i);
+                                    for (int i = 0; i < size2; i++) {
+                                        if (adapter.isChecked(i)) {
+                                            Log.d("addvill", "this " + i);
 
 
-                                        String url2 = m.serverip+"api/users/" + id + "/villages?villageId=" + vid_data[i];
-                                        Long vid = Long.parseLong(vid_data[i]);
-                                        id3 = Long.parseLong(id);
-                                        addvill(id3, vid, url2);
-                                        Log.d("addvill", "villsuccess");
+                                            String url2 = m.serverip + "api/users/" + id + "/villages?villageId=" + vid_data[i];
+                                            Long vid = Long.parseLong(vid_data[i]);
+                                            id3 = Long.parseLong(id);
+                                            addvill(id3, vid, url2);
+                                            Log.d("addvill", "villsuccess");
 
 //////////////////////////////
 
-                                        Intent intent3=new Intent(addvillage.this,MainActivity.class);
-                                        startActivity(intent3);
+                                            Intent intent3 = new Intent(addvillage.this, MainActivity.class);
+                                            startActivity(intent3);
 
+
+                                        }
 
                                     }
 
                                 }
 
+                                /////
+
+
+                                else {
+
+                                    Log.d("addvi", " you have to choose one village");
+                                    Toast.makeText(getApplicationContext(), "마을을 한개 선택하세요.",Toast.LENGTH_LONG).show();
+                                }
+
 
                             }
                         });
-
-
 
 
                     } catch (IOException e) {

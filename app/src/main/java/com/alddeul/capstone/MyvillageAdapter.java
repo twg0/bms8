@@ -36,6 +36,7 @@ public class MyvillageAdapter extends BaseAdapter {
         return list.get(position).checked;
     }
 
+
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
         Context context = viewGroup.getContext();
